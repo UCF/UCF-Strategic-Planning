@@ -1,15 +1,9 @@
-# Generic Wordpress Theme Boilerplate for UCF Marketing
+# Students Theme
 
-Stripped-down version of UCF's Generic Theme.  Provides a base set of
-development tools, vanilla templates with semantic markup, and a starter
-set of custom post types for rapid development.
-
-Note that this theme does NOT come styled out-of-the-box; it is intended
-strictly as a base for development of new themes.
-
+This theme will be used for the /students/ page on [www.ucf.edu](http://www.ucf.edu). The theme relies heavily on shortcodes with Custom Post Types used for data structures that require scheduling or reuse.
 
 ## Installation Requirements:
-- WordPress v4.1+
+- WordPress v4.4+
 
 For development:
 - node v0.10.22+
