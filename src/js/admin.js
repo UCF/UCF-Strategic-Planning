@@ -160,9 +160,22 @@ WebcomAdmin.fileUploader = function($) {
   });
 };
 
+WebcomAdmin.iconModal = function($) {
+  $('.meta-icon-wrapper').each(function() {
+      var $self = $(this),
+        $field = $self.find('.meta-icon-field');
+  });
+  
+  $('.meta-fa-icon').on('click', function(e) {
+     $('.meta-fa-icon').removeClass('selected');
+     $(this).addClass('selected');
+  });
+};
+
 
 (function($){
   WebcomAdmin.__init__($);
   WebcomAdmin.utilityPageSections($);
   WebcomAdmin.fileUploader($);
+  WebcomAdmin.iconModal($);
 })(jQuery);

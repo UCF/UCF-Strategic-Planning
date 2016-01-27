@@ -11,6 +11,7 @@ define( 'THEME_STATIC_URL', THEME_URL.'/static' );
 define( 'THEME_IMG_URL', THEME_STATIC_URL.'/img' );
 define( 'THEME_JS_URL', THEME_STATIC_URL.'/js' );
 define( 'THEME_CSS_URL', THEME_STATIC_URL.'/css' );
+define( 'THEME_DATA_URL', THEME_STATIC_URL.'/data' );
 
 define( 'GA_ACCOUNT', get_theme_mod_or_default( 'ga_account' ) );
 define( 'CB_UID', get_theme_mod_or_default( 'cb_uid' ) );
@@ -28,7 +29,7 @@ define( 'THEME_CUSTOMIZER_PREFIX', 'ucfgeneric_' ); // a unique prefix for panel
 
 Config::$custom_post_types = array(
 	'Page',
-'Post',
+    'Post',
 );
 
 

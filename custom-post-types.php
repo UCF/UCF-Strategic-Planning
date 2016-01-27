@@ -295,8 +295,14 @@ class Post extends CustomPostType {
 				'name' => 'Stylesheet',
 				'description' => '',
 				'id' => $prefix.'stylesheet',
-				'type' => 'file',
+				'type' => 'file'
 			),
+            array(
+                'name' => 'Icon',
+                'description' => '',
+                'id' => $prefix.'icon',
+                'type' => 'icon'
+            )
 		);
 	}
 }

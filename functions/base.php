@@ -389,6 +389,63 @@ class FileField extends Field {
 	}
 }
 
+class IconField extends Field {
+    function input_html() {
+        ob_start();
+        echo $this->icon_modal_html();
+?>
+        <div class="meta-icon-wrapper">
+            <div class="meta-icon-preview">
+                <?php if ( $this->value ) : ?>
+                    <i class="fa <?php echo $this->value; ?> fa-preview"></i>
+                <?php endif; ?>
+            </div>
+            <p class="hide-if-no-js">
+                <?php if ( $this->value ) : ?>
+                <a class="meta-icon-toggle thickbox" href="#TB_inline?width=600&height=550&inlineId=meta-icon-modal">Update Icon</a>
+                <?php else: ?>
+                <a class="meta-icon-toggle thickbox" href="#TB_inline?width=600&height=550&inlineId=meta-icon-modal">Choose Icon</a>
+                <?php endif; ?>
+            </p>
+            <input class="meta-icon-field" id="<?php echo htmlentities( $this->id ); ?>" name="<?php echo htmlentities( $this->id ); ?>" type="hidden" value="<?php echo htmlentities( $this->value ); ?>">
+        </div>
+<?php
+        return ob_get_clean();
+    }
+    
+    function icon_modal_html() {
+        ob_start();
+?>
+        <div id="meta-icon-modal" style="display: none;">
+            <h2>Choose Icon</h2>
+            <p>
+                <input type="text" placeholder="search" id="meta-icon-search">
+                <button type="button" id="meta-icon-submit">Submit</button>
+            </p>
+            <ul class="meta-fa-icons">
+            <?php foreach( get_fa_icons() as $icon ) : ?>
+                <li class="meta-fa-icon"><i class="fa <?php echo $icon; ?>"></i></li> 
+            <?php endforeach; ?>
+            </ul>
+        </div>
+<?php
+        return ob_get_clean();
+    }
+}
+
+function get_fa_icons() {
+    $opts = array(
+        'http' => array(
+            'timeout' => 15
+        )  
+    );
+    
+    $context = stream_context_create( $opts );
+    
+    $contents = file_get_contents( THEME_DATA_URL . '/fa-icons.json', false, $context );
+
+    return json_decode( $contents );
+}
 
 /***************************************************************************
  * UTILITY FUNCTIONS
@@ -1344,6 +1401,9 @@ function display_meta_box_field( $post_id, $field ) {
 		$field['post_id'] = $post_id;
 		$field_obj = new FileField( $field );
 		break;
+    case 'icon':
+        $field_obj = new IconField( $field );
+        break;
 	default:
 		break;
 	}
