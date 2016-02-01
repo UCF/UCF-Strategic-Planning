@@ -402,9 +402,9 @@ class IconField extends Field {
             </div>
             <p class="hide-if-no-js">
                 <?php if ( $this->value ) : ?>
-                <a class="meta-icon-toggle thickbox" href="#TB_inline?width=600&height=550&inlineId=meta-icon-modal">Update Icon</a>
+                <a class="meta-icon-toggle thickbox" href="#TB_inline?width=600&height=550&inlineId=meta-icon-modal&fieldId=<?php echo htmlentities( $this->id ); ?>">Update Icon</a>
                 <?php else: ?>
-                <a class="meta-icon-toggle thickbox" href="#TB_inline?width=600&height=550&inlineId=meta-icon-modal">Choose Icon</a>
+                <a class="meta-icon-toggle thickbox" href="#TB_inline?width=600&height=550&inlineId=meta-icon-modal&fieldId=<?php echo htmlentities( $this->id ); ?>">Choose Icon</a>
                 <?php endif; ?>
             </p>
             <input class="meta-icon-field" id="<?php echo htmlentities( $this->id ); ?>" name="<?php echo htmlentities( $this->id ); ?>" type="hidden" value="<?php echo htmlentities( $this->value ); ?>">
@@ -417,34 +417,37 @@ class IconField extends Field {
         ob_start();
 ?>
         <div id="meta-icon-modal" style="display: none;">
+        	<input type="hidden" id="meta-icon-field-id" value>
             <h2>Choose Icon</h2>
             <p>
                 <input type="text" placeholder="search" id="meta-icon-search">
-                <button type="button" id="meta-icon-submit">Submit</button>
             </p>
             <ul class="meta-fa-icons">
-            <?php foreach( get_fa_icons() as $icon ) : ?>
-                <li class="meta-fa-icon"><i class="fa <?php echo $icon; ?>"></i></li> 
+            <?php foreach( $this->get_fa_icons() as $icon ) : ?>
+                <li class="meta-fa-icon"><i class="fa <?php echo $icon; ?>" data-icon-value="<?php echo $icon; ?>"></i></li> 
             <?php endforeach; ?>
             </ul>
+            <div class="meta-icon-modal-footer">
+            	<button type="button" id="meta-icon-submit">Submit</button>
+            </div>
         </div>
 <?php
         return ob_get_clean();
     }
-}
 
-function get_fa_icons() {
-    $opts = array(
-        'http' => array(
-            'timeout' => 15
-        )  
-    );
-    
-    $context = stream_context_create( $opts );
-    
-    $contents = file_get_contents( THEME_DATA_URL . '/fa-icons.json', false, $context );
+    function get_fa_icons() {
+	    $opts = array(
+	        'http' => array(
+	            'timeout' => 15
+	        )  
+	    );
+	    
+	    $context = stream_context_create( $opts );
+	    
+	    $contents = file_get_contents( THEME_DATA_URL . '/fa-icons.json', false, $context );
 
-    return json_decode( $contents );
+	    return json_decode( $contents );
+	}
 }
 
 /***************************************************************************

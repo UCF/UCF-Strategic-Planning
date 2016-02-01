@@ -225,7 +225,22 @@
 }
 
 #meta-icon-search {
-    width: 100%;
+  display: inline-block;
+  width: 500px;
+}
+
+.meta-icon-modal-footer {
+  background-color: #fff;
+  bottom: -2px;
+  left: 0;
+  padding: 10px 0;
+  position: absolute;
+  width: 100%;
+}
+
+#meta-icon-submit {
+  float: right;
+  margin-right: 20px;
 }
 
 .meta-fa-icons {
@@ -254,6 +269,10 @@
         border-color: #c90;
         color: #c90;
      }
+}
+
+.fa-preview {
+  font-size: 48px;
 }
 
 // scss-lint:enable all
