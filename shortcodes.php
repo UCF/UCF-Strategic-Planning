@@ -10,43 +10,52 @@ add_shortcode( 'search_form', 'sc_search_form' );
 
 
 /**
- * Create a full-width callout box.
+ * Create a full-width box with icon_links centered inside.
  **/
-function sc_callout( $attr, $content ) {
-	$bgcolor          = isset( $attr['bgcolor'] ) ? $attr['bgcolor'] : '#f0f0f0';
-	$background_image = isset( $attr['background_image'] ) ? $attr['background_image'] : '';
-	$textcolor        = isset( $attr['textcolor'] ) ? $attr['textcolor'] : '#000';
-	$content_align    = isset( $attr['content_align'] ) ? 'text-' . $attr['content_align'] : '';
-	$extra_classes    = isset( $attr['class'] ) ? ' ' . $attr['class'] : '';
+function sc_icon_links( $attr, $content ) {
+	$amount          = isset( $attr['amount'] ) ? $attr['amount'] : 3;
+	$alignment    = isset( $attr['alignment'] ) ? $attr['content_align'] : 'horizontal';
+	$iconlinks = get_posts( array(
+		'post_type'        => 'icon_link',
+		'orderby'          => 'date',
+		'order'            => 'DESC',
+		'post_status'      => 'publish',
+		'posts_per_page'   => -1
+	) );
 
-	// Generate 'style="..."' attribute for .callout element
-	$style_str = '';
 	$extra_classes = '';
 
-	if ( $textcolor ) {
-		$style_str .= 'color: ' . $textcolor . '; ';
-		$style_str .= 'background-color: ' . $bgcolor . '; ';
-	}
-
 	// Append .text-left/center/right to $extra_classes
-	if ( $content_align ) {
-		$extra_classes .= ' ' . $content_align;
+	if ( $alignment ) {
+		$extra_classes .= ' align-' . $alignment;
 	}
 
 	ob_start();
 ?>
 
-	<div style="<?php echo $style_str; ?>" class="callout
+	<div class="icon-links
 <?php if ($extra_classes !== ''): ?>
 	<?php echo $extra_classes; ?>
 <?php endif; ?>
 	">
-		<?php echo $content; ?>
+
+<?php
+	if ( $iconlinks ) {
+		foreach ( $iconlinks as $post ) {
+			$icon = get_post_meta( $post->ID, 'icon_link_icon', true );
+			echo '<i class="fa ' . $icon . '"></i><br />';
+			echo $post->ID . "<br />";
+			echo $post->post_title . "<br />";
+			echo $post->post_content . "<br />";
+		}
+	}
+?>
+
 	</div>
 
 <?php
 	return ob_get_clean();
 }
-add_shortcode( 'callout', 'sc_callout' );
+add_shortcode( 'icon-links', 'sc_icon_links' );
 
 ?>

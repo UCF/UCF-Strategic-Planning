@@ -318,7 +318,7 @@ class IconLink extends CustomPostType {
 		$taxonomies     = array( );
 
 	public function fields() {
-		$prefix = $this->options( 'name' ).'_';
+		$prefix = $this->options( 'name' ) . '_';
 		return array(
 			array(
 				'name' => 'Icon',
