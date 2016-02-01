@@ -1,4 +1,7 @@
 var gulp = require('gulp'),
+    fs = require('fs'),
+    readline = require('readline'),
+    jsonfile = require('jsonfile'),
     configLocal = require('./gulp-config.json'),
     merge = require('merge'),
     sass = require('gulp-sass'),
@@ -19,6 +22,7 @@ var configDefault = {
       cssPath: './static/css',
       jsPath: './src/js',
       jsMinPath: './static/js',
+      dataPath: './static/data',
       fontPath: './static/fonts',
       componentsPath: './src/components',
       sync: false,
@@ -36,6 +40,9 @@ gulp.task('bower', function() {
       // Add Glyphicons to fonts dir
       gulp.src(config.componentsPath + '/bootstrap-sass-official/assets/fonts/*/*')
         .pipe(gulp.dest(config.fontPath));
+
+      gulp.src(config.componentsPath + '/font-awesome/fonts/*')
+        .pipe(gulp.dest(config.fontPath + '/font-awesome/'));
 
     });
 });
@@ -118,6 +125,30 @@ gulp.task('js-admin', function() {
     .pipe(browserSync.stream());
 });
 
+// Get list of font-awesome icons
+gulp.task('fa-list', function() {
+    var stream = fs.createReadStream(config.componentsPath + '/font-awesome/scss/_icons.scss');
+    stream.on('error', function(err) { console.log(err); });
+    
+    var reader = readline.createInterface({
+       input: stream
+    });
+    
+    var regex = /\.#\{\$fa-css-prefix\}-(.*):before/,
+        icons = [];
+        
+    reader.on('line', function(line) {
+       var match = regex.exec(line);
+       if (match) {
+           icons.push("fa-" + match[1]);
+       } 
+    }).on('close', function() {
+        jsonfile.writeFile(config.dataPath + '/fa-icons.json', icons, function (err) {
+            if (err) { console.log(err); } else { console.log("Font awesome list written."); }
+        }); 
+    });
+});
+
 
 // All js-related tasks
 gulp.task('js', ['js-lint', 'js-main', 'js-admin']);
@@ -139,4 +170,4 @@ gulp.task('watch', function() {
 
 
 // Default task
-gulp.task('default', ['bower', 'css', 'js']);
+gulp.task('default', ['bower', 'fa-list', 'css', 'js']);

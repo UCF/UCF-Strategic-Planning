@@ -295,8 +295,8 @@ class Post extends CustomPostType {
 				'name' => 'Stylesheet',
 				'description' => '',
 				'id' => $prefix.'stylesheet',
-				'type' => 'file',
-			),
+				'type' => 'file'
+			)
 		);
 	}
 }

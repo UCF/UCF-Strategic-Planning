@@ -160,9 +160,71 @@ WebcomAdmin.fileUploader = function($) {
   });
 };
 
+WebcomAdmin.iconModal = function($) {
+  $('.meta-icon-toggle').on('click', function(e) {
+    var fieldId = $(this).parent().parent().find('.meta-icon-field').attr('id'),
+        $modalInput = $('#meta-icon-field-id'),
+        currentVal = $('#' + fieldId).val();
+
+    if (fieldId && $modalInput) {
+      $modalInput.val(fieldId);
+
+      if (currentVal) {
+        var $currentIcon = $('i[data-icon-value="' + currentVal + '"]').parent();
+        $currentIcon.addClass('selected');
+        setTimeout( function() {
+          $('#TB_ajaxContent').animate({
+            scrollTop: $currentIcon.position().top - 48
+          }, 100);
+        }, 750);
+      }
+    }
+  });
+
+  $('.meta-icon-wrapper').each(function() {
+    var $self = $(this),
+      $field = $self.find('.meta-icon-field');
+  });
+  
+  $('.meta-fa-icon').on('click', function(e) {
+    $('.meta-fa-icon').removeClass('selected');
+    $(this).addClass('selected');
+  });
+
+  $('#meta-icon-search').on('keyup', function() {
+    var q = $(this).val();
+    if (q === '') {
+      $('.meta-fa-icon').show();
+    } else {
+      $('.meta-fa-icon').hide();
+      $('i[class*="' + q + '"]').parent().show();
+    }
+  });
+
+  $('#meta-icon-submit').on('click', function() {
+    var selectedVal  = $('.meta-fa-icon.selected').find('i').attr('data-icon-value'),
+        $modalInput = $('#meta-icon-field-id'),
+        $field = $('#' + $modalInput.val()),
+        $iconPreview = $field.parent().find('i');
+
+    if (selectedVal) {
+      $field.val(selectedVal);
+      if ($iconPreview.length) {
+        $iconPreview.attr('class', 'fa ' + selectedVal + ' fa-preview');
+      } else {
+        $icon = $('<i class="fa ' + selectedVal + ' fa-preview"></i>');
+        $field.parent().prepend($icon);
+      }
+    }
+
+    tb_remove();
+
+  });
+};
 
 (function($){
   WebcomAdmin.__init__($);
   WebcomAdmin.utilityPageSections($);
   WebcomAdmin.fileUploader($);
+  WebcomAdmin.iconModal($);
 })(jQuery);
