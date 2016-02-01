@@ -296,13 +296,7 @@ class Post extends CustomPostType {
 				'description' => '',
 				'id' => $prefix.'stylesheet',
 				'type' => 'file'
-			),
-            array(
-                'name' => 'Icon',
-                'description' => '',
-                'id' => $prefix.'icon',
-                'type' => 'icon'
-            )
+			)
 		);
 	}
 }
