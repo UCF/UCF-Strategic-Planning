@@ -439,6 +439,11 @@ function __init__() {
 	add_theme_support( 'post-thumbnails' );
 	add_theme_support( 'title-tag' );
 
+	add_theme_support( 'custom-header', array(
+		'width' => 2000,
+		'height' => 750
+	) );
+
 	register_nav_menu( 'header-menu', __( 'Header Menu' ) );
 	register_nav_menu( 'footer-menu', __( 'Footer Menu' ) );
 

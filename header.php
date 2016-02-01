@@ -5,8 +5,9 @@
 	</head>
 	<body ontouchstart <?php echo body_class(); ?>>
 		<header class="site-header">
-			<?php echo display_site_title(); ?>
-
+			<div class="header-image" style="background: url(<?php echo header_image(); ?>">
+				<?php echo display_site_title(); ?>
+			</div>
 			<nav class="site-nav">
 				<?php
 				wp_nav_menu( array(
