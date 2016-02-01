@@ -301,5 +301,93 @@ class Post extends CustomPostType {
 	}
 }
 
+class CallToAction extends CustomPostType {
+	public
+		$name           = 'call_to_action',
+		$plural_name    = 'Calls to Action',
+		$singular_name  = 'Call to Action',
+		$add_new_item   = 'Add New Call to Action',
+		$edit_item      = 'Edit Call to Action',
+		$new_item       = 'New Call to Action',
+		$public         = True,
+		$use_editor     = False,
+		$use_thumbnails = True,
+		$use_order      = False,
+		$use_title      = True,
+		$use_metabox    = True,
+		$taxonomies     = array();
+
+	public function fields() {
+		$prefix = $this->options( 'name' ).'_';
+		return array(
+			array(
+				'name'        => 'Call to Action Title Text Color',
+				'description' => 'The color of the overlay text',
+				'id'          => $prefix.'text_color',
+				'type'        => 'color',
+				'default'     => '#ffffff'
+			),
+			array(
+				'name'        => 'Call to Action Button Color',
+				'description' => 'The background color of the call to action button',
+				'id'          => $prefix.'btn_background',
+				'type'        => 'color',
+				'default'     => '#ffcc00'
+			),
+			array(
+				'name'        => 'Call to Action Button Text Color',
+				'description' => 'The text color of the call to action button',
+				'id'          => $prefix.'btn_foreground',
+				'type'        => 'color',
+				'default'     => '#ffffff'
+			),
+			array(
+				'name'        => 'Call to Action Button Text',
+				'description' => 'The text of the call to action button',
+				'id'          => $prefix.'btn_text',
+				'type'        => 'text'
+			),
+			array(
+				'name'        => 'Call to Action URL',
+				'description' => 'The url of the call to action',
+				'id'          => $prefix.'url',
+				'type'        => 'text'
+			)
+		);
+	}
+
+	public function toHTML( $object ) {
+		$image_url = has_post_thumbnail( $object->ID ) ? 
+			wp_get_attachment_image_src( get_post_thumbnail_id( $object->ID ), 'call_to_action' )[0] :
+			null;
+		$url = get_post_meta( $object->ID, 'call_to_action_url', True );
+
+		$title_color = get_post_meta( $object->ID, 'call_to_action_text_color', True );
+		$btn_background = get_post_meta( $object->ID, 'call_to_action_btn_background', True );
+		$btn_foreground = get_post_meta( $object->ID, 'call_to_action_btn_foreground', True );
+		$btn_text = get_post_meta( $object->ID, 'call_to_action_btn_text', True );
+
+		$btn_styles = array();
+		if ( $btn_background ) : $btn_styles[] = 'background: '.$btn_background; endif;
+		if ( $btn_foreground ) : $btn_styles[] = 'color: '.$btn_foreground; endif;
+
+		ob_start();
+		if ( $image_url && $url ) :
+?>
+		<div class="call-to-action" style="background: url('<?php echo $image_url; ?>'">
+			<a href="<?php echo $url; ?>" target="_blank">
+				<h2 <?php if ( $title_color ) : echo 'style="color: '.$title_color.'"'; ?>><?php echo $object->post_title; endif; ?></h2>
+				<?php if ( $btn_text ) : ?>
+				<span class="btn btn-lg" <?php if ( !empty( $btn_styles ) ) : echo explode( $$btn_styles, ' ' ); endif; ?>>
+					<?php echo $btn_text; ?>
+				</span>
+				<?php endif; ?>
+			</a>
+		</div>
+<?php
+		endif;
+		return ob_get_clean();
+	}
+}
 
 ?>

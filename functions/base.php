@@ -16,6 +16,7 @@ class Config {
 		$custom_post_types = array(), // Custom post types to register
 		$custom_taxonomies = array(), // Custom taxonomies to register
 		$setting_defaults  = array(), // Default settings for theme mods
+		$shortcodes        = array(), // Shortcodes to register
 		$styles            = array(), // Stylesheets to register
 		$scripts           = array(), // Scripts to register
 		$links             = array(), // <link>s to include in <head>
@@ -217,6 +218,22 @@ class TextField extends Field{
 	}
 }
 
+/**
+ *
+ * @package default
+ * @author Jim Barnes
+ **/
+class ColorField extends Field {
+	protected $type_attr = 'color';
+
+	function input_html() {
+		ob_start();
+?>
+		<input type="<?php echo $this->type_attr; ?>" id="<?php echo htmlentities( $this->id ); ?>" name="<?php echo htmlentities( $this->id ); ?>" value="<?php echo htmlentities( $this->value );?>">
+<?php
+		return ob_get_clean();
+	}
+}
 
 /**
  * PasswordField can be used to accept sensitive information, not encrypted on
@@ -1199,6 +1216,18 @@ function installed_custom_post_types() {
 }
 
 /**
+ * Returns all shortcodes registered in the
+ * Config::$installed_shortcodes array.
+ **/
+function installed_shortcodes() {
+	$installed = Config::$shortcodes;
+
+	return array_map( create_function( '$class', '
+		return new $class;
+	' ), $installed );
+}
+
+/**
  * Adding custom post types to the installed array defined in this function
  * will activate and make available for use those types.
  * */
@@ -1259,6 +1288,20 @@ function register_custom_post_types() {
 	flush_rewrite_rules_if_necessary();
 }
 add_action( 'init', 'register_custom_post_types' );
+
+/**
+ *
+ * Registers all installed shortcode.
+ * @return void
+ * @author Jim Barnes
+ **/
+function register_shortcodes() {
+	foreach( installed_shortcodes() as $shortcode ) {
+		$shortcode->register_shortcode();
+	}
+}
+
+add_action( 'init', 'register_shortcodes' );
 
 /**
  * Registers all metaboxes for install custom post types
@@ -1384,6 +1427,9 @@ function display_meta_box_field( $post_id, $field ) {
 	switch ( $field['type'] ) {
 	case 'text':
 		$field_obj = new TextField( $field );
+		break;
+	case 'color':
+		$field_obj = new ColorField( $field );
 		break;
 	case 'textarea':
 		$field_obj = new TextareaField( $field );
