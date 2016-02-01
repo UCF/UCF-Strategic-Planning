@@ -301,5 +301,34 @@ class Post extends CustomPostType {
 	}
 }
 
+class IconLink extends CustomPostType {
+	public
+		$name           = 'icon_link',
+		$plural_name    = 'Icon Links',
+		$singular_name  = 'Icon Link',
+		$add_new_item   = 'Add New Icon Link',
+		$edit_item      = 'Edit Icon Link',
+		$new_item       = 'New Icon Link',
+		$public         = True,
+		$use_editor     = True,
+		$use_thumbnails = False,
+		$use_order      = True,
+		$use_title      = True,
+		$use_metabox    = True,
+		$taxonomies     = array( );
+
+	public function fields() {
+		$prefix = $this->options( 'name' ).'_';
+		return array(
+			array(
+				'name' => 'Icon',
+				'description' => '',
+				'id' => $prefix.'icon',
+				'type' => 'icon'
+			)
+		);
+	}
+}
+
 
 ?>

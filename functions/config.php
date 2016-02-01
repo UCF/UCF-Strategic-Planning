@@ -29,12 +29,13 @@ define( 'THEME_CUSTOMIZER_PREFIX', 'ucfgeneric_' ); // a unique prefix for panel
 
 Config::$custom_post_types = array(
 	'Page',
-    'Post',
+	'Post',
+	'IconLink'
 );
 
 
 Config::$custom_taxonomies = array(
-	
+
 );
 
 
@@ -520,7 +521,7 @@ function hook_frontend_theme_scripts() {
 	</script>
 	<?php endif;?>
 
-	
+
 <?php
 	echo ob_get_clean();
 }
