@@ -160,6 +160,7 @@ function define_customizer_sections( $wp_customize ) {
 
 	// Move 'Static Front Page' section to new 'Home Page' panel
 	$wp_customize->get_section( 'static_front_page' )->panel = THEME_CUSTOMIZER_PREFIX . 'home';
+	$wp_customize->get_section( 'header_image' )->panel = THEME_CUSTOMIZER_PREFIX . 'home';
 }
 add_action( 'customize_register', 'define_customizer_sections' );
 
@@ -438,6 +439,11 @@ function __init__() {
 	add_theme_support( 'menus' );
 	add_theme_support( 'post-thumbnails' );
 	add_theme_support( 'title-tag' );
+
+	add_theme_support( 'custom-header', array(
+		'width' => 2000,
+		'height' => 750
+	) );
 
 	register_nav_menu( 'header-menu', __( 'Header Menu' ) );
 	register_nav_menu( 'footer-menu', __( 'Footer Menu' ) );
