@@ -186,6 +186,167 @@ abstract class CustomPostType {
 		}
 	}
 
+	/**
+	 * Registers the fields for the custom post type.
+	 **/
+	public function register_fields() {
+		$options = array(
+			'id'         => $this->options( 'name' ).'_fields',
+			'title'      => __( $this->options( 'singular_name' ). ' Fields' ),
+			'fields'     => array(),
+			'location'   => array(
+				array(
+					array(
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => $this->options( 'name' ),
+						'order_no' => 0,
+						'group_no' => 0
+					)
+				)
+			),
+			'options' => array(
+				'position' => 'normal',
+				'layout'   => 'default'
+			),
+			'menu_order' => 0,
+		);
+
+		foreach( $this->fields() as $field ) {
+			$opts = array(
+				'key'          => $field['id'],
+				'label'        => $field['name'],
+				'name'         => $field['id'],
+				'instructions' => $field['description'],
+				'required'     => $field['required'] ? $field['required'] : false
+			);
+
+			switch( $field['type'] ) {
+				case 'text':
+					$opts = array_merge( $opts, 
+						array(
+							'type'          => 'text',
+							'default_value' => $field['default'] ? $field['default'] : '',
+							'placeholder'   => $field['placeholder'] ? $field['placeholder'] : '',
+							'formatting'    => 'html'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'textarea':
+					$opts = array_merge( $opts, 
+						array(
+							'type'          => 'textarea',
+							'default_value' => $field['default'] ? $field['default'] : '',
+							'placeholder'   => $field['placeholder'] ? $field['placeholder'] : '',
+							'formatting'    => 'html'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'number':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'number',
+							'default_value' => $field['default'] ? $field['default'] : '',
+							'placeholder'   => $field['placeholder'] ? $field['placeholder'] : '',
+							'min'           => $field['min'] ? $field['min'] : null,
+							'max'           => $field['max'] ? $field['max'] : null
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'email':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'email',
+							'default_value' => $field['default'] ? $default['default'] : '',
+							'placeholder'   => $field['placeholder'] ? $field['placeholder'] : '',
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'image':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'image',
+							'save_format'   => $field['save_as'] ? $field['save_as'] : 'object',
+							'library'       => $field['library'] ? $field['library'] : 'all'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'file':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'file',
+							'save_format'   => $field['save_as'] ? $field['save_as'] : 'object',
+							'library'       => $field['library'] ? $field['library'] : 'all'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'select':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'select',
+							'choices'       => $field['choices'],
+							'default_value' => $field['default'] ? $field['default'] : '',
+							'allow_null'    => $field['allow_null'] ? $field['allow_null'] : 0,
+							'multiple'      => $field['multiple'] ? $field['multiple'] : 0
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'checkbox-list':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'checkbox',
+							'choices'       => $field['choices'],
+							'default_value' => $field['default'] ? $field['default'] : null,
+							'layout'        => $field['layout'] ? $field['layout'] : 'vertical'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'radio':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'radio',
+							'choices'       => $field['choices'],
+							'default_value' => $field['default'] ? $field['default'] : null,
+							'layout'        => $field['layout'] ? $field['layout'] : 'vertical'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'checkbox':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'true_false',
+							'message'       => $field['name'],
+							'default_value' => $field['default'] ? $field['default'] : 0
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'color':
+					$opts = array_merge( $opts,
+						array(
+							'type'              => 'color_picker',
+							'default_value'     => $field['default'] ? $field['default'] : null
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+			}
+		}
+
+		if ( function_exists( 'register_field_group' ) ) {
+			register_field_group( $options );
+		}
+	}
+
 
 	/**
 	 * Shortcode for this custom post type.  Can be overridden for descendants.

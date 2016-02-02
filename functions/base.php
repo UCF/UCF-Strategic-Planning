@@ -1289,6 +1289,15 @@ function register_custom_post_types() {
 }
 add_action( 'init', 'register_custom_post_types' );
 
+function register_custom_post_type_fields() {
+	foreach ( installed_custom_post_types() as $custom_post_type ) {
+		$custom_post_type->register_fields();
+	}
+
+	flush_rewrite_rules_if_necessary();
+}
+add_action( 'init', 'register_custom_post_type_fields' );
+
 /**
  *
  * Registers all installed shortcode.
@@ -1302,181 +1311,5 @@ function register_shortcodes() {
 }
 
 add_action( 'init', 'register_shortcodes' );
-
-/**
- * Registers all metaboxes for install custom post types
- *
- * @return void
- * @author Jared Lang
- * */
-function register_meta_boxes() {
-	//Register custom post types metaboxes
-	foreach ( installed_custom_post_types() as $custom_post_type ) {
-		$custom_post_type->register_metaboxes();
-	}
-}
-add_action( 'do_meta_boxes', 'register_meta_boxes' );
-
-
-/***************************************************************************
- * POST DATA HANDLERS and META BOX FUNCTIONS
- *
- * Functions that display and save custom post types and their meta data.
- *
- ***************************************************************************/
-
-/**
- * Returns a custom post type's metabox data.
- **/
-function get_post_meta_box( $post_id ) {
-	$meta_box = null;
-	foreach ( installed_custom_post_types() as $custom_post_type ) {
-		if ( post_type( $post_id ) == $custom_post_type->options( 'name' ) ) {
-			$meta_box = $custom_post_type->metabox();
-			break;
-		}
-	}
-	return $meta_box;
-}
-
-/**
- * Saves the data for a given post type
- *
- * @return void
- * @author Jared Lang
- * */
-function save_meta_data( $post_id ) {
-	$meta_box = get_post_meta_box( $post_id );
-
-	// verify nonce
-	$nonce = isset( $_POST['meta_box_nonce'] ) ? $_POST['meta_box_nonce'] : null;
-	if ( !wp_verify_nonce( $nonce, basename( __FILE__ ) ) ) {
-		return $post_id;
-	}
-
-	// check autosave
-	if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || isset( $_REQUEST['bulk_edit'] ) ) {
-		return $post_id;
-	}
-
-	// check permissions
-	if ( 'page' == $_POST['post_type'] ) {
-		if ( !current_user_can( 'edit_page', $post_id ) ) {
-			return $post_id;
-		}
-	} elseif ( !current_user_can( 'edit_post', $post_id ) ) {
-		return $post_id;
-	}
-
-	if ( $meta_box ) {
-		foreach ( $meta_box['fields'] as $field ) {
-			save_default( $post_id, $field );
-		}
-	}
-}
-add_action( 'save_post', 'save_meta_data' );
-
-
-function save_default( $post_id, $field ) {
-	$old = get_post_meta( $post_id, $field['id'], true );
-	$new = isset( $_POST[$field['id']]) ? $_POST[$field['id']] : null;
-
-	// Update if new is not empty and is not the same value as old
-	if ( $new !== "" and $new !== null and $new != $old ) {
-		update_post_meta( $post_id, $field['id'], $new );
-	}
-	// Delete if we're sending a new null value and there was an old value
-	elseif ( ( $new === "" or is_null( $new ) ) and $old ) {
-		delete_post_meta( $post_id, $field['id'], $old );
-	}
-	// Otherwise we do nothing, field stays the same
-	return;
-}
-
-
-/**
- * Displays the metaboxes for a given post type
- *
- * @return void
- * @author Jared Lang
- * */
-function show_meta_boxes( $post ) {
-	$meta_box = get_post_meta_box( $post );
-	ob_start();
-?>
-	<input type="hidden" name="meta_box_nonce" value="<?php echo wp_create_nonce( basename( __FILE__ ) ); ?>">
-	<table class="form-table">
-	<?php
-	foreach ( $meta_box['fields'] as $field ) {
-		display_meta_box_field( $post->ID, $field );
-	}
-	?>
-	</table>
-<?php
-	echo ob_get_clean();
-}
-
-
-/**
- * Displays meta box fields with current or default values.
- * */
-function display_meta_box_field( $post_id, $field ) {
-	$field_obj = null;
-	$field['value'] = get_post_meta( $post_id, $field['id'], true );
-
-	switch ( $field['type'] ) {
-	case 'text':
-		$field_obj = new TextField( $field );
-		break;
-	case 'color':
-		$field_obj = new ColorField( $field );
-		break;
-	case 'textarea':
-		$field_obj = new TextareaField( $field );
-		break;
-	case 'select':
-		$field_obj = new SelectField( $field );
-		break;
-	case 'multiselect':
-		$field_obj = new MultiselectField( $field );
-		break;
-	case 'radio':
-		$field_obj = new RadioField( $field );
-		break;
-	case 'checkbox':
-		$field_obj = new CheckboxField( $field );
-		break;
-	case 'file':
-		$field['post_id'] = $post_id;
-		$field_obj = new FileField( $field );
-		break;
-    case 'icon':
-        $field_obj = new IconField( $field );
-        break;
-	default:
-		break;
-	}
-
-	$markup = '';
-
-	if ( $field_obj ) {
-		ob_start();
-?>
-		<tr>
-			<th><?php echo $field_obj->label_html(); ?></th>
-			<td>
-				<?php echo $field_obj->description_html(); ?>
-				<?php echo $field_obj->input_html(); ?>
-			</td>
-		</tr>
-	<?php
-		$markup = ob_get_clean();
-	}
-	else {
-		$markup = '<tr><th></th><td>Don\'t know how to handle field of type '. $field['type'] .'</td></tr>';
-	}
-
-	echo $markup;
-}
 
 ?>
