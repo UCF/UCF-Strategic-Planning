@@ -374,16 +374,17 @@ class CallToAction extends CustomPostType {
 		ob_start();
 		if ( $image_url && $url ) :
 ?>
-		<div class="call-to-action" style="background: url('<?php echo $image_url; ?>'">
-			<a href="<?php echo $url; ?>" target="_blank">
-				<h2 <?php if ( $title_color ) : echo 'style="color: '.$title_color.'"'; ?>><?php echo $object->post_title; endif; ?></h2>
-				<?php if ( $btn_text ) : ?>
-				<span class="btn btn-lg" <?php if ( !empty( $btn_styles ) ) : echo explode( $$btn_styles, ' ' ); endif; ?>>
+		<a class="call-to-action" href="<?php echo $url; ?>" target="_blank">
+			<img src="<?php echo $image_url; ?>" alt="<?php echo $object->post_title; ?>">
+			<h2 <?php if ( $title_color ) : echo 'style="color: '.$title_color.'"'; ?>><?php echo $object->post_title; endif; ?></h2>
+			<?php if ( $btn_text ) : ?>
+			<div class="btn-wrapper">
+				<span class="btn btn-lg btn-ucf" <?php if ( !empty( $btn_styles ) ) : echo explode( $btn_styles, ' ' ); endif; ?>>
 					<?php echo $btn_text; ?>
 				</span>
-				<?php endif; ?>
-			</a>
-		</div>
+			</div>
+			<?php endif; ?>
+		</a>
 <?php
 		endif;
 		return ob_get_clean();

@@ -9,19 +9,61 @@
   width: 100%;
 }
 
-.site-title {
-  @extend .h1;
-  background: rgba(255, 204, 0, 0.5);
-  display: table;
-  font-size: 48px;
+.header-center {
+
   margin: 0 auto;
-  padding: 10px 20px;
   position: relative;
   text-align: center;
   top: 40%;
   vertical-align: middle;
 
-  a {
-    color: #000;
+  .site-title {
+    @extend .h1;
+    background: rgba(255, 204, 0, 0.5);
+    display: table;
+    font-size: 76px;
+    font-weight: 800;
+    margin: 0 auto;
+    padding: 10px 20px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+
+    a {
+      color: #000;
+    }
+  }
+  .weather {
+    background: #000;
+    color: #fff;
+    display: table;
+    font-family: $font-family-serif;
+    font-size: 16px;
+    line-height: 32px;
+    margin: 0 auto;
+    padding: 8px 16px;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+
+    .icon {
+      height: 40px;
+      width: 40px;
+
+      i {
+        color: #c90;
+        font-size: 32px;
+      }
+    }
+
+    .vertical-rule {
+      border-left: 1px solid #fff;
+      margin-left: 4px;
+      width: 2px;
+    }
+
+    .temp {
+      margin-left: 4px;
+    }
   }
 }

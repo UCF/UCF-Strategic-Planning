@@ -94,6 +94,7 @@ Config::$setting_defaults = array(
 	'enable_google' => 1,
 	'search_per_page' => 10,
 	'cloud_typography_key' => '//cloud.typography.com/730568/675644/css/fonts.css', // Main site css key
+	'weather_feed_url' => 'http://weather.smca.ucf.edu/',
 );
 
 
@@ -162,6 +163,13 @@ function define_customizer_sections( $wp_customize ) {
 			'title' => 'Web Fonts'
 		)
 	);
+	$wp_customize->add_section(
+		THEME_CUSTOMIZER_PREFIX . 'home_custom',
+		array(
+			'title' => 'Home Customization',
+			'panel' => THEME_CUSTOMIZER_PREFIX . 'home'
+		)
+	);
 
 	// Move 'Static Front Page' section to new 'Home Page' panel
 	$wp_customize->get_section( 'static_front_page' )->panel = THEME_CUSTOMIZER_PREFIX . 'home';
@@ -178,6 +186,23 @@ add_action( 'customize_register', 'define_customizer_sections' );
  **/
 
 function define_customizer_fields( $wp_customize ) {
+	// Home
+	$wp_customize->add_setting(
+		'weather_feed_url',
+		array(
+			'default'     => get_setting_default( 'weather_feed_url' ),
+		)
+	);
+
+	$wp_customize->add_control(
+		'weather_feed_url',
+		array(
+			'type'        => 'text',
+			'label'       => 'Weather Feed URL',
+			'description' => 'The url of the CM Weather Feed',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'home_custom'
+		)
+	);
 
 	// Analytics
 	$wp_customize->add_setting(

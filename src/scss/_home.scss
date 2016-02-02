@@ -1,0 +1,25 @@
+.call-to-action {
+  img {
+    position: relative;
+    width: 100%;
+  }
+
+  h2 {
+    position: absolute;
+    margin: 0 auto;
+    text-align: center;
+    top: 20px;
+    width: 92.5%;
+  }
+
+  .btn-wrapper {
+    bottom: 20px;
+    position: absolute;
+    text-align: center;
+    width: 92.5%;
+  }
+
+  .btn {
+    text-align: center;
+  }
+}
