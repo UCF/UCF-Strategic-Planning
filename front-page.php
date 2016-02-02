@@ -8,7 +8,7 @@
 				<?php echo the_content(); ?>
 			</div>
 			<div class="col-md-5">
-
+				<?php echo get_call_to_action(); ?>
 			</div>
 		</div>
 	</div>
