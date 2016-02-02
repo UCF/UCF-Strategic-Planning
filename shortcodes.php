@@ -10,7 +10,7 @@ abstract class Shortcode {
         $params      = array(), // The parameters used by the shortcode.
         $callback    = 'callback',
         $wysiwyg     = True; // Whether to add it to the shortcode Wysiwyg modal.
-    
+
     /*
      * Register the shortcode.
      * @since v0.0.1
@@ -20,7 +20,7 @@ abstract class Shortcode {
     public function register_shortcode() {
         add_shortcode( $this->command, array( $this, $this->callback ) );
     }
-    
+
     /*
      * Returns the html option markup.
      * @since v0.0.1
@@ -30,7 +30,7 @@ abstract class Shortcode {
     public function get_option_markup() {
         return sprintf('<option value="%s">%s</option>', $this->command, $this->name);
     }
-    
+
     /*
      * Returns the description html markup.
      * @since v0.0.1
@@ -40,7 +40,7 @@ abstract class Shortcode {
     public function get_description_markup() {
         return sprintf('<li class="shortcode-%s">%s</li>', $this->command, $this->description);
     }
-    
+
     /*
      * Returns the form html markup.
      * @since v0.0.1
@@ -65,7 +65,7 @@ abstract class Shortcode {
 <?php
         return ob_get_clean();
     }
-    
+
     /*
      * Returns the appropriate markup for the field.
      * @since v0.0.1
@@ -79,11 +79,11 @@ abstract class Shortcode {
         $type      = isset( $field['type'] ) ? $field['type'] : 'text';
         $default   = isset( $field['default'] ) ? $field['default'] : '';
         $template  = isset( $field['template'] ) ? $tempalte['template'] : '';
-        
+
         $retval = '<h4>' . $name . '</h4>';
         if ( $help_text ) {
             $retval .= '<p class="help">' . $help_text . '</p>';
-        } 
+        }
         switch( $type ) {
             case 'text':
             case 'date':
@@ -102,7 +102,7 @@ abstract class Shortcode {
                 $retval .= '</select>';
                 break;
         }
-        
+
         return $retval;
     }
 }
@@ -171,45 +171,36 @@ add_shortcode( 'search_form', 'sc_search_form' );
  **/
 function sc_icon_links( $attr, $content ) {
 	$amount          = isset( $attr['amount'] ) ? $attr['amount'] : 3;
-	$alignment    = isset( $attr['alignment'] ) ? $attr['content_align'] : 'horizontal';
 	$iconlinks = get_posts( array(
 		'post_type'        => 'icon_link',
 		'orderby'          => 'date',
 		'order'            => 'DESC',
 		'post_status'      => 'publish',
-		'posts_per_page'   => -1
+		'posts_per_page'   => 3
 	) );
-
-	$extra_classes = '';
-
-	// Append .text-left/center/right to $extra_classes
-	if ( $alignment ) {
-		$extra_classes .= ' align-' . $alignment;
-	}
 
 	ob_start();
 ?>
-
-	<div class="icon-links
-<?php if ($extra_classes !== ''): ?>
-	<?php echo $extra_classes; ?>
-<?php endif; ?>
-	">
-
-<?php
-	if ( $iconlinks ) {
-		foreach ( $iconlinks as $post ) {
-			$icon = get_post_meta( $post->ID, 'icon_link_icon', true );
-			echo '<i class="fa ' . $icon . '"></i><br />';
-			echo $post->ID . "<br />";
-			echo $post->post_title . "<br />";
-			echo $post->post_content . "<br />";
-		}
-	}
-?>
-
+<div class="container">
+	<div class="row">
+		<div class="icon-links">
+			<ul>
+		<?php
+			if ( $iconlinks ) {
+				foreach ( $iconlinks as $post ) {
+					$icon = get_post_meta( $post->ID, 'icon_link_icon', true ); ?>
+					<li class="icon-link">
+						<span class="icon fa <?php echo $icon; ?>"></span>
+						<span class="title"><?php echo $post->post_title; ?></span>
+						<span class="description"><?php echo $post->post_content; ?></span>
+					</li>
+				<?php }
+			}
+		?>
+			</ul>
+		</div>
 	</div>
-
+</div>
 <?php
 	return ob_get_clean();
 }

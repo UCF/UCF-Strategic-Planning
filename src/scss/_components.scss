@@ -230,3 +230,28 @@
     }
   }
 }
+
+.icon-links {
+  background: gold;
+  width: 100%;
+
+  ul {
+    margin: 0 auto;
+    text-align: center;
+
+    li {
+      display: inline-block;
+    }
+
+    .icon {
+      font-size: 80px;
+    }
+    .title {
+      display: block;
+    }
+    .description {
+      display: block;
+      text-transform: italic;
+    }
+  }
+}
