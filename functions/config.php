@@ -51,7 +51,7 @@ Config::$links = array(
 
 
 Config::$styles = array(
-	array( 'admin' => True, 'src' => THEME_CSS_URL.'/admin.min.css', ),
+	array( 'name' => 'webcom-admin', 'admin' => True, 'src' => THEME_CSS_URL.'/admin.min.css', ),
 	THEME_CSS_URL . '/style.min.css'
 );
 

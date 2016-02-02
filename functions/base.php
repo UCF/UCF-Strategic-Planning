@@ -459,6 +459,40 @@ class IconField extends Field {
 	}
 }
 
+class MenuSelectField extends ChoicesField {
+	function __construct( $attr ) {
+		parent::__construct( $attr );
+		$this->choices = $this->get_menus();
+	}
+
+	function get_menus() {
+		$menus = wp_get_nav_menus();
+		$retval = array();
+
+		foreach( $menus as $menu ) {
+			$retval[$menu->name] = $menu->term_id;
+		}
+
+		$retval['-- Choose Menu --'] = '';
+
+		return $retval;
+	}
+
+	function input_html() {
+		ob_start();
+?>
+		<select class="menu-select" name="<?php echo htmlentities( $this->id )?>" id="<?php echo htmlentities( $this->id )?>" data-menu-path="<?php echo THEME_ADMIN_URL; ?>">
+			<?php foreach ( $this->choices as $key=>$value ):?>
+			<option<?php if ( $this->value == $value ):?> selected="selected"<?php endif;?> value="<?php echo htmlentities( $value )?>"><?php echo htmlentities( $key )?></option>
+			<?php endforeach;?>
+		</select>
+		<?php $menu_url = !empty( $this->value ) ? get_admin_url('nav-menus.php?action=edit&menu=') . $this->value : ''; ?>
+		<a class="menu-edit-link" href="<?php echo $menu_url; ?>" target="_blank">Edit Menu Items</a>
+<?php
+		return ob_get_clean();
+	}
+}
+
 /***************************************************************************
  * UTILITY FUNCTIONS
  *
@@ -1445,6 +1479,9 @@ function display_meta_box_field( $post_id, $field ) {
     case 'icon':
         $field_obj = new IconField( $field );
         break;
+    case 'menu':
+    	$field_obj = new MenuSelectField( $field );
+    	break;
 	default:
 		break;
 	}

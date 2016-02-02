@@ -439,7 +439,13 @@ class Section extends CustomPostType {
 				'description' => 'The lead text that will appear immediately under the section title.',
 				'id'          => $prefix.'lead_text',
 				'type'        => 'textarea'
-			)
+			),
+			array(
+				'name'        => 'Resource Links',
+				'description' => 'Menu object which stores the external links to be displayed',
+				'id'          => $prefix.'menu',
+				'type'        => 'menu',
+			),
 		);
 	}
 }
