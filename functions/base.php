@@ -223,16 +223,8 @@ class TextField extends Field{
  * @package default
  * @author Jim Barnes
  **/
-class ColorField extends Field {
+class ColorField extends TextField {
 	protected $type_attr = 'color';
-
-	function input_html() {
-		ob_start();
-?>
-		<input type="<?php echo $this->type_attr; ?>" id="<?php echo htmlentities( $this->id ); ?>" name="<?php echo htmlentities( $this->id ); ?>" value="<?php echo htmlentities( $this->value );?>">
-<?php
-		return ob_get_clean();
-	}
 }
 
 /**

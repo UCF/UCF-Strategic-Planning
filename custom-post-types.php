@@ -391,4 +391,57 @@ class CallToAction extends CustomPostType {
 	}
 }
 
+class Section extends CustomPostType {
+	public
+		$name           = 'section',
+		$plural_name    = 'Sections',
+		$singular_name  = 'Section',
+		$add_new_item   = 'Add New Section',
+		$edit_item      = 'Edit Section',
+		$new_item       = 'New Section',
+		$public         = True,
+		$use_editor     = True,
+		$use_thumbnails = True,
+		$use_order      = False,
+		$use_title      = True,
+		$use_metabox    = True,
+		$taxonomies     = array();
+
+	public function fields() {
+		$prefix = $this->options( 'name' ).'_';
+		return array(
+			array(
+				'name'        => 'Header Image',
+				'description' => 'This image will be used in the section header when the header video ends or if the user\'s browser does not support video playback.',
+				'id'          => $prefix.'header_image',
+				'type'        => 'file'
+			),
+			array(
+				'name'        => 'Header Video (mp4)',
+				'description' => 'The video that appears as the header background (mp4).',
+				'id'          => $prefix.'header_video_mp4',
+				'type'        => 'file'
+			),
+			array(
+				'name'        => 'Header Text',
+				'description' => 'The text that will appear over the video header.',
+				'id'          => $prefix.'header_text',
+				'type'        => 'text'
+			),
+			array(
+				'name'        => 'Header Text Color',
+				'description' => 'The color of the header text.',
+				'id'          => $prefix.'header_text_color',
+				'type'        => 'color'
+			),
+			array(
+				'name'        => 'Lead Text',
+				'description' => 'The lead text that will appear immediately under the section title.',
+				'id'          => $prefix.'lead_text',
+				'type'        => 'textarea'
+			)
+		);
+	}
+}
+
 ?>
