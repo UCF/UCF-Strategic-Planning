@@ -7,7 +7,7 @@ var headerImage = function($) {
 	var resize = function() {
 		var $image = $('.header-image'),
 			width = $image.width(),
-			height = (width * 0.375).clamp(200, 750);
+			height = (width * 0.375).clamp(400, 750);
 
 		$image.height(height + 'px');
 	};

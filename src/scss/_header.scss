@@ -10,23 +10,24 @@
 }
 
 .header-center {
+  display: table;
+  height: 100%;
+  width: 100%;
 
-  margin: 0 auto;
-  position: relative;
-  text-align: center;
-  top: 40%;
-  vertical-align: middle;
+  .title-wrapper {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+  }
 
   .site-title {
     @extend .h1;
     background: rgba(255, 204, 0, 0.5);
     display: table;
-    font-size: 76px;
+    font-size: 68px;
     font-weight: 800;
     margin: 0 auto;
     padding: 10px 20px;
-    position: relative;
-    text-align: center;
     text-transform: uppercase;
 
     a {
@@ -35,16 +36,13 @@
   }
   .weather {
     background: #000;
+    display: inline-block;
     color: #fff;
-    display: table;
     font-family: $font-family-serif;
     font-size: 16px;
     line-height: 32px;
-    margin: 0 auto;
     padding: 8px 16px;
     position: relative;
-    text-align: center;
-    vertical-align: middle;
 
     .icon {
       height: 40px;
