@@ -17,7 +17,7 @@ h6,
 .h6,
 .lead {
   @include no-font-smoothing();
-  font-family: $font-family-sans-serif;
+  font-family: $font-family-serif;
 }
 
 .lead {

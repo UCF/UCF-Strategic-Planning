@@ -9,19 +9,59 @@
   width: 100%;
 }
 
-.site-title {
-  @extend .h1;
-  background: rgba(255, 204, 0, 0.5);
+.header-center {
   display: table;
-  font-size: 48px;
-  margin: 0 auto;
-  padding: 10px 20px;
-  position: relative;
-  text-align: center;
-  top: 40%;
-  vertical-align: middle;
+  height: 100%;
+  width: 100%;
 
-  a {
-    color: #000;
+  .title-wrapper {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .site-title {
+    @extend .h1;
+    background: rgba(255, 204, 0, 0.5);
+    display: table;
+    font-size: 68px;
+    font-weight: 800;
+    margin: 0 auto;
+    padding: 10px 20px;
+    text-transform: uppercase;
+
+    a {
+      color: #000;
+    }
+  }
+  .weather {
+    background: #000;
+    display: inline-block;
+    color: #fff;
+    font-family: $font-family-serif;
+    font-size: 16px;
+    line-height: 32px;
+    padding: 8px 16px;
+    position: relative;
+
+    .icon {
+      height: 40px;
+      width: 40px;
+
+      i {
+        color: #c90;
+        font-size: 32px;
+      }
+    }
+
+    .vertical-rule {
+      border-left: 1px solid #fff;
+      margin-left: 4px;
+      width: 2px;
+    }
+
+    .temp {
+      margin-left: 4px;
+    }
   }
 }
