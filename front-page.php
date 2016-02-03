@@ -13,5 +13,16 @@
 		</div>
 	</div>
 </primary>
+<?php
+	$args = array(
+		'post_type' => 'section'
+	);
+
+	$posts = get_posts( $args );
+
+	foreach( $posts as $post ) {
+		echo Section::toHTML( $post );
+	}
+?>
 
 <?php get_footer(); ?>

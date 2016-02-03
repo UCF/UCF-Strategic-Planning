@@ -272,7 +272,8 @@ abstract class CustomPostType {
 					$opts = array_merge( $opts,
 						array(
 							'type'          => 'image',
-							'save_format'   => $field['save_as'] ? $field['save_as'] : 'object',
+							'preview_size'  => 'thumbnail',
+							'save_format'   => 'object',
 							'library'       => $field['library'] ? $field['library'] : 'all'
 						)
 					);
@@ -607,7 +608,7 @@ class Section extends CustomPostType {
 				'name'        => 'Header Image',
 				'description' => 'This image will be used in the section header when the header video ends or if the user\'s browser does not support video playback.',
 				'id'          => $prefix.'header_image',
-				'type'        => 'file'
+				'type'        => 'image'
 			),
 			array(
 				'name'        => 'Header Video (mp4)',
@@ -687,6 +688,65 @@ class Section extends CustomPostType {
 				'toolbar'     => 'basic'
 			)
 		);
+	}
+
+	function add_post_meta( $object ) {
+
+		$post_id    = $object->ID;
+		$prefix     = 'section_';
+
+		$object->header_image      = get_field( $prefix.'header_image', $post_id );
+		$object->header_video_mp4  = get_field( $prefix.'header_video_mp4', $post_id );
+		$object->header_text       = get_field( $prefix.'header_text', $post_id );
+		$object->header_text_color = get_field( $prefix.'header_text_color', $post_id );
+		$object->lead_text         = get_field( $prefix.'lead_text', $post_id );
+		$object->feature_type      = get_field( $prefix.'feature_type', $post_id );
+		$object->feature_image     = get_field( $prefix.'feature_image', $post_id );
+		$object->feature_cta       = get_field( $prefix.'feature_cta', $post_id );
+		$object->content           = get_field( $prefix.'content', $post_id );
+
+		return $object;
+	}
+
+	public function toHTML( $object ) {
+		$object = Section::add_post_meta( $object );
+		ob_start();
+?>
+		<section id="<?php echo $object->post_name; ?>">
+			<div class="section-header">
+			<?php if ( $object->header_video_mp4 ) : ?>
+				<video class="section-header-video">
+					<source src="<?php echo $object->header_video_mp4; ?>" type="video/mp4">
+				</video>
+			<?php endif; ?>
+			<?php if ( $object->header_image ) : ?>
+				<?php echo wp_get_attachment_image( $object->header_image, array( 2000, 750 ) ); ?>
+			<?php endif; ?>
+			<?php if ( $object->header_text ) : ?>
+				<span class="section-header-text" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
+					<?php echo $object->header_text; ?>
+				</span>
+			<?php endif; ?>
+			</div>
+			<div class="container">
+			<h2><?php echo $object->post_title; ?></h2>
+			<p class="lead"><?php echo $object->lead_text; ?></p>
+			<div class="row">
+				<div class="col-md-5">
+				<?php if ( $object->feature_type == 'feature_image' ) : ?>
+					<?php echo wp_get_attachment_image( $object->feature_image, 'medium' ); ?>
+					<img src="<?php echo $object->feature_image->url; ?>" alt="<?php echo $object->feature_image->alt; ?>">
+				<?php else: ?>
+					<?php echo CallToAction::toHTML( $object->feature_cta ); ?>
+				<?php endif; ?>
+				</div>
+				<div class="col-md-7">
+					<?php echo apply_filters( 'the_content', $object->content); ?>
+				</div>
+			</div>
+		</section>
+<?php
+		return ob_get_clean();
 	}
 }
 
