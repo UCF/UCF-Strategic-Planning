@@ -7,6 +7,7 @@
 
 .header-image {
   width: 100%;
+  background-position: center center;
 }
 
 .header-center {
@@ -20,48 +21,100 @@
     vertical-align: middle;
   }
 
-  .site-title {
-    @extend .h1;
-    background: rgba(255, 204, 0, 0.5);
-    display: table;
-    font-size: 68px;
-    font-weight: 800;
+  .header-title {
+    display: inline-block;
     margin: 0 auto;
-    padding: 10px 20px;
-    text-transform: uppercase;
+    position: relative;
+    text-align: center;
+  }
 
-    a {
-      color: #000;
+  .title-header-container {
+    display: table;
+    margin: 0 auto;
+    position: relative;
+
+    > h1,
+    > span {
+      @extend .h1;
+      background: rgba(255, 204, 0, .8);
+      display: block;
+      font-size: 80px;
+      font-weight: 800;
+      margin: 0;
+      padding: 4px 30px;
+      text-transform: uppercase;
+
+      @media (max-width: $screen-md-max) {
+        font-size: 68px;
+      }
+      @media (max-width: $screen-sm-max) {
+        font-size: 55px;
+      }
+      @media (max-width: $screen-xs-max) {
+        font-size: 40px;
+      }
     }
   }
+
+  a {
+    &:link,
+    &:visited,
+    &:active,
+    &:hover {
+      color: #000;
+      text-decoration: none;
+    }
+  }
+
   .weather {
     background: #000;
     display: inline-block;
     color: #fff;
     font-family: $font-family-serif;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 32px;
-    padding: 8px 16px;
-    position: relative;
+    padding: 6px 20px;
+    position: absolute;
+    right: 0;
+    letter-spacing: 1.35px;
+    font-weight: 100;
+
+    @media (max-width: $screen-xs-max) {
+      font-size: 13px;
+      padding: 0 14px;
+    }
 
     .icon {
-      height: 40px;
-      width: 40px;
+      display: inline-block;
+      padding-right: 6px;
 
-      i {
-        color: #c90;
-        font-size: 32px;
+      @media (max-width: $screen-xs-max) {
+        padding-right: 4px;
+      }
+
+      span {
+        color: $ucf-gold;
+        font-size: 27px;
+        display: inline-block;
+        position: relative;
+        bottom: -3px;
+
+        @media (max-width: $screen-xs-max) {
+          font-size: 20px;
+        }
       }
     }
 
     .vertical-rule {
       border-left: 1px solid #fff;
       margin-left: 4px;
+      margin-right: 6px;
       width: 2px;
     }
 
     .temp {
       margin-left: 4px;
+      font-weight: 800;
     }
   }
 }

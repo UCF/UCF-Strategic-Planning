@@ -5,19 +5,23 @@
 	</head>
 	<body ontouchstart <?php echo body_class(); ?>>
 		<header class="site-header">
-			<div class="header-image" style="background: url(<?php echo header_image(); ?>">
+			<div class="header-image" style="background-image: url(<?php echo header_image(); ?>">
 				<div class="header-center">
 					<div class="title-wrapper">
-						<?php echo display_site_title(); ?>
-						<?php $weather = get_weather_data(); ?>
-						<?php if ( $weather ) : ?>
-							<div class="weather">
-								<span class="icon"><i class="fa fa-<?php echo $weather->icon; ?>"></i></span>
-								<span class="location">Orlando, FL</span>
-								<span class="vertical-rule"></span>
-								<span class="temp"><?php echo $weather->temp; ?></span>
-							</div>
-						<?php endif; ?>
+						<div class="title-header-container">
+							<?php echo display_site_title(); ?>
+							<?php $weather = get_weather_data(); ?>
+							<?php if ( $weather ) : ?>
+								<div class="weather">
+									<span class="icon">
+										<span class="fa fa-<?php echo $weather->icon; ?>"></span>
+									</span>
+									<span class="location">Orlando, FL</span>
+									<span class="vertical-rule"></span>
+									<span class="temp"><?php echo $weather->tempN; ?>&deg;F</span>
+								</div>
+							<?php endif; ?>
+						</div>
 					</div>
 				</div>
 			</div>

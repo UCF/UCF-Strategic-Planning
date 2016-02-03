@@ -1,6 +1,6 @@
 <?php disallow_direct_load( 'home.php' ); ?>
 <?php get_header(); the_post(); ?>
-<primary>
+<article>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-7">
@@ -15,8 +15,8 @@
 			</div>
 		</div>
 	</div>
-</primary>
 <?php 
 	the_content();
 ?>
+</article>
 <?php get_footer(); ?>
