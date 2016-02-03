@@ -5,7 +5,10 @@
 		<div class="row">
 			<div class="col-md-7">
 				<h2><?php echo the_title(); ?></h2>
-				<?php echo the_content(); ?>
+				<?php 
+					$message = get_field( 'page_message' );
+					echo apply_filters( 'the_content', $message );
+				?>
 			</div>
 			<div class="col-md-5">
 				<?php echo get_call_to_action(); ?>
@@ -13,5 +16,7 @@
 		</div>
 	</div>
 </primary>
-
+<?php 
+	the_content();
+?>
 <?php get_footer(); ?>

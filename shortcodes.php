@@ -156,6 +156,55 @@ class CallToActionSC extends Shortcode {
     }
 }
 
+class SectionSC extends Shortcode {
+    public
+        $name        = 'Section', // The name of the shortcode.
+        $command     = 'section', // The command used to call the shortcode.
+        $description = 'Displays section markup', // The description of the shortcode.
+        $params      = array(
+            array(
+                'name'      => 'Section Object',
+                'id'        => 'section_id',
+                'help_text' => 'Choose the section to display',
+                'type'      => 'dropdown',
+                'choices'   => array()
+            )
+        ), // The parameters used by the shortcode.
+        $callback    = 'callback',
+        $wysiwyg     = True; // Whether to add it to the shortcode Wysiwyg modal.
+
+    public function __construct() {
+        $this->params[0]['choices'] = $this->get_choices();
+    }
+
+    private function get_choices() {
+        $posts = get_posts( array( 'post_type' => 'section' ) );
+        $retval = array( array( 'name' => '-- Choose Section --', 'value' => '' ) );
+        foreach( $posts as $post ) {
+            $retval[] = array(
+                'name'  => $post->post_title,
+                'value' => $post->ID
+            );
+        }
+
+        return $retval;
+    }
+
+    public static function callback( $attr, $content='' ) {
+        $attr = shortcode_atts( array(
+                'section_id' => ''
+            ), $attr
+        );
+
+        if ( isset( $attr['section_id'] ) ) {
+            $post = get_post( $attr['section_id'] );
+            return Section::toHTML( $post );
+        } else {
+            return '';
+        }
+    }
+}
+
 function sc_search_form() {
     ob_start();
 ?>

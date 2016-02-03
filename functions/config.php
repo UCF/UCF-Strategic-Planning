@@ -30,7 +30,8 @@ define( 'THEME_CUSTOMIZER_PREFIX', 'ucfgeneric_' ); // a unique prefix for panel
 Config::$custom_post_types = array(
 	'Page',
     'Post',
-    'CallToAction'
+    'CallToAction',
+    'Section'
 );
 
 
@@ -39,7 +40,8 @@ Config::$custom_taxonomies = array(
 );
 
 Config::$shortcodes = array(
-	'CallToActionSC'
+	'CallToActionSC',
+	'SectionSC'
 );
 
 
@@ -50,7 +52,7 @@ Config::$links = array(
 
 
 Config::$styles = array(
-	array( 'admin' => True, 'src' => THEME_CSS_URL.'/admin.min.css', ),
+	array( 'name' => 'webcom-admin', 'admin' => True, 'src' => THEME_CSS_URL.'/admin.min.css', ),
 	THEME_CSS_URL . '/style.min.css'
 );
 
