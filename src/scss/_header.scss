@@ -22,52 +22,47 @@
 
   .header-title {
     display: inline-block;
-    margin:0 auto;
-    border: solid red 2px;
-    text-align: center;
+    margin: 0 auto;
     position: relative;
+    text-align: center;
   }
 
-  .title-thing {
-
+  .title-header-container {
     display: table;
     margin: 0 auto;
-    text-transform: uppercase;
     position: relative;
 
-    & > h1,
-    & > span {
+    > h1,
+    > span {
       @extend .h1;
+      background: rgba(255, 204, 0, .8);
       font-size: 80px;
-      margin: 0;
       font-weight: 800;
-    background: rgba(255, 204, 0, 0.8);
-      padding: 10px 20px;
+      margin: 0;
+      padding: 4px 30px;
+      text-transform: uppercase;
+
+      @media (max-width: $screen-md-max) {
+        font-size: 68px;
+      }
+      @media (max-width: $screen-sm-max) {
+        font-size: 55px;
+      }
+      @media (max-width: $screen-xs-max) {
+        font-size: 40px;
+      }
+
     }
 
     a {
       color: #000;
+    }
 
-      &:hover {
-        text-decoration: none;
-      }
+    a:hover {
+      text-decoration: none;
     }
   }
 
-  // .site-title {
-  //   @extend .h1;
-  //   background: rgba(255, 204, 0, 0.8);
-  //   display: table;
-  //   font-size: 68px;
-  //   font-weight: 800;
-  //   margin: 0 auto;
-  //   padding: 10px 20px;
-  //   text-transform: uppercase;
-
-  //   a {
-  //     color: #000;
-  //   }
-  // }
   .weather {
     background: #000;
     display: inline-block;
@@ -75,9 +70,16 @@
     font-family: $font-family-serif;
     font-size: 16px;
     line-height: 32px;
-    padding: 8px 16px;
+    padding: 4px 20px;
     position: absolute;
     right: 0;
+    letter-spacing: 1.35px;
+    font-weight: 100;
+
+    @media (max-width: $screen-xs-max) {
+      font-size: 13px;
+      padding: 0 14px;
+    }
 
     .icon {
       height: 40px;
@@ -97,6 +99,7 @@
 
     .temp {
       margin-left: 4px;
+      font-weight: 800;
     }
   }
 }
