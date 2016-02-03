@@ -213,12 +213,14 @@ abstract class CustomPostType {
 		);
 
 		foreach( $this->fields() as $field ) {
-			$opts = array(
-				'key'          => $field['id'],
-				'label'        => $field['name'],
-				'name'         => $field['id'],
-				'instructions' => $field['description'],
-				'required'     => $field['required'] ? $field['required'] : false
+			$opts = array_merge( $field, 
+				array(
+					'key'          => $field['id'],
+					'label'        => $field['name'],
+					'name'         => $field['id'],
+					'instructions' => $field['description'],
+					'required'     => $field['required'] ? $field['required'] : false
+				)
 			);
 
 			switch( $field['type'] ) {
@@ -343,6 +345,28 @@ abstract class CustomPostType {
 					$opts = array_merge( $opts,
 						array(
 							'type'              => 'fa_icon'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'wysiwyg':
+					$opts = array_merge( $opts,
+						array(
+							'type'              => 'wysiwyg',
+							'toolbar'           => $field['toolbar'] ? $field['toolbar'] : 'full',
+							'media_upload'      => $field['media_upload'] ? $field['media_upload'] : 'no'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'post_object':
+					$opts = array_merge( $opts,
+						array(
+							'type'              => 'post_object',
+							'post_type'         => $field['post_type'] ? $field['post_type'] : array( 'post' ),
+							'taxonomy'          => $field['taxonomy'] ? $field['taxonomy'] : array( 'all' ),
+							'allow_null'        => $field['allow_null'] ? $field['allow_null'] : 1,
+							'multiple'          => $field['multiple'] ? $field['multiple'] : 0
 						)
 					);
 					$options['fields'][] = $opts;
@@ -569,7 +593,7 @@ class Section extends CustomPostType {
 		$edit_item      = 'Edit Section',
 		$new_item       = 'New Section',
 		$public         = True,
-		$use_editor     = True,
+		$use_editor     = False,
 		$use_thumbnails = True,
 		$use_order      = False,
 		$use_title      = True,
@@ -610,11 +634,58 @@ class Section extends CustomPostType {
 				'type'        => 'textarea'
 			),
 			array(
-				'name'        => 'Resource Links',
-				'description' => 'Menu object which stores the external links to be displayed',
-				'id'          => $prefix.'menu',
-				'type'        => 'menu',
+				'name'        => 'Feature Type',
+				'description' => 'Choose the kind of feature to use for this section.',
+				'id'          => $prefix.'feature_type',
+				'type'        => 'radio',
+				'choices'     => array(
+					'feature_image' => 'Image',
+					'feature_cta' => 'Call to Action'
+				),
+				'default'     => 'feature_image'
 			),
+			array(
+				'name'        => 'Feature Image',
+				'description' => 'The image that will appear in the content area.',
+				'id'          => $prefix.'feature_image',
+				'type'        => 'image',
+				'conditional_logic' => array(
+					'status' => 1,
+					'rules'  => array(
+						array(
+							'field' => $prefix.'feature_type',
+							'operator' => '==',
+							'value' => 'feature_image'
+						)
+					),
+					'allorany' => 'all'
+				)
+			),
+			array(
+				'name'        => 'Feature Call to Action',
+				'description' => 'The call to action that will appear in the content area.',
+				'id'          => $prefix.'feature_cta',
+				'type'        => 'post_object',
+				'post_type'   => array( 'call_to_action' ),
+				'conditional_logic' => array(
+					'status' => 1,
+					'rules'  => array(
+						array(
+							'field'    => $prefix.'feature_type',
+							'operator' => '==',
+							'value'    => 'feature_cta'
+						)
+					),
+					'allorany' => 'all'
+				)
+			),
+			array(
+				'name'        => 'Content',
+				'description' => 'The content that will appear to the right of the featured image.',
+				'id'          => $prefix.'content',
+				'type'        => 'wysiwyg',
+				'toolbar'     => 'basic'
+			)
 		);
 	}
 }
