@@ -20,20 +20,53 @@
     vertical-align: middle;
   }
 
-  .site-title {
-    @extend .h1;
-    background: rgba(255, 204, 0, 0.5);
+  .header-title {
+    display: inline-block;
+    margin:0 auto;
+    border: solid red 2px;
+    text-align: center;
+    position: relative;
+  }
+
+  .title-thing {
+    background: rgba(255, 204, 0, 0.8);
     display: table;
-    font-size: 68px;
-    font-weight: 800;
     margin: 0 auto;
     padding: 10px 20px;
     text-transform: uppercase;
+    position: relative;
+
+    & > h1,
+    & > span {
+      @extend .h1;
+      font-size: 80px;
+      margin: 0;
+      font-weight: 800;
+    }
 
     a {
       color: #000;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
+
+  // .site-title {
+  //   @extend .h1;
+  //   background: rgba(255, 204, 0, 0.8);
+  //   display: table;
+  //   font-size: 68px;
+  //   font-weight: 800;
+  //   margin: 0 auto;
+  //   padding: 10px 20px;
+  //   text-transform: uppercase;
+
+  //   a {
+  //     color: #000;
+  //   }
+  // }
   .weather {
     background: #000;
     display: inline-block;
@@ -42,7 +75,8 @@
     font-size: 16px;
     line-height: 32px;
     padding: 8px 16px;
-    position: relative;
+    position: absolute;
+    right: 0;
 
     .icon {
       height: 40px;

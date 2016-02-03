@@ -8,6 +8,7 @@
 			<div class="header-image" style="background: url(<?php echo header_image(); ?>">
 				<div class="header-center">
 					<div class="title-wrapper">
+					<div class="title-thing">
 						<?php echo display_site_title(); ?>
 						<?php $weather = get_weather_data(); ?>
 						<?php if ( $weather ) : ?>
@@ -18,6 +19,7 @@
 								<span class="temp"><?php echo $weather->temp; ?></span>
 							</div>
 						<?php endif; ?>
+					</div>
 					</div>
 				</div>
 			</div>
