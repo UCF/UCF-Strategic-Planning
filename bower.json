@@ -17,6 +17,6 @@
 	"dependencies": {
 		"bootstrap-sass-official": "~3.3.6",
 		"font-awesome": "~4.5.0",
-    "weather-icons": "~2.0.10"
+		"weather-icons": "~2.0.10"
 	}
 }
