@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Abstract class for defining custom post types.
  **/
@@ -84,6 +83,12 @@ abstract class CustomPostType {
 		return array();
 	}
 
+	/**
+	 * Additional settings for overriding field layout.
+	 **/
+	public function override_field_options( $options ) {
+		return $options;
+	}
 
 	/**
 	 * Using instance variables defined, returns an array defining what this
@@ -207,10 +212,12 @@ abstract class CustomPostType {
 			),
 			'options' => array(
 				'position' => 'normal',
-				'layout'   => 'default'
+				'layout' => 'default'
 			),
 			'menu_order' => 0,
 		);
+
+		$options = $this->override_field_options( $options );
 
 		foreach( $this->fields() as $field ) {
 			$opts = array_merge( $field, 
@@ -455,15 +462,34 @@ class Page extends CustomPostType {
 		$prefix = $this->options( 'name' ).'_';
 		return array(
 			array(
-				'name' => 'Stylesheet',
-				'description' => '',
-				'id' => $prefix.'stylesheet',
-				'type' => 'file',
+				'name'        => 'Home Page Message',
+				'description' => 'The message that appears below the header',
+				'id'          => $prefix.'message',
+				'type'        => 'textarea'
+			),
+			array(
+				'name'        => 'Home Page Spotlight',
+				'description' => 'The active spotlight on the home page',
+				'id'          => $prefix.'spotlight',
+				'type'        => 'post_object',
+				'post_type'   => 'call_to_action'
 			),
 		);
 	}
-}
 
+	public function override_field_options( $options ) {
+		// Only show fields on home page.
+		$options['location'][0][] = array(
+			'param'    => 'page_type',
+			'operator' => '==',
+			'value'    => 'front_page',
+			'order_no' => 1,
+			'group_no' => 0
+		);
+
+		return $options;
+	}
+}
 
 class Post extends CustomPostType {
 	public
@@ -712,7 +738,7 @@ class Section extends CustomPostType {
 		$object = Section::add_post_meta( $object );
 		ob_start();
 ?>
-		<section id="<?php echo $object->post_name; ?>">
+		<section id="<?php echo $object->post_name; ?>" class="bucket-section">
 			<div class="section-header">
 			<?php if ( $object->header_video_mp4 ) : ?>
 				<video class="section-header-video">
@@ -720,12 +746,14 @@ class Section extends CustomPostType {
 				</video>
 			<?php endif; ?>
 			<?php if ( $object->header_image ) : ?>
-				<?php echo wp_get_attachment_image( $object->header_image, array( 2000, 750 ) ); ?>
-			<?php endif; ?>
-			<?php if ( $object->header_text ) : ?>
-				<span class="section-header-text" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
-					<?php echo $object->header_text; ?>
-				</span>
+				<?php $header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) ); ?>
+				<div class="section-header-image" style="background: url(<?php echo $header_img[0]; ?>);">
+					<div class="section-header-wrapper">
+						<span class="section-header-text" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
+							<?php echo $object->header_text; ?>
+						</span>
+					</div>
+				</div>
 			<?php endif; ?>
 			</div>
 			<div class="container">
@@ -734,8 +762,8 @@ class Section extends CustomPostType {
 			<div class="row">
 				<div class="col-md-5">
 				<?php if ( $object->feature_type == 'feature_image' ) : ?>
-					<?php echo wp_get_attachment_image( $object->feature_image, 'medium' ); ?>
-					<img src="<?php echo $object->feature_image->url; ?>" alt="<?php echo $object->feature_image->alt; ?>">
+					<?php $featured_img = wp_get_attachment_image_src( $object->feature_image, 'large' ); ?>
+					<img class="img-responsive" src="<?php echo $featured_img[0]; ?>">
 				<?php else: ?>
 					<?php echo CallToAction::toHTML( $object->feature_cta ); ?>
 				<?php endif; ?>

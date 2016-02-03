@@ -40,7 +40,8 @@ Config::$custom_taxonomies = array(
 );
 
 Config::$shortcodes = array(
-	'CallToActionSC'
+	'CallToActionSC',
+	'SectionSC'
 );
 
 

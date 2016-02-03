@@ -13,16 +13,8 @@
 		</div>
 	</div>
 </primary>
-<?php
-	$args = array(
-		'post_type' => 'section'
-	);
-
-	$posts = get_posts( $args );
-
-	foreach( $posts as $post ) {
-		echo Section::toHTML( $post );
-	}
+<?php 
+	$additional_content = get_field( 'page_additional_content' );
+	echo apply_filters( 'the_content', $additional_content );
 ?>
-
 <?php get_footer(); ?>
