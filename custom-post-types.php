@@ -339,6 +339,14 @@ abstract class CustomPostType {
 					);
 					$options['fields'][] = $opts;
 					break;
+				case 'icon':
+					$opts = array_merge( $opts,
+						array(
+							'type'              => 'fa_icon'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
 			}
 		}
 

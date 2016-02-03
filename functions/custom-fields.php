@@ -13,8 +13,8 @@ class acf_field_fa_icon_field extends acf_field {
 	 * @author Jim Barnes
 	 **/
 	function __construct() {
-		$this->name     = 'fa_icon_field';
-		$this->label    = __( 'Font-Awesome Icon Field' );
+		$this->name     = 'fa_icon';
+		$this->label    = __( 'Font-Awesome Icon Picker' );
 		$this->category = __( 'Basic' );
 		$this->defaults = array(
 
