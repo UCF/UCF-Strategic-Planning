@@ -54,6 +54,9 @@ function get_weather_data() {
 		case 'default':
 			$weather->icon = 'sun-o';
 			break;
+		default:
+			$weather->icon = 'sun-o';
+			break;
 	}
 
 	return $weather;

@@ -7,6 +7,7 @@
 
 .header-image {
   width: 100%;
+  background-position: center center;
 }
 
 .header-center {
@@ -52,14 +53,15 @@
       @media (max-width: $screen-xs-max) {
         font-size: 40px;
       }
-
     }
+  }
 
-    a {
+  a {
+    &:link,
+    &:visited,
+    &:active,
+    &:hover {
       color: #000;
-    }
-
-    a:hover {
       text-decoration: none;
     }
   }
@@ -69,9 +71,9 @@
     display: inline-block;
     color: #fff;
     font-family: $font-family-serif;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 32px;
-    padding: 4px 20px;
+    padding: 6px 20px;
     position: absolute;
     right: 0;
     letter-spacing: 1.35px;
@@ -83,18 +85,30 @@
     }
 
     .icon {
-      height: 40px;
-      width: 40px;
+      display: inline-block;
+      padding-right: 6px;
 
-      i {
-        color: #c90;
-        font-size: 32px;
+      @media (max-width: $screen-xs-max) {
+        padding-right: 4px;
+      }
+
+      span {
+        color: $ucf-gold;
+        font-size: 27px;
+        display: inline-block;
+        position: relative;
+        bottom: -3px;
+
+        @media (max-width: $screen-xs-max) {
+          font-size: 20px;
+        }
       }
     }
 
     .vertical-rule {
       border-left: 1px solid #fff;
       margin-left: 4px;
+      margin-right: 6px;
       width: 2px;
     }
 
