@@ -180,11 +180,6 @@ WebcomAdmin.iconModal = function($) {
       }
     }
   });
-
-  $('.meta-icon-wrapper').each(function() {
-    var $self = $(this),
-      $field = $self.find('.meta-icon-field');
-  });
   
   $('.meta-fa-icon').on('click', function(e) {
     $('.meta-fa-icon').removeClass('selected');
@@ -204,8 +199,13 @@ WebcomAdmin.iconModal = function($) {
   $('#meta-icon-submit').on('click', function() {
     var selectedVal  = $('.meta-fa-icon.selected').find('i').attr('data-icon-value'),
         $modalInput = $('#meta-icon-field-id'),
-        $field = $('#' + $modalInput.val()),
+        $field = $('#' + $modalInput.val().replace('[', '\\[').replace(']', '\\]')),
         $iconPreview = $field.parent().find('i');
+
+    console.log( selectedVal );
+    console.log( $modalInput );
+    console.log( $field );
+    console.log( $iconPreview );
 
     if (selectedVal) {
       $field.val(selectedVal);
