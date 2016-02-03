@@ -29,10 +29,9 @@
   }
 
   .title-thing {
-    background: rgba(255, 204, 0, 0.8);
+
     display: table;
     margin: 0 auto;
-    padding: 10px 20px;
     text-transform: uppercase;
     position: relative;
 
@@ -42,6 +41,8 @@
       font-size: 80px;
       margin: 0;
       font-weight: 800;
+    background: rgba(255, 204, 0, 0.8);
+      padding: 10px 20px;
     }
 
     a {
