@@ -51,79 +51,51 @@ function get_weather_icon( $condition ) {
 	$icon_prefix = "wi wi-";
 	$icons_to_conditions = array(
 			'day-sunny' => array(
-				'sunny',
-				'fair (day)',
 				'fair',
 				'default'
 			),
-			'night-clear' => array(
-				'clear (night)',
-				'fair (night)',
-				'hot',
-				'night'
-			),
 			'hot' => array(
-				'hot'
+				'hot',
+				'haze'
 			),
 			'cloudy' => array(
-				'cloudy',
-				'mostly cloudy (night)',
-				'mostly cloudy (day)',
-				'partly cloudy (night)',
-				'partly cloudy (day)',
+				'overcast',
 				'partly cloudy',
-				'partly cloudy'
+				'mostly cloudy'
 			),
 			'snowflake-cold' => array(
-				'cold'
+				'blowing snow',
+				'cold',
+				'snow'
 			),
 			'showers' => array(
-				'mixed rain and snow',
-				'mixed rain and sleet',
-				'mixed snow and sleet',
-				'freezing drizzle',
+				'showers',
 				'drizzle',
-				'freezing rain',
-				'showers',
-				'showers',
-				'snow flurries',
-				'light snow showers',
-				'blowing snow',
-				'snow',
+				'mixed rain/sleet',
+				'mixed rain/hail',
+				'mixed snow/sleet',
 				'hail',
-				'sleet',
-				'mixed rain and hail',
-				'rainy',
-				'thundershowers',
-				'snow showers',
-				'scattered showers',
+				'freezing drizzle'
 			),
 			'cloudy-gusts' => array(
-				'blustery',
 				'windy'
 			),
 			'fog' => array(
-				'foggy',
-				'haze',
-				'smoky',
-				'dust'
+				'dust',
+				'smoke',
+				'foggy'
 			),
 			'storm-showers' => array(
-				'isolated thundershowers',
-				'isolated thunderstorms',
 				'scattered thunderstorms',
-				'scattered thunderstorms'
+				'scattered thundershowers',
+				'scattered showers',
+				'Freezing rain',
+				'isolated thunderstorms',
+				'isolated thundershowers'
 			),
 			'lightning' => array(
-				'heavy snow',
-				'scattered snow showers',
-				'heavy snow',
 				'tornado',
-				'tropical storm',
-				'hurricane',
-				'severe thunderstorms',
-				'thunderstorms',
-				'stormy'
+				'severe thunderstorms'
 			)
 		);
 
@@ -141,3 +113,4 @@ function get_weather_icon( $condition ) {
 }
 
 ?>
+
