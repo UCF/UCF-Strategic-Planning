@@ -16,9 +16,8 @@
   a {
     @include transition( color 0.125s, background-color 0.125s );
     color: #fff;
-    font-family: $font-family-serif;
+    font-family: Georgia,"Times New Roman",Times,serif;
     font-size: 17px;
-    font-weight: 400;
     padding: 7px;
 
     &:hover,
@@ -35,7 +34,7 @@
     background-color: #fc0;
     border: darken(#fc0, 20%);
     border-radius: 4px;
-    color: #fff;
+    color: #000;
     padding: 7px 14px;
 
     &:hover,
@@ -43,7 +42,7 @@
     &:focus {
       background-color: #000;
       border: lighten(#000, 20%);
-      color: #fc0;
+      color: #fff;
     }
   }
 }
