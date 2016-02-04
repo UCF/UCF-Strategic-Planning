@@ -472,7 +472,7 @@ class Page extends CustomPostType {
 				'description' => 'The active spotlight on the home page',
 				'id'          => $prefix.'spotlight',
 				'type'        => 'post_object',
-				'post_type'   => 'call_to_action'
+				'post_type'   => array( 'spotlight' )
 			),
 		);
 	}
