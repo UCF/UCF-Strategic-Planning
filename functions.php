@@ -62,15 +62,10 @@ function get_weather_icon( $condition ) {
 				'hot',
 				'night'
 			),
+			'hot' => array(
+				'hot'
+			),
 			'cloudy' => array(
-				'dust',
-				'foggy',
-				'haze',
-				'smoky',
-				'blustery',
-				'windy',
-				'foggy',
-				'cold',
 				'cloudy',
 				'mostly cloudy (night)',
 				'mostly cloudy (day)',
@@ -78,6 +73,9 @@ function get_weather_icon( $condition ) {
 				'partly cloudy (day)',
 				'partly cloudy',
 				'partly cloudy'
+			),
+			'snowflake-cold' => array(
+				'cold'
 			),
 			'showers' => array(
 				'mixed rain and snow',
@@ -98,13 +96,25 @@ function get_weather_icon( $condition ) {
 				'rainy',
 				'thundershowers',
 				'snow showers',
-				'isolated thundershowers'
+				'scattered showers',
 			),
-			'lightning' => array(
+			'cloudy-gusts' => array(
+				'blustery',
+				'windy'
+			),
+			'fog' => array(
+				'foggy',
+				'haze',
+				'smoky',
+				'dust'
+			),
+			'storm-showers' => array(
+				'isolated thundershowers',
 				'isolated thunderstorms',
 				'scattered thunderstorms',
-				'scattered thunderstorms',
-				'scattered showers',
+				'scattered thunderstorms'
+			),
+			'lightning' => array(
 				'heavy snow',
 				'scattered snow showers',
 				'heavy snow',
