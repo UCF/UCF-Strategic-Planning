@@ -14,6 +14,19 @@ require_once 'shortcodes.php';              // Per theme shortcodes
  * functions/theme.php instead of this file.  Note the load order of files
  * listed above.
  **/
+function get_call_to_action() {
+	$args = array(
+		'post_type' => 'call_to_action'
+	);
+
+	$posts = get_posts( $args );
+
+	$random = rand( 0, $posts.length - 1 );
+
+	$post = $posts[$random];
+
+	return CallToAction::toHTML( $post );
+}
 
 function get_weather_data() {
 	$opts = array(
@@ -100,4 +113,3 @@ function get_weather_icon( $condition ) {
 }
 
 ?>
-
