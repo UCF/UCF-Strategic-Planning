@@ -134,6 +134,12 @@ function define_customizer_sections( $wp_customize ) {
 		)
 	);
 	$wp_customize->add_section(
+		THEME_CUSTOMIZER_PREFIX.'remote_menus',
+		array(
+			'title' => 'Remote Menus'
+		)
+	);
+	$wp_customize->add_section(
 		THEME_CUSTOMIZER_PREFIX . 'events',
 		array(
 			'title'       => 'Events',
@@ -203,6 +209,35 @@ function define_customizer_fields( $wp_customize ) {
 			'label'       => 'Weather Feed URL',
 			'description' => 'The url of the CM Weather Feed',
 			'section'     => THEME_CUSTOMIZER_PREFIX . 'home_custom'
+		)
+	);
+
+	// Menus
+	$wp_customize->add_setting(
+		'header_menu_feed'
+	);
+
+	$wp_customize->add_control(
+		'header_menu_feed',
+		array(
+			'type'        => 'text',
+			'label'       => 'Header Menu Feed',
+			'description' => 'The JSON feed of the www.ucf.edu header menu.',
+			'section'     => THEME_CUSTOMIZER_PREFIX.'remote_menus'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'footer_menu_feed'
+	);
+
+	$wp_customize->add_control(
+		'footer_menu_feed',
+		array(
+			'type'        => 'text',
+			'label'       => 'Footer Menu Feed',
+			'description' => 'The JSON feed of the www.ucf.edu footer menu.',
+			'section'     => THEME_CUSTOMIZER_PREFIX.'remote_menus'
 		)
 	);
 
