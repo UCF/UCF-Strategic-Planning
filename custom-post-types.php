@@ -220,7 +220,7 @@ abstract class CustomPostType {
 		$options = $this->override_field_options( $options );
 
 		foreach( $this->fields() as $field ) {
-			$opts = array_merge( $field, 
+			$opts = array_merge( $field,
 				array(
 					'key'          => $field['id'],
 					'label'        => $field['name'],
@@ -232,7 +232,7 @@ abstract class CustomPostType {
 
 			switch( $field['type'] ) {
 				case 'text':
-					$opts = array_merge( $opts, 
+					$opts = array_merge( $opts,
 						array(
 							'type'          => 'text',
 							'default_value' => $field['default'] ? $field['default'] : '',
@@ -243,7 +243,7 @@ abstract class CustomPostType {
 					$options['fields'][] = $opts;
 					break;
 				case 'textarea':
-					$opts = array_merge( $opts, 
+					$opts = array_merge( $opts,
 						array(
 							'type'          => 'textarea',
 							'default_value' => $field['default'] ? $field['default'] : '',
@@ -478,14 +478,6 @@ class Page extends CustomPostType {
 	}
 
 	public function override_field_options( $options ) {
-		// Only show fields on home page.
-		$options['location'][0][] = array(
-			'param'    => 'page_type',
-			'operator' => '==',
-			'value'    => 'front_page',
-			'order_no' => 1,
-			'group_no' => 0
-		);
 
 		return $options;
 	}
@@ -577,7 +569,7 @@ class Spotlight extends CustomPostType {
 	}
 
 	public function toHTML( $object ) {
-		$image_url = has_post_thumbnail( $object->ID ) ? 
+		$image_url = has_post_thumbnail( $object->ID ) ?
 			wp_get_attachment_image_src( get_post_thumbnail_id( $object->ID ), 'spotlight' )[0] :
 			null;
 		$url = get_field( 'spotlight_url', $object->ID );
@@ -599,7 +591,7 @@ class Spotlight extends CustomPostType {
 			<h2 <?php if ( $title_color ) : echo 'style="color: '.$title_color.'"'; ?>><?php echo $object->post_title; endif; ?></h2>
 			<?php if ( $btn_text ) : ?>
 			<div class="btn-wrapper">
-				<span class="btn btn-lg btn-ucf" <?php if ( !empty( $btn_styles ) ) : echo explode( $btn_styles, ' ' ); endif; ?>>
+				<span class="btn btn-lg btn-ucf" <?php if ( !empty( $btn_styles) ) : echo implode( ' ', $btn_styles ); endif; ?>>
 					<?php echo $btn_text; ?>
 				</span>
 			</div>
@@ -747,7 +739,7 @@ class Section extends CustomPostType {
 			<?php endif; ?>
 			<?php if ( $object->header_image ) : ?>
 				<?php $header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) ); ?>
-				<div class="section-header-image" style="background: url(<?php echo $header_img[0]; ?>);">
+				<div class="section-header-image" style="background-image: url(<?php echo $header_img[0]; ?>);">
 					<div class="section-header-wrapper">
 						<span class="section-header-text" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
 							<?php echo $object->header_text; ?>
