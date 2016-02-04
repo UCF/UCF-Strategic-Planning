@@ -11,7 +11,13 @@
 				?>
 			</div>
 			<div class="col-md-5">
-				<?php echo get_call_to_action(); ?>
+				<?php 
+					$spotlight = get_field( 'page_spotlight' );
+					if ( $spotlight ) {
+						$spotlight = get_post( $spotlight );
+						echo Spotlight::toHTML( $spotlight );
+					}
+				?>
 			</div>
 		</div>
 	</div>

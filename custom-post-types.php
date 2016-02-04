@@ -521,14 +521,14 @@ class Post extends CustomPostType {
 	}
 }
 
-class CallToAction extends CustomPostType {
+class Spotlight extends CustomPostType {
 	public
-		$name           = 'call_to_action',
-		$plural_name    = 'Calls to Action',
-		$singular_name  = 'Call to Action',
-		$add_new_item   = 'Add New Call to Action',
-		$edit_item      = 'Edit Call to Action',
-		$new_item       = 'New Call to Action',
+		$name           = 'spotlight',
+		$plural_name    = 'Spotlights',
+		$singular_name  = 'Spotlight',
+		$add_new_item   = 'Add New Spotlight',
+		$edit_item      = 'Edit Spotlight',
+		$new_item       = 'New Spotlight',
 		$public         = True,
 		$use_editor     = False,
 		$use_thumbnails = True,
@@ -541,34 +541,34 @@ class CallToAction extends CustomPostType {
 		$prefix = $this->options( 'name' ).'_';
 		return array(
 			array(
-				'name'        => 'Call to Action Title Text Color',
+				'name'        => 'Title Text Color',
 				'description' => 'The color of the overlay text',
 				'id'          => $prefix.'text_color',
 				'type'        => 'color',
 				'default'     => '#ffffff'
 			),
 			array(
-				'name'        => 'Call to Action Button Color',
+				'name'        => 'Button Color',
 				'description' => 'The background color of the call to action button',
 				'id'          => $prefix.'btn_background',
 				'type'        => 'color',
 				'default'     => '#ffcc00'
 			),
 			array(
-				'name'        => 'Call to Action Button Text Color',
+				'name'        => 'Button Text Color',
 				'description' => 'The text color of the call to action button',
 				'id'          => $prefix.'btn_foreground',
 				'type'        => 'color',
 				'default'     => '#ffffff'
 			),
 			array(
-				'name'        => 'Call to Action Button Text',
+				'name'        => 'Button Text',
 				'description' => 'The text of the call to action button',
 				'id'          => $prefix.'btn_text',
 				'type'        => 'text'
 			),
 			array(
-				'name'        => 'Call to Action URL',
+				'name'        => 'URL',
 				'description' => 'The url of the call to action',
 				'id'          => $prefix.'url',
 				'type'        => 'text'
@@ -578,14 +578,14 @@ class CallToAction extends CustomPostType {
 
 	public function toHTML( $object ) {
 		$image_url = has_post_thumbnail( $object->ID ) ? 
-			wp_get_attachment_image_src( get_post_thumbnail_id( $object->ID ), 'call_to_action' )[0] :
+			wp_get_attachment_image_src( get_post_thumbnail_id( $object->ID ), 'spotlight' )[0] :
 			null;
-		$url = get_post_meta( $object->ID, 'call_to_action_url', True );
+		$url = get_field( 'spotlight_url', $object->ID );
 
-		$title_color = get_post_meta( $object->ID, 'call_to_action_text_color', True );
-		$btn_background = get_post_meta( $object->ID, 'call_to_action_btn_background', True );
-		$btn_foreground = get_post_meta( $object->ID, 'call_to_action_btn_foreground', True );
-		$btn_text = get_post_meta( $object->ID, 'call_to_action_btn_text', True );
+		$title_color = get_field( 'spotlight_text_color', $object->ID );
+		$btn_background = get_field( 'spotlight_btn_background', $object->ID );
+		$btn_foreground = get_field( 'spotlight_btn_foreground', $object->ID );
+		$btn_text = get_field( 'spotlight_btn_text', $object->ID );
 
 		$btn_styles = array();
 		if ( $btn_background ) : $btn_styles[] = 'background: '.$btn_background; endif;
@@ -667,7 +667,7 @@ class Section extends CustomPostType {
 				'type'        => 'radio',
 				'choices'     => array(
 					'feature_image' => 'Image',
-					'feature_cta' => 'Call to Action'
+					'feature_spotlight' => 'Spotlight'
 				),
 				'default'     => 'feature_image'
 			),
@@ -691,16 +691,16 @@ class Section extends CustomPostType {
 			array(
 				'name'        => 'Feature Call to Action',
 				'description' => 'The call to action that will appear in the content area.',
-				'id'          => $prefix.'feature_cta',
+				'id'          => $prefix.'feature_spotlight',
 				'type'        => 'post_object',
-				'post_type'   => array( 'call_to_action' ),
+				'post_type'   => array( 'spotlight' ),
 				'conditional_logic' => array(
 					'status' => 1,
 					'rules'  => array(
 						array(
 							'field'    => $prefix.'feature_type',
 							'operator' => '==',
-							'value'    => 'feature_cta'
+							'value'    => 'feature_spotlight'
 						)
 					),
 					'allorany' => 'all'
@@ -728,7 +728,7 @@ class Section extends CustomPostType {
 		$object->lead_text         = get_field( $prefix.'lead_text', $post_id );
 		$object->feature_type      = get_field( $prefix.'feature_type', $post_id );
 		$object->feature_image     = get_field( $prefix.'feature_image', $post_id );
-		$object->feature_cta       = get_field( $prefix.'feature_cta', $post_id );
+		$object->feature_spotlight = get_field( $prefix.'feature_spotlight', $post_id );
 		$object->content           = get_field( $prefix.'content', $post_id );
 
 		return $object;
@@ -765,7 +765,7 @@ class Section extends CustomPostType {
 					<?php $featured_img = wp_get_attachment_image_src( $object->feature_image, 'large' ); ?>
 					<img class="img-responsive" src="<?php echo $featured_img[0]; ?>">
 				<?php else: ?>
-					<?php echo CallToAction::toHTML( $object->feature_cta ); ?>
+					<?php echo Spotlight::toHTML( $object->feature_spotlight ); ?>
 				<?php endif; ?>
 				</div>
 				<div class="col-md-7">
