@@ -732,21 +732,24 @@ class Section extends CustomPostType {
 ?>
 		<section id="<?php echo $object->post_name; ?>" class="bucket-section">
 			<div class="section-header">
-			<?php if ( $object->header_video_mp4 ) : ?>
-				<video class="section-header-video">
-					<source src="<?php echo $object->header_video_mp4; ?>" type="video/mp4">
-				</video>
-			<?php endif; ?>
-			<?php if ( $object->header_image ) : ?>
-				<?php $header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) ); ?>
-				<div class="section-header-image" style="background-image: url(<?php echo $header_img[0]; ?>);">
-					<div class="section-header-wrapper">
-						<span class="section-header-text" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
-							<?php echo $object->header_text; ?>
-						</span>
-					</div>
+				<div class="section-header-text-wrapper">
+					<span class="section-header-text" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
+					<?php echo $object->header_text; ?>
+					</span>
 				</div>
-			<?php endif; ?>
+				<?php if ( $object->header_image ) : ?>
+					<?php $header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) ); ?>
+					<div class="section-header-image" style="background-image: url(<?php echo $header_img[0]; ?>);">
+					</div>
+				<?php endif; ?>
+				<?php if ( $object->header_video_mp4 ) : ?>
+					<?php $header_video_url = wp_get_attachment_url( $object->header_video_mp4 ); ?>
+					<div class="section-header-video-container">
+						<video class="section-header-video" autoplay loop>
+							<source src="<?php echo $header_video_url; ?>" type="video/mp4">
+						</video>
+					</div>
+				<?php endif; ?>
 			</div>
 			<div class="container">
 			<h2><?php echo $object->post_title; ?></h2>

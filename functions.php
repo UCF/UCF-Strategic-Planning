@@ -46,7 +46,6 @@ function get_weather_data() {
 
 function get_weather_icon( $condition ) {
 	// https://erikflowers.github.io/weather-icons/
-	// TODO: add more icons to this now that we're using weather icons
 
 	$icon_prefix = "wi wi-";
 	$icons_to_conditions = array(
@@ -89,7 +88,7 @@ function get_weather_icon( $condition ) {
 				'scattered thunderstorms',
 				'scattered thundershowers',
 				'scattered showers',
-				'Freezing rain',
+				'freezing rain',
 				'isolated thunderstorms',
 				'isolated thundershowers'
 			),

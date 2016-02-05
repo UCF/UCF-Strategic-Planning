@@ -1,16 +1,48 @@
 .bucket-section {
   margin-top: 70px;
 
+  .section-header {
+    position: relative;
+    height: 750px;
+    width: 100%;
+  }
+
   .section-header-image {
     background-size: cover;
     background-position: center center;
     height: 750px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 80;
+
+    opacity: 1;
+    transition: opacity 1s ease;
   }
-  .section-header-wrapper {
+  .section-header-video-container {
+    height: 750px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+
+  }
+  .section-header-video {
+    width: 100%;
+  }
+
+  .section-header:hover .section-header-image {
+    opacity: 0;
+  }
+
+  .section-header-text-wrapper {
     display: table;
     height: 100%;
     width: 100%;
-
+    position: absolute;
+    top: 0;
+    z-index: 100;
     .section-header-text {
       color: #fff;
       display: table-cell;
