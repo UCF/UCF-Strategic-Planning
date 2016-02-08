@@ -3,6 +3,26 @@
 
 // Theme Specific Code Here
 // ...
+var headerImage = function($) {
+	var resize = function() {
+		var $image = $('.header-image'),
+			width = $image.width(),
+			height = (width * 0.375).clamp(400, 750);
+
+		$image.height(height + 'px');
+	};
+
+	resize();
+
+	$(window).on('resize', function() {
+		resize();
+	});
+};
+
+Number.prototype.clamp = function(min, max) {
+	return Math.min(Math.max(this, min), max);
+};
+
 var calendarWidget = function($) {
 	if ($('.calendar-slider')) {
 		//Helper functions
@@ -35,6 +55,33 @@ var calendarWidget = function($) {
 			});
 		};
 
+		var stripTags = function( str ) {
+			var tmp = document.createElement('div');
+			tmp.innerHTML = str;
+			return tmp.textContent || tmp.innerText;
+		};
+
+		var shortenDesc = function(desc) {
+			var charCount = 0,
+					charCountMax = 127,
+					words = stripTags(desc).split(' ');
+					retval = [];
+
+			for (var i in words) {
+				var word = words[i];
+				charCount += word.length;
+				if (charCount >= charCountMax) {
+					retval.push('&hellip;');
+					return retval.join(' ');
+				} else {
+					retval.push(word);
+				}
+			}
+
+			return retval.join(' ');
+
+		};
+
 		var updateEvents = function(url) {
 			$.get(url, function(data) {
 				var $events = $eventSlider.find('.carousel-inner');
@@ -44,7 +91,7 @@ var calendarWidget = function($) {
 							item = data[i];
 					$template.find('a').attr('href', item.url);
 					$template.find('h4').text(item.title);
-					$template.find('a').append(item.description);
+					$template.find('p').html(shortenDesc(item.description));
 					$template.removeAttr('id');
 					$template.removeClass('sr-only');
 					if (i === '0') {
@@ -61,6 +108,7 @@ var calendarWidget = function($) {
 				slug         = $cal.attr('data-slug'),
 				date         = new Date(),
 				year         = date.getFullYear(),
+				day          = date.getDate(),
 				month        = padNumber(date.getMonth() + 1);
 
 		$('#calendar_widget').on('click', '.pager a', function(e) {
@@ -86,35 +134,15 @@ var calendarWidget = function($) {
 
 		var url = getRestUrl(id, slug, year, month);
 		updateCalendar(url);
+
+		var todayEventFeed = 'https://events.ucf.edu/' + year + '/' + month + '/' + day + '/feed.json';
+		updateEvents(todayEventFeed);
 	}
-};
-
-var monthName = function(monthIndex) {
-	var months = {
-		0: '',
-		1: 'January',
-		2: 'February',
-		3: 'March',
-		4: 'April',
-		5: 'May',
-		6: 'June',
-		7: 'July',
-		8: 'August',
-		9: 'September',
-		10: 'October',
-		11: 'November',
-		12: 'December'
-	};
-
-	return months[monthIndex];
-};
-
-var daysInMonth= function(month, year) {
-	return new Date(year, month, 0).getDate();
 };
 
 if (typeof jQuery !== 'undefined') {
 	jQuery(document).ready( function($) {
+		headerImage($);
 		calendarWidget($);
 	});
 }

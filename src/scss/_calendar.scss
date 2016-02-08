@@ -14,6 +14,11 @@
       @include respond-to(sm) { top: 25px; }
       @include respond-to(xs) { top: 4px; }
 
+      .btn-default {
+        background: transparent;
+        border-color: #fff;
+      }
+
       &.previous {
         left: 0;
       }
@@ -23,12 +28,13 @@
       }
 
       i {
-        color: $brand-primary;
+        color: #fff;
       }
 
       & > a,
       & > span {
-        padding: 4px 10px;
+        font-size: 10px;
+        padding: 6px 10px;
         @include respond-to(sm) {
           padding: 2px 8px;
         }
@@ -137,5 +143,32 @@
         }
       }
     }
+  }
+}
+
+.events-slider {
+
+  margin-bottom: 48px;
+
+  .carousel-inner {
+    margin: 0 auto;
+    width: 70%;
+
+    h4 {
+      font-family: $font-family-sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    p {
+      font-family: $font-family-serif;
+      font-size: 12px;
+      font-weight: normal;
+    }
+  }
+
+  .carousel-control {
+    color: #fc0;
+    top: 40%;
   }
 }

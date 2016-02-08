@@ -239,9 +239,11 @@ function sc_calendar_widget() {
                 <span class="sr-only">Next</span>
             </a>
         </div>
+        <a href="https//events.ucf.edu" class="read-more">All Events &rsaquo;</a>
         <div id="event-template" class="item sr-only">
             <a href="#">
                 <h4>Event Title</h4>
+                <p></p>
             </a>
         </div>
     </div>
