@@ -578,8 +578,13 @@ class Spotlight extends CustomPostType {
 
 	public function toHTML( $object ) {
 		$image_url = has_post_thumbnail( $object->ID ) ? 
-			wp_get_attachment_image_src( get_post_thumbnail_id( $object->ID ), 'spotlight' )[0] :
+			wp_get_attachment_image_src( get_post_thumbnail_id( $object->ID ), 'spotlight' ) :
 			null;
+
+		if ( $image_url ) {
+			$image_url = $image_url[0];
+		}
+
 		$url = get_field( 'spotlight_url', $object->ID );
 
 		$title_color = get_field( 'spotlight_text_color', $object->ID );
