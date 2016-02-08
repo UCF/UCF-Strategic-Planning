@@ -214,4 +214,40 @@ function sc_search_form() {
 }
 add_shortcode( 'search_form', 'sc_search_form' );
 
+function sc_calendar_widget() {
+    $attr = shortcode_atts( array(
+        'id'    => 'calendar_widget',
+        'slug'  => 'events-at-ucf',
+        'view'  => 'frontend',
+        'year'  => date( 'Y' ),
+        'month' => date( 'm' )
+    ), $attr);
+
+    ob_start();
+?>
+    <div id="<?php echo $attr['id']; ?>"> 
+        <div class="calendar-slider" data-slug="<?php echo $attr['slug']; ?>" data-view="<?php echo $attr['view']; ?>" data-year="<?php echo $attr['year']; ?>" data-month="<?php echo $attr['month']; ?>"></div>
+        <div id="<?php echo $attr['id'] . '_slider'; ?>" class="events-slider carousel" data-ride="carousel">
+            <div class="carousel-inner" role="listbox">
+            </div>
+            <a class="left carousel-control" href="#<?php echo $attr['id'] . '_slider'?>" role="button" data-slide="prev">
+                <span class="fa fa-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#<?php echo $attr['id'] . '_slider'?>" role="button" data-slide="next">
+                <span class="fa fa-chevron-right"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <div id="event-template" class="item sr-only">
+            <a href="#">
+                <h4>Event Title</h4>
+            </a>
+        </div>
+    </div>
+<?php
+    return ob_get_clean();
+}
+add_shortcode( 'calendar_widget', 'sc_calendar_widget' );
+
 ?>

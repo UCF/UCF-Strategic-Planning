@@ -70,6 +70,47 @@ function get_footer_menu() {
 	return json_decode( $file );
 }
 
+function display_footer_menu() {
+	$menu = get_footer_menu();
+
+	ob_start();
+?>
+	<ul class="list-inline site-footer-menu">
+	<?php foreach( $menu->items as $item ) : ?>
+		<li><a href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a></li>
+	<?php endforeach; ?>
+	</ul>
+<?php
+	echo ob_get_clean();
+}
+
+function display_top_news() {
+	$items = get_news(0, 2);
+	ob_start();
+?>
+	<ul class="footer-news">
+	<?php foreach( $items as $key=>$item ) : ?>
+		<li class="footer-news-item">
+			<a href="<?php echo $item->get_link(); ?>">
+				<h3><?php echo $item->get_title(); ?></h3>
+				<p class="read-more">Read More &rsaquo;</p>
+			</a>
+		</li>
+	<?php endforeach; ?>
+	</ul>
+	<a class="all-link" href="http://today.ucf.edu">All News &rsaquo;</a>
+<?php
+	echo ob_get_clean();
+}
+
+function display_events_widget() {
+	ob_start();
+?>
+
+<?php
+	echo ob_get_clean();
+}
+
 function get_weather_data() {
 	$opts = array(
 		'http' => array(
@@ -153,5 +194,66 @@ function get_weather_icon( $condition ) {
 	// no icon name will be returned and so no icon will be used
 	return false;
 }
+
+class EventsProxy {
+	public static function get_plugin_namespace() {
+		return 'events/v1';
+	}
+
+	public function register_routes() {
+		register_rest_route( self::get_plugin_namespace(), 
+			'/(?P<id>\d+)/(?P<slug>[a-zA-Z0-9_-]+)/(?P<size>[a-zA-Z0-9_-]+)/(?P<year>\d{4})/(?P<month>\d{2})', 
+			array(
+				array(
+					'methods'  => WP_REST_Server::READABLE,
+					'callback' => array( $this, 'get_calendar' ),
+					'args'     => array(
+                        'context' => array(
+                            'default' => 'view'
+                        )
+                    )   
+				)
+		) );
+	}
+
+	public static function get_calendar( $request ) {
+		$id    = (int) $request['id'];
+		$slug  = $request['slug'];
+		$size  = $request['size'] ? $request['size'] : 'small';
+		$year  = $request['year'] ? $request['year'] : date( 'Y' );
+		$month = $request['month'] ? $request['month'] : date( 'm' );
+		$base  = UCF_EVENTS_WIDGET;
+		$params = array(
+			$base,
+			$id,
+			$slug,
+			$size,
+			$year,
+			$month
+		);
+
+		$url = implode( '/', $params );
+
+		$opts = array(
+			'http' => array(
+				'timeout'=> 15
+			)
+		);
+
+		$context = stream_context_create( $opts );
+		$file = file_get_contents( $url, false, $context );
+
+		return $file;
+	}
+}
+
+if ( ! function_exists( 'events_proxy_init' ) ) {
+	function events_proxy_init() {
+		$class = new EventsProxy();
+		add_filter( 'rest_api_init', array( $class, 'register_routes' ) );
+	}
+}
+
+add_action( 'init', 'events_proxy_init' );
 
 ?>
