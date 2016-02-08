@@ -635,6 +635,12 @@ class Section extends CustomPostType {
 				'type'        => 'file'
 			),
 			array(
+				'name'        => 'Loop Video',
+				'description' => 'Loop video.',
+				'id'          => $prefix.'header_video_loop',
+				'type'        => 'checkbox'
+			),
+			array(
 				'name'        => 'Header Text',
 				'description' => 'The text that will appear over the video header.',
 				'id'          => $prefix.'header_text',
@@ -713,15 +719,16 @@ class Section extends CustomPostType {
 		$post_id    = $object->ID;
 		$prefix     = 'section_';
 
-		$object->header_image      = get_field( $prefix.'header_image', $post_id );
-		$object->header_video_mp4  = get_field( $prefix.'header_video_mp4', $post_id );
-		$object->header_text       = get_field( $prefix.'header_text', $post_id );
-		$object->header_text_color = get_field( $prefix.'header_text_color', $post_id );
-		$object->lead_text         = get_field( $prefix.'lead_text', $post_id );
-		$object->feature_type      = get_field( $prefix.'feature_type', $post_id );
-		$object->feature_image     = get_field( $prefix.'feature_image', $post_id );
-		$object->feature_spotlight = get_field( $prefix.'feature_spotlight', $post_id );
-		$object->content           = get_field( $prefix.'content', $post_id );
+		$object->header_image        = get_field( $prefix.'header_image', $post_id );
+		$object->header_video_mp4    = get_field( $prefix.'header_video_mp4', $post_id );
+		$object->header_video_loop   = get_field( $prefix.'header_video_loop', $post_id );
+		$object->header_text         = get_field( $prefix.'header_text', $post_id );
+		$object->header_text_color   = get_field( $prefix.'header_text_color', $post_id );
+		$object->lead_text           = get_field( $prefix.'lead_text', $post_id );
+		$object->feature_type        = get_field( $prefix.'feature_type', $post_id );
+		$object->feature_image       = get_field( $prefix.'feature_image', $post_id );
+		$object->feature_spotlight   = get_field( $prefix.'feature_spotlight', $post_id );
+		$object->content             = get_field( $prefix.'content', $post_id );
 
 		return $object;
 	}
@@ -739,16 +746,18 @@ class Section extends CustomPostType {
 				</div>
 				<?php if ( $object->header_image ) : ?>
 					<?php $header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) ); ?>
-					<div class="section-header-image" style="background-image: url(<?php echo $header_img[0]; ?>);">
-					</div>
+					<div class="section-header-image <?php echo $object->header_video_mp4 ? 'has-video' : '' ?>" style="background-image: url(<?php echo $header_img[0]; ?>);"></div>
 				<?php endif; ?>
 				<?php if ( $object->header_video_mp4 ) : ?>
 					<?php $header_video_url = wp_get_attachment_url( $object->header_video_mp4 ); ?>
+					<div class="section-header-video-container video-placeholder" data-video-src= "<?php echo $header_video_url; ?>" data-video-loop="<?php echo $object->header_video_loop; ?>"></div>
+<!--
 					<div class="section-header-video-container">
 						<video class="section-header-video" autoplay loop>
 							<source src="<?php echo $header_video_url; ?>" type="video/mp4">
 						</video>
 					</div>
+-->
 				<?php endif; ?>
 			</div>
 			<div class="container">

@@ -8,7 +8,7 @@
   }
 
   .section-header-image {
-    background-size: cover;
+     background-size: cover;
     background-position: center center;
     height: 750px;
     position: absolute;
@@ -18,7 +18,28 @@
 
     opacity: 1;
     transition: opacity 1s ease;
+
+    &.has-video {
+      opacity: 0;
+    }
   }
+  // .section-header-img {
+  //   width: 100%;
+  //   position: absolute;
+  //   left: 50%;
+  //   top: 50%;
+  //   /* The following will size the video to fit the full container. Not necessary, just nice.*/
+  //   min-width: 100%;
+  //   min-height: 100%;
+  //   -webkit-transform: translate(-50%,-50%);
+  //   -moz-transform: translate(-50%,-50%);
+  //   -ms-transform: translate(-50%,-50%);
+  //   transform: translate(-50%,-50%);
+  //   z-index: 80;
+
+  //   opacity: 0;
+  //   transition: opacity 1s ease;
+  // }
   .section-header-video-container {
     height: 750px;
     overflow: hidden;
@@ -28,13 +49,40 @@
     z-index: -1;
 
   }
+
+  .section-header-image-container {
+    height: 750px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+  }
   .section-header-video {
     width: 100%;
+
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    /* The following will size the video to fit the full container. Not necessary, just nice.*/
+    min-width: 100%;
+    min-height: 100%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    z-index: 0;
+
   }
 
-  .section-header:hover .section-header-image {
-    opacity: 0;
-  }
+  // .section-header:hover .section-header-image {
+  //   opacity: 1;
+  // }
+
+  // .section-header:hover .section-header-img {
+  //   opacity: 1;
+  // }
 
   .section-header-text-wrapper {
     display: table;
@@ -43,6 +91,9 @@
     position: absolute;
     top: 0;
     z-index: 100;
+
+
+
     .section-header-text {
       color: #fff;
       display: table-cell;
