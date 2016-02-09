@@ -95,7 +95,7 @@ function display_footer_news() {
 		<div class="row">
 			<div class="col-xs-2 col-sm-4 col-md-3">
 				<div class="news-thumbnail">
-					<img class="img-responsive img-rounded" src="<?php echo $image; ?>" alt="Feed image for <?php echo $item->get_title(); ?>">
+					<img class="img-responsive" src="<?php echo $image; ?>" alt="Feed image for <?php echo $item->get_title(); ?>">
 				</div>
 			</div>
 			<div class="col-xs-10 col-sm-8 col-md-9">
@@ -172,26 +172,26 @@ function display_social() {
 ?>
 	<div class="social">
 	<?php if ( $facebook_url ) : ?>
-		<a href="<?php echo $facebook_url; ?>" target="_blank" class="ga-event-link">
-			<i class="fa fa-facebook-square"></i>
+		<a href="<?php echo $facebook_url; ?>" target="_blank" class="social-icon ga-event-link">
+			<i class="fa fa-facebook"></i>
 			<span class="sr-only">Like us on Facebook</span>
 		</a>
 	<?php endif; ?>
 	<?php if ( $twitter_url ) : ?>
-		<a href="<?php echo $twitter_url; ?>" target="_blank" class="ga-event-link">
-			<i class="fa fa-twitter-square"></i>
+		<a href="<?php echo $twitter_url; ?>" target="_blank" class="social-icon ga-event-link">
+			<i class="fa fa-twitter"></i>
 			<span class="sr-only">Follow us on Twitter</span>
 		</a>
 	<?php endif; ?>
 	<?php if ( $googleplus_url ) : ?>
-		<a href="<?php echo $googleplus_url; ?>" target="_blank" class="ga-event-link">
-			<i class="fa fa-google-plus-square"></i>
+		<a href="<?php echo $googleplus_url; ?>" target="_blank" class="social-icon ga-event-link">
+			<i class="fa fa-google-plus"></i>
 			<span class="sr-only">Follow us on Google+</span>
 		</a>
 	<?php endif; ?>
 	<?php if ( $linkedin_url ) : ?>
-		<a href="<?php echo $linkedin_url; ?>" target="_blank" class="ga-event-link">
-			<i class="fa fa-linkedin-square"></i>
+		<a href="<?php echo $linkedin_url; ?>" target="_blank" class="social-icon ga-event-link">
+			<i class="fa fa-linkedin"></i>
 			<span class="sr-only">View our LinkedIn page</span>
 		</a>
 	<?php endif; ?>
