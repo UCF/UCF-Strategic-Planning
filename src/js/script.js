@@ -32,10 +32,10 @@ var headerImage = function($) {
 	});
 };
 
-var positionImages = function($) {
+var positionHeaderBackgrounds = function($) {
 
-	var resizeImage = function() {
-		$('.section-header-image').each( function() {
+	var resizeImages = function() {
+		$('.section-header-image, .section-header-video').each( function() {
 			var $this = $(this);
 			var canvasWidth = parseInt($this.parent().width());
 			var canvasHeight = parseInt($this.parent().height());
@@ -55,10 +55,10 @@ var positionImages = function($) {
 		});
 	};
 
-	resizeImage();
+	resizeImages();
 
 	$(window).on('resize', function () {
-			resizeImage();
+			resizeImages();
 	});
 };
 
@@ -146,6 +146,6 @@ if (typeof jQuery !== 'undefined') {
 	jQuery(document).ready(function ($) {
 		headerImage($);
 		initVideos($);
-		positionImages($);
+		positionHeaderBackgrounds($);
 	});
 }
