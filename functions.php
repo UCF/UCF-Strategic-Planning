@@ -37,13 +37,22 @@ function get_header_menu() {
 
 	$context = stream_context_create( $opts );
 
-	$file = file_get_contents( get_theme_mod_or_default( 'header_menu_feed' ), false, $context );
+	$file_location = get_theme_mod_or_default( 'header_menu_feed' );
+	if ( empty( $file_location ) ) {
+		return;
+	}
+
+	$file = file_get_contents( $file_location , false, $context );
 
 	return json_decode( $file );
 }
 
 function display_header_menu() {
 	$menu = get_header_menu();
+
+	if (empty($menu) || !in_array("items", $menu)) {
+		return;
+	}
 
 	ob_start();
 ?>
@@ -65,13 +74,23 @@ function get_footer_menu() {
 
 	$context = stream_context_create( $opts );
 
-	$file = file_get_contents( get_theme_mod_or_default( 'footer_menu_feed' ), false, $context );
+	$file_location = get_theme_mod_or_default( 'footer_menu_feed' );
+
+	if ( empty( $file_location ) ) {
+		return;
+	}
+
+	$file = file_get_contents( $file_location, false, $context );
 
 	return json_decode( $file );
 }
 
 function display_footer_menu() {
 	$menu = get_footer_menu();
+
+	if (empty($menu) || !in_array("items", $menu)) {
+		return;
+	}
 
 	ob_start();
 ?>
@@ -289,8 +308,8 @@ class EventsProxy {
 	}
 
 	public function register_routes() {
-		register_rest_route( self::get_plugin_namespace(), 
-			'/(?P<id>\d+)/(?P<slug>[a-zA-Z0-9_-]+)/(?P<size>[a-zA-Z0-9_-]+)/(?P<year>\d{4})/(?P<month>\d{2})', 
+		register_rest_route( self::get_plugin_namespace(),
+			'/(?P<id>\d+)/(?P<slug>[a-zA-Z0-9_-]+)/(?P<size>[a-zA-Z0-9_-]+)/(?P<year>\d{4})/(?P<month>\d{2})',
 			array(
 				array(
 					'methods'  => WP_REST_Server::READABLE,
@@ -299,7 +318,7 @@ class EventsProxy {
                         'context' => array(
                             'default' => 'view'
                         )
-                    )   
+                    )
 				)
 		) );
 	}
