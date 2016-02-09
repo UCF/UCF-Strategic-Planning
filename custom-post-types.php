@@ -746,34 +746,31 @@ class Section extends CustomPostType {
 				</div>
 				<?php if ( $object->header_image ) : ?>
 					<?php $header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) ); ?>
-					<div class="section-header-image <?php echo $object->header_video_mp4 ? 'has-video' : '' ?>" style="background-image: url(<?php echo $header_img[0]; ?>);"></div>
+					<div class="section-header-image-container <?php echo $object->header_video_mp4 ? 'has-video' : '' ?>">
+						<img class="section-header-image" src="<?php echo $header_img[0]; ?>" />
+					</div>
 				<?php endif; ?>
 				<?php if ( $object->header_video_mp4 ) : ?>
 					<?php $header_video_url = wp_get_attachment_url( $object->header_video_mp4 ); ?>
-					<div class="section-header-video-container video-placeholder" data-video-src= "<?php echo $header_video_url; ?>" data-video-loop="<?php echo $object->header_video_loop; ?>"></div>
-<!--
-					<div class="section-header-video-container">
-						<video class="section-header-video" autoplay loop>
-							<source src="<?php echo $header_video_url; ?>" type="video/mp4">
-						</video>
+					<div class="section-header-video-container video-placeholder" data-video-src= "<?php echo $header_video_url; ?>" data-video-loop="<?php echo $object->header_video_loop; ?>">
 					</div>
--->
 				<?php endif; ?>
 			</div>
 			<div class="container">
-			<h2><?php echo $object->post_title; ?></h2>
-			<p class="lead"><?php echo $object->lead_text; ?></p>
-			<div class="row">
-				<div class="col-md-5">
-				<?php if ( $object->feature_type == 'feature_image' ) : ?>
-					<?php $featured_img = wp_get_attachment_image_src( $object->feature_image, 'large' ); ?>
-					<img class="img-responsive" src="<?php echo $featured_img[0]; ?>">
-				<?php else: ?>
-					<?php echo Spotlight::toHTML( $object->feature_spotlight ); ?>
-				<?php endif; ?>
-				</div>
-				<div class="col-md-7">
-					<?php echo apply_filters( 'the_content', $object->content); ?>
+				<h2><?php echo $object->post_title; ?></h2>
+				<p class="lead"><?php echo $object->lead_text; ?></p>
+				<div class="row">
+					<div class="col-md-5">
+					<?php if ( $object->feature_type == 'feature_image' ) : ?>
+						<?php $featured_img = wp_get_attachment_image_src( $object->feature_image, 'large' ); ?>
+						<img class="img-responsive" src="<?php echo $featured_img[0]; ?>">
+					<?php else: ?>
+						<?php echo Spotlight::toHTML( $object->feature_spotlight ); ?>
+					<?php endif; ?>
+					</div>
+					<div class="col-md-7">
+						<?php echo apply_filters( 'the_content', $object->content); ?>
+					</div>
 				</div>
 			</div>
 		</section>

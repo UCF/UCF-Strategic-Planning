@@ -5,7 +5,7 @@
 	</head>
 	<body ontouchstart <?php echo body_class(); ?>>
 		<header class="site-header">
-			<div class="header-image" style="background-image: url(<?php echo header_image(); ?>">
+			<div class="header-image" style="background-image: url(<?php echo header_image(); ?>);">
 				<div class="header-center">
 					<div class="title-wrapper">
 						<div class="title-header-container">

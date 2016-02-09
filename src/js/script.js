@@ -32,6 +32,37 @@ var headerImage = function($) {
 	});
 };
 
+var positionImages = function($) {
+
+	var resizeImage = function() {
+		$('.section-header-image').each( function() {
+			var $this = $(this);
+			var canvasWidth = parseInt($this.parent().width());
+			var canvasHeight = parseInt($this.parent().height());
+
+			var minRatio = Math.max(canvasWidth / $this.width(), canvasHeight / $this.height());
+
+			var newImgWidth = minRatio * $this.width();
+			var newImgHeight = minRatio * $this.height();
+
+			var newImgX = (canvasWidth - newImgWidth) / 2;
+			var newImgY = (canvasHeight - newImgHeight) / 2;
+
+			$this.css('width', newImgWidth);
+			$this.css('height', newImgHeight);
+			$this.css('left', newImgX);
+			$this.css('top', newImgY);
+		});
+	};
+
+	resizeImage();
+
+	$(window).on('resize', function () {
+			resizeImage();
+	});
+};
+
+
 // Test if video auto plays
 var canPlayVideo = function($) {
 
@@ -92,7 +123,6 @@ var initVideos = function($) {
 	var result = canPlayVideo($);
 
 	if (!result) {
-		console.log('cannot play videos');
 		return false;
 	}
 
@@ -104,11 +134,8 @@ var initVideos = function($) {
 				else {
 					this.pause();
 				}
-				 console.log(isScrolledIntoView(this), this);
 			});
 	});
-
-
 };
 
 Number.prototype.clamp = function(min, max) {
@@ -119,5 +146,6 @@ if (typeof jQuery !== 'undefined') {
 	jQuery(document).ready(function ($) {
 		headerImage($);
 		initVideos($);
+		positionImages($);
 	});
 }
