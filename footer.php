@@ -13,7 +13,7 @@
 					<div class="col-sm-4">
 						<?php display_contact_info(); ?>
 						<h2>Contact Us</h2>
-						<?php echo do_shortcode( '[gravityform id="1" title="false" description="false"]' ); ?>
+						<?php display_contact_form(); ?>
 						<h2>Connect with Us</h2>
 						<?php display_social(); ?>
 					</div>

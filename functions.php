@@ -158,20 +158,9 @@ function display_contact_info() {
 	echo ob_get_clean();
 }
 
-function get_weather_data() {
-	$opts = array(
-		'http' => array(
-			'timeout' => 15
-		)
-	);
-
-	$context = stream_context_create( $opts );
-	$file = file_get_contents( get_theme_mod_or_default( 'weather_feed_url' ), false, $context );
-	$weather = json_decode( $file );
-
-	$weather->icon = get_weather_icon( $weather->condition );
-
-	return $weather;
+function display_contact_form() {
+	$form_id = get_theme_mod_or_default( 'footer_contact_form' );
+	echo do_shortcode( '[gravityform id="'.$form_id.'" title="false" description="false"]' );
 }
 
 function display_social() {
@@ -209,6 +198,22 @@ function display_social() {
 	</div>
 <?php
 	echo ob_get_clean();
+}
+
+function get_weather_data() {
+	$opts = array(
+		'http' => array(
+			'timeout' => 15
+		)
+	);
+
+	$context = stream_context_create( $opts );
+	$file = file_get_contents( get_theme_mod_or_default( 'weather_feed_url' ), false, $context );
+	$weather = json_decode( $file );
+
+	$weather->icon = get_weather_icon( $weather->condition );
+
+	return $weather;
 }
 
 function get_weather_icon( $condition ) {

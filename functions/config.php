@@ -220,6 +220,30 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
+	$form_choices = array( '' => '-- Choose Form --');
+
+	if ( method_exists( 'RGFormsModel', 'get_forms' ) ) {
+		$forms = RGFormsModel::get_forms( null, 'title' );
+		foreach( $forms as $form ) {
+			$form_choices[$form->id] = $form->title;
+		}
+	}
+
+	$wp_customize->add_setting(
+		'footer_contact_form'
+	);
+
+	$wp_customize->add_control(
+		'footer_contact_form',
+		array(
+			'type'        => 'select',
+			'label'       => 'Footer Contact Form',
+			'description' => 'The form that will be shown in the footer.',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'home_custom',
+			'choices'     => $form_choices
+		)
+	);
+
 	// Menus
 	$wp_customize->add_setting(
 		'header_menu_feed'
