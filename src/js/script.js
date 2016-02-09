@@ -144,9 +144,10 @@ Number.prototype.clamp = function(min, max) {
 };
 
 if (typeof jQuery !== 'undefined') {
-	jQuery(document).ready(function ($) {
+	jQuery(document).ready( function($) {
 		headerImage($);
 		isAutoPlay($);
 		positionHeaderBackgrounds($);
 	});
 }
+

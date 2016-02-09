@@ -12,6 +12,7 @@ define( 'THEME_IMG_URL', THEME_STATIC_URL.'/img' );
 define( 'THEME_JS_URL', THEME_STATIC_URL.'/js' );
 define( 'THEME_CSS_URL', THEME_STATIC_URL.'/css' );
 define( 'THEME_DATA_URL', THEME_STATIC_URL.'/data' );
+define( 'UCF_EVENTS_WIDGET', 'http://events.ucf.edu/calendar-widget/frontend/calendar' );
 
 define( 'GA_ACCOUNT', get_theme_mod_or_default( 'ga_account' ) );
 define( 'CB_UID', get_theme_mod_or_default( 'cb_uid' ) );
@@ -36,7 +37,7 @@ Config::$custom_post_types = array(
 
 
 Config::$custom_taxonomies = array(
-	
+
 );
 
 Config::$shortcodes = array(
@@ -97,6 +98,7 @@ Config::$setting_defaults = array(
 	'search_per_page' => 10,
 	'cloud_typography_key' => '//cloud.typography.com/730568/675644/css/fonts.css', // Main site css key
 	'weather_feed_url' => 'http://weather.smca.ucf.edu/',
+	'header_menu_feed' => ''
 );
 
 
@@ -134,10 +136,23 @@ function define_customizer_sections( $wp_customize ) {
 		)
 	);
 	$wp_customize->add_section(
+		THEME_CUSTOMIZER_PREFIX.'remote_menus',
+		array(
+			'title' => 'Remote Menus'
+		)
+	);
+	$wp_customize->add_section(
 		THEME_CUSTOMIZER_PREFIX . 'events',
 		array(
 			'title'       => 'Events',
 			'description' => 'Settings for event lists used throughout the site.'
+		)
+	);
+	$wp_customize->add_section(
+		THEME_CUSTOMIZER_PREFIX . 'org_info',
+		array(
+			'title'       => 'Organization Info',
+			'description' => 'Contact information'
 		)
 	);
 	$wp_customize->add_section(
@@ -203,6 +218,62 @@ function define_customizer_fields( $wp_customize ) {
 			'label'       => 'Weather Feed URL',
 			'description' => 'The url of the CM Weather Feed',
 			'section'     => THEME_CUSTOMIZER_PREFIX . 'home_custom'
+		)
+	);
+
+	$form_choices = array( '' => '-- Choose Form --');
+
+	if ( method_exists( 'RGFormsModel', 'get_forms' ) ) {
+		$forms = RGFormsModel::get_forms( null, 'title' );
+		foreach( $forms as $form ) {
+			$form_choices[$form->id] = $form->title;
+		}
+	}
+
+	$wp_customize->add_setting(
+		'footer_contact_form'
+	);
+
+	$wp_customize->add_control(
+		'footer_contact_form',
+		array(
+			'type'        => 'select',
+			'label'       => 'Footer Contact Form',
+			'description' => 'The form that will be shown in the footer.',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'home_custom',
+			'choices'     => $form_choices
+		)
+	);
+
+	// Menus
+	$wp_customize->add_setting(
+		'header_menu_feed',
+		array(
+			'default'     => get_setting_default( 'header_menu_feed' ),
+		)
+	);
+
+	$wp_customize->add_control(
+		'header_menu_feed',
+		array(
+			'type'        => 'text',
+			'label'       => 'Header Menu Feed',
+			'description' => 'The JSON feed of the www.ucf.edu header menu.',
+			'section'     => THEME_CUSTOMIZER_PREFIX.'remote_menus'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'footer_menu_feed'
+	);
+
+	$wp_customize->add_control(
+		'footer_menu_feed',
+		array(
+			'type'        => 'text',
+			'label'       => 'Footer Menu Feed',
+			'description' => 'The JSON feed of the www.ucf.edu footer menu.',
+			'section'     => THEME_CUSTOMIZER_PREFIX.'remote_menus'
 		)
 	);
 
@@ -274,6 +345,46 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
+
+	// Org Info
+	$wp_customize->add_setting(
+		'organization_name'
+	);
+	$wp_customize->add_control(
+		'organization_name',
+		array(
+			'type'        => 'text',
+			'label'       => 'Oragnization Name',
+			'description' => 'The name that will be displayed with organization info is displayed',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'org_info'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'organization_phone'
+	);
+	$wp_customize->add_control(
+		'organization_phone',
+		array(
+			'type'        => 'text',
+			'label'       => 'Oragnization Phone',
+			'description' => 'The phone number that will be displayed with organization info is displayed',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'org_info'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'organization_email'
+	);
+	$wp_customize->add_control(
+		'organization_email',
+		array(
+			'type'        => 'email',
+			'label'       => 'Oragnization Email',
+			'description' => 'The email address that will be displayed with organization info is displayed',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'org_info'
+		)
+	);
 
 	// News
 	$wp_customize->add_setting(
@@ -396,6 +507,31 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'googleplus_url'
+	);
+	$wp_customize->add_control(
+		'googleplus_url',
+		array(
+			'type'        => 'url',
+			'label'       => 'Google+ URL',
+			'description' => 'URL to the Google+ user account you would like to direct visitors to.  Example: <em>http://plus.google.com/UCF</em>',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'social'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'linkedin_url'
+	);
+	$wp_customize->add_control(
+		'linkedin_url',
+		array(
+			'type'        => 'url',
+			'label'       => 'LinkedIn URL',
+			'description' => 'URL to the LinkedIn user account you would like to direct visitors to.  Example: <em>http://linkedin.com/UCF</em>',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'social'
+		)
+	);
 
 	// Web Fonts
 	$wp_customize->add_setting(
@@ -560,7 +696,7 @@ function hook_frontend_theme_scripts() {
 	</script>
 	<?php endif;?>
 
-	
+
 <?php
 	echo ob_get_clean();
 }

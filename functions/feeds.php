@@ -35,7 +35,6 @@ class FeedManager {
 	 * @author Jared Lang
 	 * */
 	static protected function __new_feed( $url ) {
-		$timer = Timer::start();
 		require_once ABSPATH . '/wp-includes/class-simplepie.php';
 
 		$simplepie = null;
@@ -69,8 +68,6 @@ class FeedManager {
 			$failed = True;
 		}
 
-		$elapsed = round( $timer->elapsed() * 1000 );
-		debug( '__new_feed: {$elapsed} milliseconds' );
 		return array(
 			'content'   => $content,
 			'url'       => $url,

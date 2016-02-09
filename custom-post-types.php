@@ -472,7 +472,7 @@ class Page extends CustomPostType {
 				'description' => 'The active spotlight on the home page',
 				'id'          => $prefix.'spotlight',
 				'type'        => 'post_object',
-				'post_type'   => 'call_to_action'
+				'post_type'   => array( 'spotlight' )
 			),
 		);
 	}
@@ -570,8 +570,13 @@ class Spotlight extends CustomPostType {
 
 	public function toHTML( $object ) {
 		$image_url = has_post_thumbnail( $object->ID ) ?
-			wp_get_attachment_image_src( get_post_thumbnail_id( $object->ID ), 'spotlight' )[0] :
+			wp_get_attachment_image_src( get_post_thumbnail_id( $object->ID ), 'spotlight' ) :
 			null;
+
+		if ( $image_url ) {
+			$image_url = $image_url[0];
+		}
+
 		$url = get_field( 'spotlight_url', $object->ID );
 
 		$title_color = get_field( 'spotlight_text_color', $object->ID );
