@@ -66,15 +66,12 @@ var positionHeaderBackgrounds = function($) {
 
 
 // Test if video auto plays
-var canPlayVideo = function($) {
+var isAutoPlay = function($) {
 
-	console.log(sessionStorage.canplayvideo);
-
-	if (sessionStorage.canplayvideo) {
-
-
-
-		return sessionStorage.canplayvideo;
+	// storing this in the session so we don't have to check every page load
+	if (sessionStorage.canplayvideo && sessionStorage.canplayvideo === true) {
+		loadVideos($);
+		return true;
 	}
 
 	var mp4 = 'data:video/mp4;base64,AAAAFGZ0eXBNU05WAAACAE1TTlYAAAOUbW9vdgAAAGxtdmhkAAAAAM9ghv7PYIb+AAACWAAACu8AAQAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAnh0cmFrAAAAXHRraGQAAAAHz2CG/s9ghv4AAAABAAAAAAAACu8AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAFAAAAA4AAAAAAHgbWRpYQAAACBtZGhkAAAAAM9ghv7PYIb+AAALuAAANq8AAAAAAAAAIWhkbHIAAAAAbWhscnZpZGVBVlMgAAAAAAABAB4AAAABl21pbmYAAAAUdm1oZAAAAAAAAAAAAAAAAAAAACRkaW5mAAAAHGRyZWYAAAAAAAAAAQAAAAx1cmwgAAAAAQAAAVdzdGJsAAAAp3N0c2QAAAAAAAAAAQAAAJdhdmMxAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAFAAOABIAAAASAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGP//AAAAEmNvbHJuY2xjAAEAAQABAAAAL2F2Y0MBTUAz/+EAGGdNQDOadCk/LgIgAAADACAAAAMA0eMGVAEABGjuPIAAAAAYc3R0cwAAAAAAAAABAAAADgAAA+gAAAAUc3RzcwAAAAAAAAABAAAAAQAAABxzdHNjAAAAAAAAAAEAAAABAAAADgAAAAEAAABMc3RzegAAAAAAAAAAAAAADgAAAE8AAAAOAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA4AAAAOAAAAFHN0Y28AAAAAAAAAAQAAA7AAAAA0dXVpZFVTTVQh0k/Ou4hpXPrJx0AAAAAcTVREVAABABIAAAAKVcQAAAAAAAEAAAAAAAAAqHV1aWRVU01UIdJPzruIaVz6ycdAAAAAkE1URFQABAAMAAAAC1XEAAACHAAeAAAABBXHAAEAQQBWAFMAIABNAGUAZABpAGEAAAAqAAAAASoOAAEAZABlAHQAZQBjAHQAXwBhAHUAdABvAHAAbABhAHkAAAAyAAAAA1XEAAEAMgAwADAANQBtAGUALwAwADcALwAwADYAMAA2ACAAMwA6ADUAOgAwAAABA21kYXQAAAAYZ01AM5p0KT8uAiAAAAMAIAAAAwDR4wZUAAAABGjuPIAAAAAnZYiAIAAR//eBLT+oL1eA2Nlb/edvwWZflzEVLlhlXtJvSAEGRA3ZAAAACkGaAQCyJ/8AFBAAAAAJQZoCATP/AOmBAAAACUGaAwGz/wDpgAAAAAlBmgQCM/8A6YEAAAAJQZoFArP/AOmBAAAACUGaBgMz/wDpgQAAAAlBmgcDs/8A6YEAAAAJQZoIBDP/AOmAAAAACUGaCQSz/wDpgAAAAAlBmgoFM/8A6YEAAAAJQZoLBbP/AOmAAAAACkGaDAYyJ/8AFBAAAAAKQZoNBrIv/4cMeQ==',
@@ -102,27 +99,30 @@ var canPlayVideo = function($) {
 	// triggered if autoplay fails
 	var removeVideoTimeout = setTimeout(function () {
 		body.removeChild(video);
-		showVideoStill();
+		$('.section-header-video-container').remove();
+		sessionStorage.canplayvideo = false;
 	}, 50);
 
 	// triggered if autoplay works
 	video.addEventListener('play', function () {
 		clearTimeout(removeVideoTimeout);
 		body.removeChild(video);
+		loadVideos($);
 		sessionStorage.canplayvideo = true;
-		return true;
 	}, false);
 };
 
 // Place videos inside placeholders
 var loadVideos = function($) {
 
-	$('.video-placeholder').each( function() {
+	$('.section-header-video-container').each( function() {
 		var $this = $(this);
-		var video_src = $this.data('video-src');
+		var $video = $this.children('.section-header-video');
 		var video_loop = $this.data('video-loop') ? ' loop' : '';
+		var video_src = $this.data('video-src');
 
-		$this.html('<video class="section-header-video"' + video_loop + '><source src="' + video_src + '" type="video/mp4"></video>');
+		$video.attr('loop', video_loop);
+		$video.html('<source src="' + video_src + '" type="video/mp4">');
 		$this.parent().children('.section-header-image-container').addClass('has-video');
 	});
 
@@ -139,20 +139,6 @@ var loadVideos = function($) {
 
 };
 
-
-// Test if video auto plays
-var initVideos = function($) {
-
-	var playVideos = canPlayVideo($);
-
-	if (!playVideos) {
-		$('.video-placeholder').remove();
-		return false;
-	}
-
-	loadVideos($);
-};
-
 Number.prototype.clamp = function(min, max) {
 	return Math.min(Math.max(this, min), max);
 };
@@ -160,7 +146,7 @@ Number.prototype.clamp = function(min, max) {
 if (typeof jQuery !== 'undefined') {
 	jQuery(document).ready(function ($) {
 		headerImage($);
-		initVideos($);
+		isAutoPlay($);
 		positionHeaderBackgrounds($);
 	});
 }

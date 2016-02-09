@@ -752,8 +752,13 @@ class Section extends CustomPostType {
 				<?php endif; ?>
 				<?php if ( $object->header_video_mp4 ) : ?>
 					<?php $header_video_url = wp_get_attachment_url( $object->header_video_mp4 ); ?>
-					<div class="section-header-video-container video-placeholder" data-video-src= "<?php echo $header_video_url; ?>" data-video-loop="<?php echo $object->header_video_loop ? 'true' : 'false'; ?>">
+
+					<div class="section-header-video-container" data-video-src="<?php echo $header_video_url; ?>" data-video-loop="<?php echo $object->header_video_loop ? 'true' : 'false'; ?>">
+						<video class="section-header-video"></video>
 					</div>
+
+					<!--<div class="section-header-video-container video-placeholder" data-video-src= "<?php echo $header_video_url; ?>" data-video-loop="<?php echo $object->header_video_loop ? 'true' : 'false'; ?>">
+					</div>-->
 				<?php endif; ?>
 			</div>
 			<div class="container">
