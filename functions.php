@@ -84,29 +84,76 @@ function display_footer_menu() {
 	echo ob_get_clean();
 }
 
-function display_top_news() {
-	$items = get_news(0, 2);
+function display_footer_news() {
+	$max_news = get_theme_mod_or_default( 'news_max_items' );
+	$items = get_news(0, $max_news);
 	ob_start();
 ?>
-	<ul class="footer-news">
-	<?php foreach( $items as $key=>$item ) : ?>
-		<li class="footer-news-item">
-			<a href="<?php echo $item->get_link(); ?>">
-				<h3><?php echo $item->get_title(); ?></h3>
-				<p class="read-more">Read More &rsaquo;</p>
-			</a>
-		</li>
-	<?php endforeach; ?>
-	</ul>
 	<a class="all-link" href="http://today.ucf.edu">All News &rsaquo;</a>
+	<div class="footer-news">
+	<?php foreach( $items as $key=>$item ) : $image = get_article_image( $item ); ?>
+		<div class="row">
+			<div class="col-xs-2 col-sm-4 col-md-3">
+				<div class="news-thumbnail">
+					<img class="img-responsive img-rounded" src="<?php echo $image; ?>" alt="Feed image for <?php echo $item->get_title(); ?>">
+				</div>
+			</div>
+			<div class="col-xs-10 col-sm-8 col-md-9">
+				<div class="news-details">
+					<h3><?php echo $item->get_title(); ?></h3>
+					<p><?php echo wp_trim_words( $item->get_description(), 15 ); ?></p>
+					<a href="<?php echo $item->get_link(); ?>" class="read-more">Read More &rsaquo;</a>
+				</div>
+			</div>
+		</div>
+	<?php endforeach; ?>
+	</div>
 <?php
 	echo ob_get_clean();
 }
 
-function display_events_widget() {
+function display_footer_events() {
+    $max_events = get_theme_mod_or_default( 'events_max_items' );
+    $items = get_events( 0, $max_events );
+    ob_start();
+?>
+	<a class="all-link" href="http://events.ucf.edu">All Events &rsaquo;</a>
+    <div class="footer-events">
+    <?php foreach( $items as $item ) : ?>
+        <?php
+            $month = $item->get_date( 'M' );
+            $day = $item->get_date( 'j' );
+        ?>
+        <div class="row">
+        	<div class="col-xs-2 col-sm-4 col-md-3">
+        		<div class="event-date">
+        			<span class="month"><?php echo $month; ?></span>
+                	<span class="day"><?php echo $day; ?></span>
+               	</div>
+        	</div>
+        	<div class="col-xs-10 col-sm-8 col-md-9">
+        		<div class="event-details">
+	                <h4><?php echo $item->get_title(); ?></h4>
+	                <p><?php echo wp_trim_words( $item->get_description(), 15 ); ?></p>
+	                <a href="<?php echo $item->get_link(); ?>" class="read-more" target="_blank">Read More &rsaquo;</a>
+	            </div>
+        	</div>
+        </div>
+    <?php endforeach; ?>
+    </div>
+<?php
+    echo ob_get_clean();
+}
+
+function display_contact_info() {
+	$org_name  = get_theme_mod_or_default( 'organization_name' );
+	$org_phone = get_theme_mod_or_default( 'organization_phone' );
+	$org_email = get_theme_mod_or_default( 'organization_email' );
 	ob_start();
 ?>
-
+	<h2 class="org-name"><?php echo $org_name; ?></h2>
+	<p>Phone: <a class="read-more" href="tel:<?php echo str_replace( array( '-', '(', ')' ), '', $org_phone);?>"><?php echo $org_phone; ?></a></p>
+	<p>Email: <a class="read-more" href="mailto:<?php echo $org_email; ?>"><?php echo $org_email; ?></a></p>
 <?php
 	echo ob_get_clean();
 }
@@ -125,6 +172,43 @@ function get_weather_data() {
 	$weather->icon = get_weather_icon( $weather->condition );
 
 	return $weather;
+}
+
+function display_social() {
+	$facebook_url   = get_theme_mod_or_default( 'facebook_url' );
+	$twitter_url    = get_theme_mod_or_default( 'twitter_url' );
+	$googleplus_url = get_theme_mod_or_default( 'googleplus_url' );
+	$linkedin_url   = get_theme_mod_or_default( 'linkedin_url' );
+	ob_start();
+?>
+	<div class="social">
+	<?php if ( $facebook_url ) : ?>
+		<a href="<?php echo $facebook_url; ?>" target="_blank" class="ga-event-link">
+			<i class="fa fa-facebook-square"></i>
+			<span class="sr-only">Like us on Facebook</span>
+		</a>
+	<?php endif; ?>
+	<?php if ( $twitter_url ) : ?>
+		<a href="<?php echo $twitter_url; ?>" target="_blank" class="ga-event-link">
+			<i class="fa fa-twitter-square"></i>
+			<span class="sr-only">Follow us on Twitter</span>
+		</a>
+	<?php endif; ?>
+	<?php if ( $googleplus_url ) : ?>
+		<a href="<?php echo $googleplus_url; ?>" target="_blank" class="ga-event-link">
+			<i class="fa fa-google-plus-square"></i>
+			<span class="sr-only">Follow us on Google+</span>
+		</a>
+	<?php endif; ?>
+	<?php if ( $linkedin_url ) : ?>
+		<a href="<?php echo $linkedin_url; ?>" target="_blank" class="ga-event-link">
+			<i class="fa fa-linkedin-square"></i>
+			<span class="sr-only">View our LinkedIn page</span>
+		</a>
+	<?php endif; ?>
+	</div>
+<?php
+	echo ob_get_clean();
 }
 
 function get_weather_icon( $condition ) {

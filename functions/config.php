@@ -148,6 +148,13 @@ function define_customizer_sections( $wp_customize ) {
 		)
 	);
 	$wp_customize->add_section(
+		THEME_CUSTOMIZER_PREFIX . 'org_info',
+		array(
+			'title'       => 'Organization Info',
+			'description' => 'Contact information'
+		)
+	);
+	$wp_customize->add_section(
 		THEME_CUSTOMIZER_PREFIX . 'news',
 		array(
 			'title'       => 'News',
@@ -311,6 +318,46 @@ function define_customizer_fields( $wp_customize ) {
 	);
 
 
+	// Org Info
+	$wp_customize->add_setting(
+		'organization_name'
+	);
+	$wp_customize->add_control(
+		'organization_name',
+		array(
+			'type'        => 'text',
+			'label'       => 'Oragnization Name',
+			'description' => 'The name that will be displayed with organization info is displayed',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'org_info'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'organization_phone'
+	);
+	$wp_customize->add_control(
+		'organization_phone',
+		array(
+			'type'        => 'text',
+			'label'       => 'Oragnization Phone',
+			'description' => 'The phone number that will be displayed with organization info is displayed',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'org_info'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'organization_email'
+	);
+	$wp_customize->add_control(
+		'organization_email',
+		array(
+			'type'        => 'email',
+			'label'       => 'Oragnization Email',
+			'description' => 'The email address that will be displayed with organization info is displayed',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'org_info'
+		)
+	);
+
 	// News
 	$wp_customize->add_setting(
 		'news_max_items',
@@ -432,6 +479,31 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'googleplus_url'
+	);
+	$wp_customize->add_control(
+		'googleplus_url',
+		array(
+			'type'        => 'url',
+			'label'       => 'Google+ URL',
+			'description' => 'URL to the Google+ user account you would like to direct visitors to.  Example: <em>http://plus.google.com/UCF</em>',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'social'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'linkedin_url'
+	);
+	$wp_customize->add_control(
+		'linkedin_url',
+		array(
+			'type'        => 'url',
+			'label'       => 'LinkedIn URL',
+			'description' => 'URL to the LinkedIn user account you would like to direct visitors to.  Example: <em>http://linkedin.com/UCF</em>',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'social'
+		)
+	);
 
 	// Web Fonts
 	$wp_customize->add_setting(
