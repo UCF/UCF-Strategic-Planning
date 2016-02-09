@@ -55,7 +55,9 @@ var positionHeaderBackgrounds = function($) {
 		});
 	};
 
-	resizeImages();
+	setTimeout(resizeImages, 1000);
+
+	// resizeImages();
 
 	$(window).on('resize', function () {
 			resizeImages();
@@ -65,6 +67,15 @@ var positionHeaderBackgrounds = function($) {
 
 // Test if video auto plays
 var canPlayVideo = function($) {
+
+	console.log(sessionStorage.canplayvideo);
+
+	if (sessionStorage.canplayvideo) {
+
+
+
+		return sessionStorage.canplayvideo;
+	}
 
 	var mp4 = 'data:video/mp4;base64,AAAAFGZ0eXBNU05WAAACAE1TTlYAAAOUbW9vdgAAAGxtdmhkAAAAAM9ghv7PYIb+AAACWAAACu8AAQAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAnh0cmFrAAAAXHRraGQAAAAHz2CG/s9ghv4AAAABAAAAAAAACu8AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAFAAAAA4AAAAAAHgbWRpYQAAACBtZGhkAAAAAM9ghv7PYIb+AAALuAAANq8AAAAAAAAAIWhkbHIAAAAAbWhscnZpZGVBVlMgAAAAAAABAB4AAAABl21pbmYAAAAUdm1oZAAAAAAAAAAAAAAAAAAAACRkaW5mAAAAHGRyZWYAAAAAAAAAAQAAAAx1cmwgAAAAAQAAAVdzdGJsAAAAp3N0c2QAAAAAAAAAAQAAAJdhdmMxAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAFAAOABIAAAASAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGP//AAAAEmNvbHJuY2xjAAEAAQABAAAAL2F2Y0MBTUAz/+EAGGdNQDOadCk/LgIgAAADACAAAAMA0eMGVAEABGjuPIAAAAAYc3R0cwAAAAAAAAABAAAADgAAA+gAAAAUc3RzcwAAAAAAAAABAAAAAQAAABxzdHNjAAAAAAAAAAEAAAABAAAADgAAAAEAAABMc3RzegAAAAAAAAAAAAAADgAAAE8AAAAOAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA0AAAANAAAADQAAAA4AAAAOAAAAFHN0Y28AAAAAAAAAAQAAA7AAAAA0dXVpZFVTTVQh0k/Ou4hpXPrJx0AAAAAcTVREVAABABIAAAAKVcQAAAAAAAEAAAAAAAAAqHV1aWRVU01UIdJPzruIaVz6ycdAAAAAkE1URFQABAAMAAAAC1XEAAACHAAeAAAABBXHAAEAQQBWAFMAIABNAGUAZABpAGEAAAAqAAAAASoOAAEAZABlAHQAZQBjAHQAXwBhAHUAdABvAHAAbABhAHkAAAAyAAAAA1XEAAEAMgAwADAANQBtAGUALwAwADcALwAwADYAMAA2ACAAMwA6ADUAOgAwAAABA21kYXQAAAAYZ01AM5p0KT8uAiAAAAMAIAAAAwDR4wZUAAAABGjuPIAAAAAnZYiAIAAR//eBLT+oL1eA2Nlb/edvwWZflzEVLlhlXtJvSAEGRA3ZAAAACkGaAQCyJ/8AFBAAAAAJQZoCATP/AOmBAAAACUGaAwGz/wDpgAAAAAlBmgQCM/8A6YEAAAAJQZoFArP/AOmBAAAACUGaBgMz/wDpgQAAAAlBmgcDs/8A6YEAAAAJQZoIBDP/AOmAAAAACUGaCQSz/wDpgAAAAAlBmgoFM/8A6YEAAAAJQZoLBbP/AOmAAAAACkGaDAYyJ/8AFBAAAAAKQZoNBrIv/4cMeQ==',
 		body = document.getElementsByTagName('body')[0];
@@ -80,7 +91,7 @@ var canPlayVideo = function($) {
 	// Check if <video> can play. It won't be able to on Opera mini and IE8
 	// http://stackoverflow.com/questions/14109654/check-if-a-user-is-on-ie8-for-html5-client-side
 	if (typeof video.canPlayType == 'undefined') {
-		alert ("your browser doesn't support HTML5 video");
+		sessionStorage.canplayvideo = false;
 		return false;
 	}
 
@@ -98,13 +109,12 @@ var canPlayVideo = function($) {
 	video.addEventListener('play', function () {
 		clearTimeout(removeVideoTimeout);
 		body.removeChild(video);
-		loadVideos($);
+		sessionStorage.canplayvideo = true;
+		return true;
 	}, false);
-
-	return true;
 };
 
-// Test if video auto plays
+// Place videos inside placeholders
 var loadVideos = function($) {
 
 	$('.video-placeholder').each( function() {
@@ -113,29 +123,34 @@ var loadVideos = function($) {
 		var video_loop = $this.data('video-loop') ? ' loop' : '';
 
 		$this.html('<video class="section-header-video"' + video_loop + '><source src="' + video_src + '" type="video/mp4"></video>');
+		$this.parent().children('.section-header-image-container').addClass('has-video');
 	});
+
+	$(window).on('scroll', function () {
+		$('video').each(function () {
+			if (isScrolledIntoView(this)) {
+				this.play();
+			}
+			else {
+				this.pause();
+			}
+		});
+	});
+
 };
 
 
 // Test if video auto plays
 var initVideos = function($) {
 
-	var result = canPlayVideo($);
+	var playVideos = canPlayVideo($);
 
-	if (!result) {
+	if (!playVideos) {
+		$('.video-placeholder').remove();
 		return false;
 	}
 
-	$(window).on('scroll', function () {
-			$('video').each(function () {
-				if (isScrolledIntoView(this)) {
-					this.play();
-				}
-				else {
-					this.pause();
-				}
-			});
-	});
+	loadVideos($);
 };
 
 Number.prototype.clamp = function(min, max) {
