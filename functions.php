@@ -50,7 +50,7 @@ function get_header_menu() {
 function display_header_menu() {
 	$menu = get_header_menu();
 
-	if (empty($menu) || !in_array("items", $menu)) {
+	if ( empty( $menu ) ) {
 		return;
 	}
 
@@ -88,7 +88,7 @@ function get_footer_menu() {
 function display_footer_menu() {
 	$menu = get_footer_menu();
 
-	if (empty($menu) || !in_array("items", $menu)) {
+	if ( empty( $menu) ) {
 		return;
 	}
 
@@ -306,66 +306,5 @@ function get_weather_icon( $condition ) {
 	// no icon name will be returned and so no icon will be used
 	return false;
 }
-
-class EventsProxy {
-	public static function get_plugin_namespace() {
-		return 'events/v1';
-	}
-
-	public function register_routes() {
-		register_rest_route( self::get_plugin_namespace(),
-			'/(?P<id>\d+)/(?P<slug>[a-zA-Z0-9_-]+)/(?P<size>[a-zA-Z0-9_-]+)/(?P<year>\d{4})/(?P<month>\d{2})',
-			array(
-				array(
-					'methods'  => WP_REST_Server::READABLE,
-					'callback' => array( $this, 'get_calendar' ),
-					'args'     => array(
-                        'context' => array(
-                            'default' => 'view'
-                        )
-                    )
-				)
-		) );
-	}
-
-	public static function get_calendar( $request ) {
-		$id    = (int) $request['id'];
-		$slug  = $request['slug'];
-		$size  = $request['size'] ? $request['size'] : 'small';
-		$year  = $request['year'] ? $request['year'] : date( 'Y' );
-		$month = $request['month'] ? $request['month'] : date( 'm' );
-		$base  = UCF_EVENTS_WIDGET;
-		$params = array(
-			$base,
-			$id,
-			$slug,
-			$size,
-			$year,
-			$month
-		);
-
-		$url = implode( '/', $params );
-
-		$opts = array(
-			'http' => array(
-				'timeout'=> 15
-			)
-		);
-
-		$context = stream_context_create( $opts );
-		$file = file_get_contents( $url, false, $context );
-
-		return $file;
-	}
-}
-
-if ( ! function_exists( 'events_proxy_init' ) ) {
-	function events_proxy_init() {
-		$class = new EventsProxy();
-		add_filter( 'rest_api_init', array( $class, 'register_routes' ) );
-	}
-}
-
-add_action( 'init', 'events_proxy_init' );
 
 ?>
