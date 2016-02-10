@@ -12,7 +12,6 @@ define( 'THEME_IMG_URL', THEME_STATIC_URL.'/img' );
 define( 'THEME_JS_URL', THEME_STATIC_URL.'/js' );
 define( 'THEME_CSS_URL', THEME_STATIC_URL.'/css' );
 define( 'THEME_DATA_URL', THEME_STATIC_URL.'/data' );
-define( 'UCF_EVENTS_WIDGET', 'http://events.ucf.edu/calendar-widget/frontend/calendar' );
 
 define( 'GA_ACCOUNT', get_theme_mod_or_default( 'ga_account' ) );
 define( 'CB_UID', get_theme_mod_or_default( 'cb_uid' ) );
@@ -723,9 +722,12 @@ add_action( 'admin_enqueue_scripts', 'enqueue_backend_theme_assets' );
 function localize_backend_theme_assets() {
 	$localization_array = array(
 		'baseUrl'   => get_site_url(),
-		'menuApi'   => get_site_url() . '/wp-json/ucf-rest-menus/v1',
 		'menuAdmin' => get_admin_url() . '/nav-menus.php'
 	);
+
+	if ( is_plugin_active( 'ucf-rest-menus/ucf-rest-menus.php' ) ) {
+		$localization_array['menuApi'] = get_site_url() . '/wp-json/ucf-rest-menus/v1';
+	}
 
 	wp_localize_script( 'admin-script', 'WebcomLocal', $localization_array );
 }

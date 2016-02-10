@@ -243,7 +243,9 @@ WebcomAdmin.menuField = function($) {
       }
     };
 
-    setInterval(updateMenu, 5000);
+    if ( WebcomLocal.menuApi ) {
+      setInterval(updateMenu, 5000);
+    }
 
     $('.meta-menu-field').on('change', onSelectUpdate);
   }
