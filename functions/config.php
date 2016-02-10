@@ -12,7 +12,6 @@ define( 'THEME_IMG_URL', THEME_STATIC_URL.'/img' );
 define( 'THEME_JS_URL', THEME_STATIC_URL.'/js' );
 define( 'THEME_CSS_URL', THEME_STATIC_URL.'/css' );
 define( 'THEME_DATA_URL', THEME_STATIC_URL.'/data' );
-define( 'UCF_EVENTS_WIDGET', 'http://events.ucf.edu/calendar-widget/frontend/calendar' );
 
 define( 'GA_ACCOUNT', get_theme_mod_or_default( 'ga_account' ) );
 define( 'CB_UID', get_theme_mod_or_default( 'cb_uid' ) );
@@ -422,6 +421,20 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'news_placeholder_image'
+	);
+
+	$wp_customize->add_control(
+		new WP_Customize_Image_Control(
+			$wp_customize,
+			'news_placeholder_image',
+			array(
+				'label'     => __( 'Placeholder thumbnail for news stories.' ),
+				'section'   => THEME_CUSTOMIZER_PREFIX.'news'
+			)
+		)
+	);
 
 	// Search
 	$wp_customize->add_setting(

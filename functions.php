@@ -87,6 +87,7 @@ function display_footer_menu() {
 function display_footer_news() {
 	$max_news = get_theme_mod_or_default( 'news_max_items' );
 	$items = get_news(0, $max_news);
+	$placeholder = get_theme_mod_or_default( 'news_placeholder_image' );
 	ob_start();
 ?>
 	<a class="all-link" href="http://today.ucf.edu">All News &rsaquo;</a>
@@ -95,7 +96,11 @@ function display_footer_news() {
 		<div class="row">
 			<div class="col-xs-2 col-sm-4 col-md-3">
 				<div class="news-thumbnail">
+				<?php if ( $image ) : ?>
 					<img class="img-responsive" src="<?php echo $image; ?>" alt="Feed image for <?php echo $item->get_title(); ?>">
+				<?php else : ?>
+					<img class="img-responsive" src="<?php echo $placeholder; ?>" alt="UCF Today">
+				<?php endif; ?>
 				</div>
 			</div>
 			<div class="col-xs-10 col-sm-8 col-md-9">
