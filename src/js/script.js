@@ -32,6 +32,10 @@ var headerImage = function($) {
 	});
 };
 
+var footerAdjustments = function($) {
+	$('.site-footer').find('.wrapper').children('div').matchHeight();
+};
+
 var positionHeaderBackgrounds = function($) {
 
 	var resizeImages = function() {
@@ -146,6 +150,7 @@ Number.prototype.clamp = function(min, max) {
 if (typeof jQuery !== 'undefined') {
 	jQuery(document).ready( function($) {
 		headerImage($);
+		footerAdjustments($);
 		isAutoPlay($);
 		positionHeaderBackgrounds($);
 	});
