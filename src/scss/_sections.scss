@@ -16,13 +16,8 @@
     z-index: 80;
 
   .section-header-image {
-    // background-size: cover;
-    // background-position: center center;
-    // background-repeat: no-repeat;
-    // height: 750px;
     position: absolute;
     top: 0;
-    // width: 100%;
     z-index: 80;
 
     opacity: 1;
@@ -35,24 +30,6 @@
 
   }
 
-
-  // .section-header-img {
-  //   width: 100%;
-  //   position: absolute;
-  //   left: 50%;
-  //   top: 50%;
-  //   /* The following will size the video to fit the full container. Not necessary, just nice.*/
-  //   min-width: 100%;
-  //   min-height: 100%;
-  //   -webkit-transform: translate(-50%,-50%);
-  //   -moz-transform: translate(-50%,-50%);
-  //   -ms-transform: translate(-50%,-50%);
-  //   transform: translate(-50%,-50%);
-  //   z-index: 80;
-
-  //   opacity: 0;
-  //   transition: opacity 1s ease;
-  // }
   .section-header-video-container {
     height: 750px;
     overflow: hidden;
@@ -65,15 +42,6 @@
       width: 100%;
 
       position: absolute;
-      // left: 50%;
-      // top: 50%;
-
-      // min-width: 100%;
-      // min-height: 100%;
-      // -webkit-transform: translate(-50%,-50%);
-      // -moz-transform: translate(-50%,-50%);
-      // -ms-transform: translate(-50%,-50%);
-      // transform: translate(-50%,-50%);
       z-index: 0;
     }
   }
@@ -85,11 +53,6 @@
     top: 0;
     width: 100%;
   }
-
-
-  // .section-header:hover .section-header-image {
-  //   opacity: 1;
-  // }
 
   .section-header:hover .section-header-image {
     opacity: 1;

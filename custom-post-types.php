@@ -767,7 +767,7 @@ class Section extends CustomPostType {
 				<h2><?php echo $object->post_title; ?></h2>
 				<p class="lead"><?php echo $object->lead_text; ?></p>
 				<div class="row">
-					<div class="col-md-5">
+					<div class="col-md-5 col-sm-6 col-xs-12">
 					<?php if ( $object->feature_type == 'feature_image' ) : ?>
 						<?php $featured_img = wp_get_attachment_image_src( $object->feature_image, 'large' ); ?>
 						<img class="img-responsive" src="<?php echo $featured_img[0]; ?>">
@@ -775,7 +775,7 @@ class Section extends CustomPostType {
 						<?php echo Spotlight::toHTML( $object->feature_spotlight ); ?>
 					<?php endif; ?>
 					</div>
-					<div class="col-md-7">
+					<div class="col-md-7 col-sm-6 col-xs-12">
 						<?php echo apply_filters( 'the_content', $object->content); ?>
 					</div>
 				</div>
