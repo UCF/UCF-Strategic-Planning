@@ -36,7 +36,7 @@ Config::$custom_post_types = array(
 
 
 Config::$custom_taxonomies = array(
-	
+
 );
 
 Config::$shortcodes = array(
@@ -97,6 +97,7 @@ Config::$setting_defaults = array(
 	'search_per_page' => 10,
 	'cloud_typography_key' => '//cloud.typography.com/730568/675644/css/fonts.css', // Main site css key
 	'weather_feed_url' => 'http://weather.smca.ucf.edu/',
+	'header_menu_feed' => ''
 );
 
 
@@ -245,7 +246,10 @@ function define_customizer_fields( $wp_customize ) {
 
 	// Menus
 	$wp_customize->add_setting(
-		'header_menu_feed'
+		'header_menu_feed',
+		array(
+			'default'     => get_setting_default( 'header_menu_feed' ),
+		)
 	);
 
 	$wp_customize->add_control(
@@ -705,7 +709,7 @@ function hook_frontend_theme_scripts() {
 	</script>
 	<?php endif;?>
 
-	
+
 <?php
 	echo ob_get_clean();
 }

@@ -106,6 +106,7 @@ gulp.task('js-lint', function() {
 gulp.task('js-main', function() {
   var minified = [
     config.componentsPath + '/bootstrap-sass-official/assets/javascripts/bootstrap.js',
+    config.componentsPath + '/matchHeight/jquery.matchHeight.js',
     config.jsPath + '/generic-base.js',
     config.jsPath + '/script.js'
   ];

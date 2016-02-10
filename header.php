@@ -11,7 +11,7 @@
 	</head>
 	<body ontouchstart <?php echo body_class(); ?>>
 		<header class="site-header">
-			<div class="header-image" style="background-image: url(<?php echo header_image(); ?>">
+			<div class="header-image" style="background-image: url(<?php echo header_image(); ?>);">
 				<nav class="site-nav">
 					<?php display_header_menu(); ?>
 				</nav>

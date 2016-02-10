@@ -220,7 +220,7 @@ abstract class CustomPostType {
 		$options = $this->override_field_options( $options );
 
 		foreach( $this->fields() as $field ) {
-			$opts = array_merge( $field, 
+			$opts = array_merge( $field,
 				array(
 					'key'          => $field['id'],
 					'label'        => $field['name'],
@@ -232,7 +232,7 @@ abstract class CustomPostType {
 
 			switch( $field['type'] ) {
 				case 'text':
-					$opts = array_merge( $opts, 
+					$opts = array_merge( $opts,
 						array(
 							'type'          => 'text',
 							'default_value' => $field['default'] ? $field['default'] : '',
@@ -243,7 +243,7 @@ abstract class CustomPostType {
 					$options['fields'][] = $opts;
 					break;
 				case 'textarea':
-					$opts = array_merge( $opts, 
+					$opts = array_merge( $opts,
 						array(
 							'type'          => 'textarea',
 							'default_value' => $field['default'] ? $field['default'] : '',
@@ -478,14 +478,6 @@ class Page extends CustomPostType {
 	}
 
 	public function override_field_options( $options ) {
-		// Only show fields on home page.
-		$options['location'][0][] = array(
-			'param'    => 'page_type',
-			'operator' => '==',
-			'value'    => 'front_page',
-			'order_no' => 1,
-			'group_no' => 0
-		);
 
 		return $options;
 	}
@@ -577,7 +569,7 @@ class Spotlight extends CustomPostType {
 	}
 
 	public function toHTML( $object ) {
-		$image_url = has_post_thumbnail( $object->ID ) ? 
+		$image_url = has_post_thumbnail( $object->ID ) ?
 			wp_get_attachment_image_src( get_post_thumbnail_id( $object->ID ), 'spotlight' ) :
 			null;
 
@@ -604,7 +596,7 @@ class Spotlight extends CustomPostType {
 			<h2 <?php if ( $title_color ) : echo 'style="color: '.$title_color.'"'; ?>><?php echo $object->post_title; endif; ?></h2>
 			<?php if ( $btn_text ) : ?>
 			<div class="btn-wrapper">
-				<span class="btn btn-lg btn-ucf" <?php if ( !empty( $btn_styles ) ) : echo explode( $btn_styles, ' ' ); endif; ?>>
+				<span class="btn btn-lg btn-ucf" <?php if ( !empty( $btn_styles) ) : echo implode( ' ', $btn_styles ); endif; ?>>
 					<?php echo $btn_text; ?>
 				</span>
 			</div>
@@ -646,6 +638,12 @@ class Section extends CustomPostType {
 				'description' => 'The video that appears as the header background (mp4).',
 				'id'          => $prefix.'header_video_mp4',
 				'type'        => 'file'
+			),
+			array(
+				'name'        => 'Loop Video',
+				'description' => 'Loop video.',
+				'id'          => $prefix.'header_video_loop',
+				'type'        => 'checkbox'
 			),
 			array(
 				'name'        => 'Header Text',
@@ -726,15 +724,16 @@ class Section extends CustomPostType {
 		$post_id    = $object->ID;
 		$prefix     = 'section_';
 
-		$object->header_image      = get_field( $prefix.'header_image', $post_id );
-		$object->header_video_mp4  = get_field( $prefix.'header_video_mp4', $post_id );
-		$object->header_text       = get_field( $prefix.'header_text', $post_id );
-		$object->header_text_color = get_field( $prefix.'header_text_color', $post_id );
-		$object->lead_text         = get_field( $prefix.'lead_text', $post_id );
-		$object->feature_type      = get_field( $prefix.'feature_type', $post_id );
-		$object->feature_image     = get_field( $prefix.'feature_image', $post_id );
-		$object->feature_spotlight = get_field( $prefix.'feature_spotlight', $post_id );
-		$object->content           = get_field( $prefix.'content', $post_id );
+		$object->header_image        = get_field( $prefix.'header_image', $post_id );
+		$object->header_video_mp4    = get_field( $prefix.'header_video_mp4', $post_id );
+		$object->header_video_loop   = get_field( $prefix.'header_video_loop', $post_id );
+		$object->header_text         = get_field( $prefix.'header_text', $post_id );
+		$object->header_text_color   = get_field( $prefix.'header_text_color', $post_id );
+		$object->lead_text           = get_field( $prefix.'lead_text', $post_id );
+		$object->feature_type        = get_field( $prefix.'feature_type', $post_id );
+		$object->feature_image       = get_field( $prefix.'feature_image', $post_id );
+		$object->feature_spotlight   = get_field( $prefix.'feature_spotlight', $post_id );
+		$object->content             = get_field( $prefix.'content', $post_id );
 
 		return $object;
 	}
@@ -745,36 +744,40 @@ class Section extends CustomPostType {
 ?>
 		<section id="<?php echo $object->post_name; ?>" class="bucket-section">
 			<div class="section-header">
-			<?php if ( $object->header_video_mp4 ) : ?>
-				<video class="section-header-video">
-					<source src="<?php echo $object->header_video_mp4; ?>" type="video/mp4">
-				</video>
-			<?php endif; ?>
-			<?php if ( $object->header_image ) : ?>
-				<?php $header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) ); ?>
-				<div class="section-header-image" style="background: url(<?php echo $header_img[0]; ?>);">
-					<div class="section-header-wrapper">
-						<span class="section-header-text" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
-							<?php echo $object->header_text; ?>
-						</span>
-					</div>
+				<div class="section-header-text-wrapper">
+					<span class="section-header-text" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
+					<?php echo $object->header_text; ?>
+					</span>
 				</div>
-			<?php endif; ?>
+				<?php if ( $object->header_image ) : ?>
+					<?php $header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) ); ?>
+					<div class="section-header-image-container">
+						<img class="section-header-image" src="<?php echo $header_img[0]; ?>" />
+					</div>
+				<?php endif; ?>
+				<?php if ( $object->header_video_mp4 ) : ?>
+					<?php $header_video_url = wp_get_attachment_url( $object->header_video_mp4 ); ?>
+
+					<div class="section-header-video-container" data-video-src="<?php echo $header_video_url; ?>" data-video-loop="<?php echo $object->header_video_loop ? 'true' : 'false'; ?>">
+						<video class="section-header-video"></video>
+					</div>
+				<?php endif; ?>
 			</div>
 			<div class="container">
-			<h2><?php echo $object->post_title; ?></h2>
-			<p class="lead"><?php echo $object->lead_text; ?></p>
-			<div class="row">
-				<div class="col-md-5">
-				<?php if ( $object->feature_type == 'feature_image' ) : ?>
-					<?php $featured_img = wp_get_attachment_image_src( $object->feature_image, 'large' ); ?>
-					<img class="img-responsive" src="<?php echo $featured_img[0]; ?>">
-				<?php else: ?>
-					<?php echo Spotlight::toHTML( $object->feature_spotlight ); ?>
-				<?php endif; ?>
-				</div>
-				<div class="col-md-7">
-					<?php echo apply_filters( 'the_content', $object->content); ?>
+				<h2><?php echo $object->post_title; ?></h2>
+				<p class="lead"><?php echo $object->lead_text; ?></p>
+				<div class="row">
+					<div class="col-md-5">
+					<?php if ( $object->feature_type == 'feature_image' ) : ?>
+						<?php $featured_img = wp_get_attachment_image_src( $object->feature_image, 'large' ); ?>
+						<img class="img-responsive" src="<?php echo $featured_img[0]; ?>">
+					<?php else: ?>
+						<?php echo Spotlight::toHTML( $object->feature_spotlight ); ?>
+					<?php endif; ?>
+					</div>
+					<div class="col-md-7">
+						<?php echo apply_filters( 'the_content', $object->content); ?>
+					</div>
 				</div>
 			</div>
 		</section>
