@@ -61,8 +61,6 @@ var positionHeaderBackgrounds = function($) {
 
 	setTimeout(resizeImages, 1000);
 
-	// resizeImages();
-
 	$(window).on('resize', function () {
 			resizeImages();
 	});
