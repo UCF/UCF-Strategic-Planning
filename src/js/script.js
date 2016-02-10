@@ -33,7 +33,7 @@ var headerImage = function($) {
 };
 
 var footerAdjustments = function($) {
-	$('.site-footer').find('.wrapper').children('div').matchHeight();
+	$('.site-footer').find('.wrapper').children('.footer-col ').matchHeight();
 };
 
 var positionHeaderBackgrounds = function($) {

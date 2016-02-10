@@ -4,19 +4,19 @@
 				<div class="row">
 					<div class="wrapper">
 						<div class="col-sm-4">
-							<div class="left-col">
+							<div class="footer-col left-col">
 								<h2>Student News</h2>
 								<?php display_footer_news(); ?>
 							</div>
 						</div>
 						<div class="col-sm-4">
-							<div class="center-col">
+							<div class="footer-col center-col">
 								<h2>Events</h2>
 								<?php display_footer_events(); ?>
 							</div>
 						</div>
 						<div class="col-sm-4">
-							<div class="right-col">
+							<div class="footer-col right-col">
 								<?php display_contact_info(); ?>
 								<h2>Contact Us</h2>
 								<?php display_contact_form(); ?>
