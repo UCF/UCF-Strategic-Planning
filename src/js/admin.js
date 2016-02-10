@@ -222,27 +222,6 @@ WebcomAdmin.iconModal = function($) {
   });
 };
 
-WebcomAdmin.menuField = function($) {
-  var updateMenuEditLink = function() {
-    var $select = $(this),
-        url_base = $select.attr('data-menu-path'),
-        value = $select.find(':selected').val(),
-        $menu_edit = $select.parent().find('.menu-edit-link');
-
-    if (value) {
-      var url = url_base + '/nav-menus.php?action=edit&menu=' + value;
-      $menu_edit.attr('href', url);
-      $menu_edit.show();
-    } else {
-      $menu_edit.hide();
-    }
-  };
-
-  $('.menu-select').ready(updateMenuEditLink);
-
-  $('.menu-select').on('change', updateMenuEditLink);
-};
-
 WebcomAdmin.shortcodeInterfaceTool = function($) {
   var $cls                   = WebcomAdmin.shortcodeInterfaceTool;
   $cls.shortcodeForm         = $('#select-shortcode-form');
@@ -325,6 +304,5 @@ WebcomAdmin.shortcodeInterfaceTool = function($) {
   WebcomAdmin.utilityPageSections($);
   WebcomAdmin.fileUploader($);
   WebcomAdmin.iconModal($);
-  WebcomAdmin.menuField($);
   WebcomAdmin.shortcodeInterfaceTool($);
 })(jQuery);

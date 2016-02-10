@@ -379,6 +379,14 @@ abstract class CustomPostType {
 					);
 					$options['fields'][] = $opts;
 					break;
+				case 'menu':
+					$opts = array_merge( $opts,
+						array(
+							'type'              => 'menu_select'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
 			}
 		}
 
@@ -715,7 +723,13 @@ class Section extends CustomPostType {
 				'id'          => $prefix.'content',
 				'type'        => 'wysiwyg',
 				'toolbar'     => 'basic'
-			)
+			),
+			array(
+				'name'        => 'Resource Links',
+				'description' => 'A menu of external links to display',
+				'id'          => $prefix.'resource_links',
+				'type'        => 'menu'
+			),
 		);
 	}
 
@@ -734,6 +748,7 @@ class Section extends CustomPostType {
 		$object->feature_image       = get_field( $prefix.'feature_image', $post_id );
 		$object->feature_spotlight   = get_field( $prefix.'feature_spotlight', $post_id );
 		$object->content             = get_field( $prefix.'content', $post_id );
+		$object->menu                = get_field( $prefix.'resource_links', $post_id );
 
 		return $object;
 	}
@@ -767,7 +782,7 @@ class Section extends CustomPostType {
 				<h2><?php echo $object->post_title; ?></h2>
 				<p class="lead"><?php echo $object->lead_text; ?></p>
 				<div class="row">
-					<div class="col-md-5">
+					<div class="col-md-5 vertical-rule">
 					<?php if ( $object->feature_type == 'feature_image' ) : ?>
 						<?php $featured_img = wp_get_attachment_image_src( $object->feature_image, 'large' ); ?>
 						<img class="img-responsive" src="<?php echo $featured_img[0]; ?>">
@@ -775,8 +790,21 @@ class Section extends CustomPostType {
 						<?php echo Spotlight::toHTML( $object->feature_spotlight ); ?>
 					<?php endif; ?>
 					</div>
-					<div class="col-md-7">
+					<div class="col-md-5 col-md-offset-1">
 						<?php echo apply_filters( 'the_content', $object->content); ?>
+						<?php if ( $object->menu ) : ?>
+						<div class="menu-wrapper">
+							<h2>Explore Futher</h2>
+							<?php
+								wp_nav_menu(
+									array(
+										'menu_id'  => $object->menu,
+										'container' => ''
+									)
+								);
+							?>
+						</div>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>

@@ -138,4 +138,19 @@
       line-height: 32px;
     }
   }
+
+  .menu-wrapper {
+    h2 {
+      padding-top: 14px;
+    }
+
+    .menu {
+      list-style: none;
+      padding-left: 0;
+
+      .menu-item a {
+        font-size: 16px;
+      }
+    }
+  }
 }
