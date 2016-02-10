@@ -18,6 +18,7 @@ define( 'CB_UID', get_theme_mod_or_default( 'cb_uid' ) );
 define( 'CB_DOMAIN', get_theme_mod_or_default( 'cb_domain' ) );
 
 define( 'THEME_CUSTOMIZER_PREFIX', 'ucfgeneric_' ); // a unique prefix for panel/section IDs
+date_default_timezone_set( 'EST' );
 
 
 /**

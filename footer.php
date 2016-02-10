@@ -20,8 +20,6 @@
 								<?php display_contact_info(); ?>
 								<h2>Contact Us</h2>
 								<?php display_contact_form(); ?>
-								<h2>Connect with Us</h2>
-								<?php display_social(); ?>
 							</div>
 						</div>
 					</div>
@@ -30,6 +28,7 @@
 			<div class="main-site-footer">
 				<div class="container">
 					<p class="main-site-title">University of Central Florida</p>
+					<?php display_social(); ?>
 					<?php display_footer_menu() ; ?>
 				</div>
 			</div>
