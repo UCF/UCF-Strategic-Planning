@@ -2,12 +2,6 @@
 <html lang="en-US">
 	<head>
 		<?php wp_head(); ?>
-		<script>
-			var Webcom = {
-				baseUrl: '<?php echo get_site_url(); ?>',
-				eventsProxy: '<?php echo get_site_url(); ?>/wp-json/events/v1'
-			};
-		</script>
 	</head>
 	<body ontouchstart <?php echo body_class(); ?>>
 		<header class="site-header">

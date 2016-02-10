@@ -202,11 +202,6 @@ WebcomAdmin.iconModal = function($) {
         $field = $('#' + $modalInput.val().replace('[', '\\[').replace(']', '\\]')),
         $iconPreview = $field.parent().find('i');
 
-    console.log( selectedVal );
-    console.log( $modalInput );
-    console.log( $field );
-    console.log( $iconPreview );
-
     if (selectedVal) {
       $field.val(selectedVal);
       if ($iconPreview.length) {
@@ -220,6 +215,38 @@ WebcomAdmin.iconModal = function($) {
     tb_remove();
 
   });
+};
+
+WebcomAdmin.menuField = function($) {
+  if ($('.meta-menu-field').length) {
+    var $field = $('.meta-menu-field'),
+        apiURL = WebcomLocal.menuApi;
+
+    var updateMenu = function() {
+      $.getJSON(apiURL + '/menus', function(data) {
+        for(var i in data) {
+          var menu = data[i];
+          if ( $field.find( 'option[value=' + menu.ID + ']' ).length === 0 ) {
+            $field.append('<option value="' + menu.ID + '">' + menu.name + '</option>');
+          }
+        }
+      });
+    };
+
+    var onSelectUpdate = function(e) {
+      var $field = $(this),
+          value = $field.find('option:selected').val(),
+          $edit = $field.parent().find('a.edit-menu');
+
+      if (value) {
+        $edit.attr('href', WebcomLocal.menuAdmin + '?action=edit&menu=' + value);
+      }
+    };
+
+    setInterval(updateMenu, 5000);
+
+    $('.meta-menu-field').on('change', onSelectUpdate);
+  }
 };
 
 WebcomAdmin.shortcodeInterfaceTool = function($) {
@@ -304,5 +331,6 @@ WebcomAdmin.shortcodeInterfaceTool = function($) {
   WebcomAdmin.utilityPageSections($);
   WebcomAdmin.fileUploader($);
   WebcomAdmin.iconModal($);
+  WebcomAdmin.menuField($);
   WebcomAdmin.shortcodeInterfaceTool($);
 })(jQuery);

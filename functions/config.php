@@ -63,7 +63,7 @@ if ( get_theme_mod_or_default( 'cloud_typography_key' ) ) {
 
 
 Config::$scripts = array(
-	array( 'admin' => True, 'src' => THEME_JS_URL.'/admin.min.js', ),
+	array( 'name' => 'admin-script', 'admin' => True, 'src' => THEME_JS_URL.'/admin.min.js', ),
 	array( 'name' => 'ucfhb-script', 'src' => '//universityheader.ucf.edu/bar/js/university-header.js?use-1200-breakpoint=1', ),
 	array( 'name' => 'theme-script', 'src' => THEME_JS_URL.'/script.min.js', ),
 );
@@ -702,7 +702,6 @@ function hook_frontend_theme_scripts() {
 }
 add_action( 'wp_head', 'hook_frontend_theme_scripts' );
 
-
 /**
  * Register backend scripts and stylesheets.
  **/
@@ -720,5 +719,16 @@ function enqueue_backend_theme_assets() {
 	}
 }
 add_action( 'admin_enqueue_scripts', 'enqueue_backend_theme_assets' );
+
+function localize_backend_theme_assets() {
+	$localization_array = array(
+		'baseUrl'   => get_site_url(),
+		'menuApi'   => get_site_url() . '/wp-json/ucf-rest-menus/v1',
+		'menuAdmin' => get_admin_url() . '/nav-menus.php'
+	);
+
+	wp_localize_script( 'admin-script', 'WebcomLocal', $localization_array );
+}
+add_action( 'admin_enqueue_scripts', 'localize_backend_theme_assets', 999 );
 
 ?>
