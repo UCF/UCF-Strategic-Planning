@@ -50,7 +50,7 @@ function get_header_menu() {
 function display_header_menu() {
 	$menu = get_header_menu();
 
-	if (empty($menu) || !in_array("items", $menu)) {
+	if ( empty( $menu ) ) {
 		return;
 	}
 
@@ -88,7 +88,7 @@ function get_footer_menu() {
 function display_footer_menu() {
 	$menu = get_footer_menu();
 
-	if (empty($menu) || !in_array("items", $menu)) {
+	if ( empty( $menu) ) {
 		return;
 	}
 
