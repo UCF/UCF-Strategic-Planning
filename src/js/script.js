@@ -105,6 +105,7 @@ var isAutoPlay = function($) {
 		body.removeChild(video);
 		loadVideos($);
 		positionHeaderBackgrounds($);
+		checkVideoPositionToPlay($);
 		sessionStorage.canplayvideo = true;
 	}, false);
 };
@@ -126,12 +127,14 @@ var loadVideos = function($) {
 	$('.section-header-video-container').each( function() {
 		var $this = $(this),
 			$video = $this.children('.section-header-video'),
-			video_loop = $this.data('video-loop') ? ' loop' : '',
-			video_width = $this.data('video-loop') ? parseInt($this.data('video-width')) : 0,
-			video_height = $this.data('video-loop') ? parseInt($this.data('video-height')) : 0,
+			video_width = $this.data('video-width') ? parseInt($this.data('video-width')) : 0,
+			video_height = $this.data('video-height') ? parseInt($this.data('video-height')) : 0,
 			video_src = $this.data('video-src');
 
-		$video.attr('loop', video_loop);
+		if ($this.data('video-loop')) {
+			$video.attr('loop', '');
+		}
+
 		$video.html('<source src="' + video_src + '" type="video/mp4">');
 		$video.css('width', video_width);
 		$video.css('height', video_height);
@@ -149,7 +152,6 @@ if (typeof jQuery !== 'undefined') {
 		headerImage($);
 		footerAdjustments($);
 		isAutoPlay($);
-		checkVideoPositionToPlay($);
 
 		$(window).on('resize', function() {
 			positionHeaderBackgrounds($);
