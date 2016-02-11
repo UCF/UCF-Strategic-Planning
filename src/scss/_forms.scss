@@ -19,6 +19,10 @@ textarea {
   textarea {
     @extend .form-control;
   }
+
+  > textarea {
+    height: 100px;
+  }
 }
 
 .gfield {

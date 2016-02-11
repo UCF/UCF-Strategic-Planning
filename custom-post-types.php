@@ -379,6 +379,14 @@ abstract class CustomPostType {
 					);
 					$options['fields'][] = $opts;
 					break;
+				case 'menu':
+					$opts = array_merge( $opts,
+						array(
+							'type'              => 'menu_select'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
 			}
 		}
 
@@ -715,7 +723,13 @@ class Section extends CustomPostType {
 				'id'          => $prefix.'content',
 				'type'        => 'wysiwyg',
 				'toolbar'     => 'basic'
-			)
+			),
+			array(
+				'name'        => 'Resource Links',
+				'description' => 'A menu of external links to display',
+				'id'          => $prefix.'resource_links',
+				'type'        => 'menu'
+			),
 		);
 	}
 
@@ -734,6 +748,7 @@ class Section extends CustomPostType {
 		$object->feature_image       = get_field( $prefix.'feature_image', $post_id );
 		$object->feature_spotlight   = get_field( $prefix.'feature_spotlight', $post_id );
 		$object->content             = get_field( $prefix.'content', $post_id );
+		$object->menu                = get_field( $prefix.'resource_links', $post_id );
 
 		return $object;
 	}
@@ -778,8 +793,21 @@ class Section extends CustomPostType {
 						<?php echo Spotlight::toHTML( $object->feature_spotlight ); ?>
 					<?php endif; ?>
 					</div>
-					<div class="col-md-7 col-sm-6 col-xs-12">
+					<div class="col-md-6 col-md-offset-1">
 						<?php echo apply_filters( 'the_content', $object->content); ?>
+						<?php if ( $object->menu ) : ?>
+						<div class="menu-wrapper">
+							<h2>Explore Further</h2>
+							<?php
+								wp_nav_menu(
+									array(
+										'menu_id'  => $object->menu,
+										'container' => ''
+									)
+								);
+							?>
+						</div>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>

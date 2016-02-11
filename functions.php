@@ -113,22 +113,22 @@ function display_footer_news() {
 	<div class="footer-news">
 	<?php foreach( $items as $key=>$item ) : $image = get_article_image( $item ); ?>
 		<div class="row">
-			<div class="col-xs-2 col-sm-4 col-md-3">
-				<div class="news-thumbnail">
-				<?php if ( $image ) : ?>
-					<img class="img-responsive" src="<?php echo $image; ?>" alt="Feed image for <?php echo $item->get_title(); ?>">
-				<?php else : ?>
-					<img class="img-responsive" src="<?php echo $placeholder; ?>" alt="UCF Today">
-				<?php endif; ?>
+			<a href="<?php echo $item->get_link(); ?>">
+				<div class="col-xs-2 col-sm-4 col-md-3">
+					<div class="news-thumbnail">
+					<?php if ( $image ) : ?>
+						<img class="img-responsive" src="<?php echo $image; ?>" alt="Feed image for <?php echo $item->get_title(); ?>">
+					<?php else : ?>
+						<img class="img-responsive" src="<?php echo $placeholder; ?>" alt="UCF Today">
+					<?php endif; ?>
+					</div>
 				</div>
-			</div>
-			<div class="col-xs-10 col-sm-8 col-md-9">
-				<div class="news-details">
-					<h3><?php echo $item->get_title(); ?></h3>
-					<p><?php echo wp_trim_words( $item->get_description(), 15 ); ?></p>
-					<a href="<?php echo $item->get_link(); ?>" class="read-more">Read More &rsaquo;</a>
+				<div class="col-xs-10 col-sm-8 col-md-9">
+					<div class="news-details">
+						<h3><?php echo $item->get_title(); ?></h3>
+					</div>
 				</div>
-			</div>
+			</a>
 		</div>
 	<?php endforeach; ?>
 	</div>
@@ -147,22 +147,36 @@ function display_footer_events() {
         <?php
             $month = $item->get_date( 'M' );
             $day = $item->get_date( 'j' );
+            $startDate = $item->get_item_tags( 'http://events.ucf.edu', 'startdate' );
+        	$endDate = $item->get_item_tags( 'http://events.ucf.edu', 'enddate' );
+        	$startTime = date( 'g:i a', strtotime( $startDate[0]['data'] ) );
+        	$endTime = date( 'g:i a', strtotime( $endDate[0]['data'] ) );
+        	$timeString = '';
+        	if ( $startTime == $endTime ) {
+        		$timeString = $startTime;
+        	} else {
+        		$timeString = $startTime . ' - ' . $endTime;
+        	}
         ?>
-        <div class="row">
-        	<div class="col-xs-3 col-sm-4 col-md-3">
-        		<div class="event-date">
-        			<span class="month"><?php echo $month; ?></span>
-                	<span class="day"><?php echo $day; ?></span>
-               	</div>
-        	</div>
-        	<div class="col-xs-9 col-sm-8 col-md-9">
-        		<div class="event-details">
-	                <h4><?php echo $item->get_title(); ?></h4>
-	                <p><?php echo wp_trim_words( $item->get_description(), 15 ); ?></p>
-	                <a href="<?php echo $item->get_link(); ?>" class="read-more" target="_blank">Read More &rsaquo;</a>
-	            </div>
-        	</div>
-        </div>
+        <div class="row event">
+        	<a href="<?php echo $item->get_link(); ?>" target="_blank">
+	        	<div class="col-xs-2 col-sm-4 col-md-3">
+	        		<div class="event-date">
+	        			<span class="month"><?php echo $month; ?></span>
+	                	<span class="day"><?php echo $day; ?></span>
+	               	</div>
+	        	</div>
+	        	<div class="col-xs-10 col-sm-8 col-md-9">
+	        		<div class="event-details">
+		                <h4><?php echo $item->get_title(); ?></h4>
+		                <?php
+		                	
+		                ?>
+		                <p class="time"><?php echo $timeString; ?></p>
+		            </div>
+	        	</div>
+        	</a>
+	    </div>
     <?php endforeach; ?>
     </div>
 <?php
