@@ -801,7 +801,7 @@ class Section extends CustomPostType {
 							<?php
 								wp_nav_menu(
 									array(
-										'menu_id'  => $object->menu,
+										'menu'  => $object->menu,
 										'container' => ''
 									)
 								);
