@@ -132,6 +132,8 @@ class acf_field_menu_field extends acf_field {
 		<?php if ( $field['value'] ) : ?>
 			<p></p>
 			<a class="button edit-menu" href="<?php echo get_admin_url() . '/nav-menus.php?action=edit&menu=' . $field['value']; ?>" target="_blank"><span class="fa fa-pencil"></span> Edit Menu Items</a>
+			<p>or</p>
+			<a class="button" href="<?php echo get_admin_url() . '/nav-menus.php?action=edit&menu=0'; ?>" target="_blank"><span class="fa fa-bars"></span> Create New Menu</a>
 		<?php else : ?>
 			<p>or</p>
 			<a class="button" href="<?php echo get_admin_url() . '/nav-menus.php?action=edit&menu=0'; ?>" target="_blank"><span class="fa fa-bars"></span> Create New Menu</a>

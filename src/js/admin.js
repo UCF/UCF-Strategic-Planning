@@ -240,6 +240,8 @@ WebcomAdmin.menuField = function($) {
 
       if (value) {
         $edit.attr('href', WebcomLocal.menuAdmin + '?action=edit&menu=' + value);
+      } else {
+        $edit.hide();
       }
     };
 
