@@ -1,5 +1,5 @@
 <?php
-
+include_once ABSPATH . 'wp-admin/includes/plugin.php';
 /**
  * Set theme constants
  **/
@@ -557,7 +557,6 @@ function define_customizer_fields( $wp_customize ) {
 	 * If Yoast SEO is activated, assume we're handling ALL SEO-related
 	 * modifications with it.  Don't add Facebook Opengraph theme options.
 	 **/
-	include_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 	if ( !is_plugin_active( 'wordpress-seo/wp-seo.php' ) ) {
 

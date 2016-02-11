@@ -794,7 +794,7 @@ class Section extends CustomPostType {
 						<?php echo apply_filters( 'the_content', $object->content); ?>
 						<?php if ( $object->menu ) : ?>
 						<div class="menu-wrapper">
-							<h2>Explore Futher</h2>
+							<h2>Explore Further</h2>
 							<?php
 								wp_nav_menu(
 									array(
