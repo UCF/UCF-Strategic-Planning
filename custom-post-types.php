@@ -545,8 +545,32 @@ class IconLink extends CustomPostType {
 				'description' => '',
 				'id' => $prefix.'icon',
 				'type' => 'icon'
+			),
+			array(
+				'name' => 'URL',
+				'description' => 'The URL of the icon link',
+				'id' => $prefix.'url',
+				'type' => 'text'
 			)
 		);
+	}
+
+	public function toHTML( $object ) {
+		$icon = get_field( 'icon_link_icon', $object->ID );
+		$url = get_field( 'icon_link_url', $object->ID );
+		ob_start();
+?>
+		<div class="icon-link">
+			<a href="<?php echo $url; ?>" target="_blank">
+				<div class="icon-wrapper">
+					<span class="fa <?php echo $icon; ?>"></span>
+				</div>
+				<h3><?php echo $object->post_title; ?></h3>
+				<p><?php echo $object->post_content; ?></p>
+			</a>
+		</div>
+<?php
+		return ob_get_clean();
 	}
 }
 

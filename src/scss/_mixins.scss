@@ -41,3 +41,11 @@
     background-size: $width $height;
   }
 }
+
+@mixin zoom($scale: 2) {
+  zoom: $scale;
+  -moz-transform: scale($scale);
+  -o-transform: scale($scale);
+  -webkit-transform: scale($scale);
+  transform: scale($scale);
+}
