@@ -62,6 +62,7 @@ var isAutoPlay = function($) {
 	// storing this in the session so we don't have to check every page load
 	if (sessionStorage.canplayvideo && sessionStorage.canplayvideo === true) {
 		loadVideos($);
+		positionHeaderBackgrounds($);
 		return true;
 	}
 
