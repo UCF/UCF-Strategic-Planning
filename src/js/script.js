@@ -105,6 +105,7 @@ var isAutoPlay = function($) {
 		body.removeChild(video);
 		loadVideos($);
 		positionHeaderBackgrounds($);
+		checkVideoPositionToPlay($);
 		sessionStorage.canplayvideo = true;
 	}, false);
 };
@@ -151,7 +152,6 @@ if (typeof jQuery !== 'undefined') {
 		headerImage($);
 		footerAdjustments($);
 		isAutoPlay($);
-		checkVideoPositionToPlay($);
 
 		$(window).on('resize', function() {
 			positionHeaderBackgrounds($);
