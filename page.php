@@ -1,4 +1,4 @@
-<?php disallow_direct_load( 'home.php' ); ?>
+<?php disallow_direct_load( 'page.php' ); ?>
 <?php get_header(); the_post(); ?>
 <article>
 	<div class="container">
