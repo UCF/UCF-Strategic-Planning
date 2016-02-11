@@ -202,11 +202,6 @@ WebcomAdmin.iconModal = function($) {
         $field = $('#' + $modalInput.val().replace('[', '\\[').replace(']', '\\]')),
         $iconPreview = $field.parent().find('i');
 
-    console.log( selectedVal );
-    console.log( $modalInput );
-    console.log( $field );
-    console.log( $iconPreview );
-
     if (selectedVal) {
       $field.val(selectedVal);
       if ($iconPreview.length) {
@@ -223,24 +218,39 @@ WebcomAdmin.iconModal = function($) {
 };
 
 WebcomAdmin.menuField = function($) {
-  var updateMenuEditLink = function() {
-    var $select = $(this),
-        url_base = $select.attr('data-menu-path'),
-        value = $select.find(':selected').val(),
-        $menu_edit = $select.parent().find('.menu-edit-link');
+  if ($('.meta-menu-field').length) {
+    var $field = $('.meta-menu-field'),
+        apiURL = WebcomLocal.menuApi;
 
-    if (value) {
-      var url = url_base + '/nav-menus.php?action=edit&menu=' + value;
-      $menu_edit.attr('href', url);
-      $menu_edit.show();
-    } else {
-      $menu_edit.hide();
+    var updateMenu = function() {
+      $.getJSON(apiURL + '/menus', function(data) {
+        for(var i in data) {
+          var menu = data[i];
+          if ( $field.find( 'option[value=' + menu.ID + ']' ).length === 0 ) {
+            $field.append('<option value="' + menu.ID + '">' + menu.name + '</option>');
+          }
+        }
+      });
+    };
+
+    var onSelectUpdate = function(e) {
+      var $field = $(this),
+          value = $field.find('option:selected').val(),
+          $edit = $field.parent().find('a.edit-menu');
+
+      if (value) {
+        $edit.attr('href', WebcomLocal.menuAdmin + '?action=edit&menu=' + value);
+      } else {
+        $edit.hide();
+      }
+    };
+
+    if ( WebcomLocal.menuApi ) {
+      setInterval(updateMenu, 5000);
     }
-  };
 
-  $('.menu-select').ready(updateMenuEditLink);
-
-  $('.menu-select').on('change', updateMenuEditLink);
+    $('.meta-menu-field').on('change', onSelectUpdate);
+  }
 };
 
 WebcomAdmin.shortcodeInterfaceTool = function($) {
@@ -252,7 +262,6 @@ WebcomAdmin.shortcodeInterfaceTool = function($) {
   $cls.shortcodeDescriptions = $cls.shortcodeForm.find('#shortcode-descriptions');
 
   $cls.shortcodeInsert = function(shortcode, parameters, enclosingText) {
-    console.log(shortcode);
     var text = '[' + shortcode;
 
     if (parameters) {
