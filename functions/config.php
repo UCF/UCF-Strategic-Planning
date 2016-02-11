@@ -29,12 +29,19 @@ define( 'THEME_CUSTOMIZER_PREFIX', 'ucfgeneric_' ); // a unique prefix for panel
 
 Config::$custom_post_types = array(
 	'Page',
+	'Post',
+	'IconLink',
     'Post',
+    'CallToAction'
 );
 
 
 Config::$custom_taxonomies = array(
-	
+
+);
+
+Config::$shortcodes = array(
+	'CallToActionSC'
 );
 
 
@@ -442,6 +449,8 @@ function __init__() {
 	register_nav_menu( 'header-menu', __( 'Header Menu' ) );
 	register_nav_menu( 'footer-menu', __( 'Footer Menu' ) );
 
+	add_image_size( 'call_to_action', 400, 300 );
+
 	// add_image_size( 'my-image-size', 620 );
 
 	// register_sidebar( array(
@@ -520,7 +529,7 @@ function hook_frontend_theme_scripts() {
 	</script>
 	<?php endif;?>
 
-	
+
 <?php
 	echo ob_get_clean();
 }
