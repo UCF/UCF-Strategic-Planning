@@ -48,8 +48,6 @@ var positionHeaderBackgrounds = function($) {
 			newImgX = (canvasWidth - newImgWidth) / 2,
 			newImgY = (canvasHeight - newImgHeight) / 2;
 
-		console.log(canvasHeight);
-
 		$this.css('width', newImgWidth);
 		$this.css('height', newImgHeight);
 		$this.css('left', newImgX);
