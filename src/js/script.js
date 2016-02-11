@@ -59,10 +59,13 @@ var positionHeaderBackgrounds = function($) {
 // Test if video auto plays
 var isAutoPlay = function($) {
 
+	sessionStorage.canplayvideo = false;
+
 	// storing this in the session so we don't have to check every page load
 	if (sessionStorage.canplayvideo && sessionStorage.canplayvideo === true) {
 		loadVideos($);
 		positionHeaderBackgrounds($);
+
 		return true;
 	}
 
@@ -81,6 +84,7 @@ var isAutoPlay = function($) {
 	// http://stackoverflow.com/questions/14109654/check-if-a-user-is-on-ie8-for-html5-client-side
 	if (typeof video.canPlayType == 'undefined') {
 		sessionStorage.canplayvideo = false;
+		positionHeaderBackgrounds($);
 		return false;
 	}
 
