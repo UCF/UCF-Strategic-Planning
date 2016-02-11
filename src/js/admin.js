@@ -260,7 +260,6 @@ WebcomAdmin.shortcodeInterfaceTool = function($) {
   $cls.shortcodeDescriptions = $cls.shortcodeForm.find('#shortcode-descriptions');
 
   $cls.shortcodeInsert = function(shortcode, parameters, enclosingText) {
-    console.log(shortcode);
     var text = '[' + shortcode;
 
     if (parameters) {
