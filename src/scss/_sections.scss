@@ -5,6 +5,13 @@
     position: relative;
     height: 750px;
     width: 100%;
+
+    @media (max-width: $screen-md-max) {
+      height: 500px;
+    }
+    @media (max-width: $screen-sm-max) {
+      height: 360px;
+    }
   }
 
   .section-header-image-container {
@@ -15,15 +22,15 @@
     width: 100%;
     z-index: 80;
 
-  .section-header-image {
-    position: absolute;
-    top: 0;
-    z-index: 80;
-    opacity: 1;
-    transition: opacity 1s ease;
+    .section-header-image {
+      position: absolute;
+      top: 0;
+      z-index: 80;
+      opacity: 1;
+      transition: opacity 1s ease;
 
-    width: 100%;
-  }
+      width: 100%;
+    }
 
     &.has-video .section-header-image  {
       opacity: 0;
@@ -39,6 +46,13 @@
     width: 100%;
     z-index: -1;
 
+    @media (max-width: $screen-md-max) {
+      height: 500px;
+    }
+    @media (max-width: $screen-sm-max) {
+      height: 360px;
+    }
+
     .section-header-video {
       position: absolute;
       z-index: 0;
@@ -51,6 +65,14 @@
     position: absolute;
     top: 0;
     width: 100%;
+
+    @media (max-width: $screen-md-max) {
+      height: 500px;
+    }
+    @media (max-width: $screen-sm-max) {
+      height: 360px;
+    }
+
   }
 
   .section-header:hover .section-header-image {
@@ -65,8 +87,6 @@
     top: 0;
     z-index: 100;
 
-
-
     .section-header-text {
       color: #fff;
       display: table-cell;
@@ -77,6 +97,13 @@
       position: relative;
       text-align: center;
       vertical-align: middle;
+
+      @media (max-width: $screen-md-max) {
+        font-size: 60px;
+      }
+      @media (max-width: $screen-sm-max) {
+        font-size: 50px;
+      }
     }
   }
 
