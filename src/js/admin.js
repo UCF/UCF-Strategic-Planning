@@ -180,11 +180,6 @@ WebcomAdmin.iconModal = function($) {
       }
     }
   });
-
-  $('.meta-icon-wrapper').each(function() {
-    var $self = $(this),
-      $field = $self.find('.meta-icon-field');
-  });
   
   $('.meta-fa-icon').on('click', function(e) {
     $('.meta-fa-icon').removeClass('selected');
@@ -204,7 +199,7 @@ WebcomAdmin.iconModal = function($) {
   $('#meta-icon-submit').on('click', function() {
     var selectedVal  = $('.meta-fa-icon.selected').find('i').attr('data-icon-value'),
         $modalInput = $('#meta-icon-field-id'),
-        $field = $('#' + $modalInput.val()),
+        $field = $('#' + $modalInput.val().replace('[', '\\[').replace(']', '\\]')),
         $iconPreview = $field.parent().find('i');
 
     if (selectedVal) {
@@ -222,6 +217,42 @@ WebcomAdmin.iconModal = function($) {
   });
 };
 
+WebcomAdmin.menuField = function($) {
+  if ($('.meta-menu-field').length) {
+    var $field = $('.meta-menu-field'),
+        apiURL = WebcomLocal.menuApi;
+
+    var updateMenu = function() {
+      $.getJSON(apiURL + '/menus', function(data) {
+        for(var i in data) {
+          var menu = data[i];
+          if ( $field.find( 'option[value=' + menu.ID + ']' ).length === 0 ) {
+            $field.append('<option value="' + menu.ID + '">' + menu.name + '</option>');
+          }
+        }
+      });
+    };
+
+    var onSelectUpdate = function(e) {
+      var $field = $(this),
+          value = $field.find('option:selected').val(),
+          $edit = $field.parent().find('a.edit-menu');
+
+      if (value) {
+        $edit.attr('href', WebcomLocal.menuAdmin + '?action=edit&menu=' + value);
+      } else {
+        $edit.hide();
+      }
+    };
+
+    if ( WebcomLocal.menuApi ) {
+      setInterval(updateMenu, 5000);
+    }
+
+    $('.meta-menu-field').on('change', onSelectUpdate);
+  }
+};
+
 WebcomAdmin.shortcodeInterfaceTool = function($) {
   var $cls                   = WebcomAdmin.shortcodeInterfaceTool;
   $cls.shortcodeForm         = $('#select-shortcode-form');
@@ -231,7 +262,6 @@ WebcomAdmin.shortcodeInterfaceTool = function($) {
   $cls.shortcodeDescriptions = $cls.shortcodeForm.find('#shortcode-descriptions');
 
   $cls.shortcodeInsert = function(shortcode, parameters, enclosingText) {
-    console.log(shortcode);
     var text = '[' + shortcode;
 
     if (parameters) {
@@ -304,5 +334,6 @@ WebcomAdmin.shortcodeInterfaceTool = function($) {
   WebcomAdmin.utilityPageSections($);
   WebcomAdmin.fileUploader($);
   WebcomAdmin.iconModal($);
+  WebcomAdmin.menuField($);
   WebcomAdmin.shortcodeInterfaceTool($);
 })(jQuery);

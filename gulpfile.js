@@ -44,6 +44,9 @@ gulp.task('bower', function() {
       gulp.src(config.componentsPath + '/font-awesome/fonts/*')
         .pipe(gulp.dest(config.fontPath + '/font-awesome/'));
 
+      gulp.src(config.componentsPath + '/weather-icons/font/*')
+        .pipe(gulp.dest('./static/fonts/'));
+
     });
 });
 
@@ -103,8 +106,8 @@ gulp.task('js-lint', function() {
 gulp.task('js-main', function() {
   var minified = [
     config.componentsPath + '/bootstrap-sass-official/assets/javascripts/bootstrap.js',
+    config.componentsPath + '/matchHeight/jquery.matchHeight.js',
     config.jsPath + '/generic-base.js',
-    
     config.jsPath + '/script.js'
   ];
 
@@ -129,23 +132,23 @@ gulp.task('js-admin', function() {
 gulp.task('fa-list', function() {
     var stream = fs.createReadStream(config.componentsPath + '/font-awesome/scss/_icons.scss');
     stream.on('error', function(err) { console.log(err); });
-    
+
     var reader = readline.createInterface({
        input: stream
     });
-    
+
     var regex = /\.#\{\$fa-css-prefix\}-(.*):before/,
         icons = [];
-        
+
     reader.on('line', function(line) {
        var match = regex.exec(line);
        if (match) {
            icons.push("fa-" + match[1]);
-       } 
+       }
     }).on('close', function() {
         jsonfile.writeFile(config.dataPath + '/fa-icons.json', icons, function (err) {
             if (err) { console.log(err); } else { console.log("Font awesome list written."); }
-        }); 
+        });
     });
 });
 

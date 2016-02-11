@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Abstract class for defining custom post types.
  **/
@@ -84,6 +83,12 @@ abstract class CustomPostType {
 		return array();
 	}
 
+	/**
+	 * Additional settings for overriding field layout.
+	 **/
+	public function override_field_options( $options ) {
+		return $options;
+	}
 
 	/**
 	 * Using instance variables defined, returns an array defining what this
@@ -186,6 +191,210 @@ abstract class CustomPostType {
 		}
 	}
 
+	/**
+	 * Registers the fields for the custom post type.
+	 **/
+	public function register_fields() {
+		$options = array(
+			'id'         => $this->options( 'name' ).'_fields',
+			'title'      => __( $this->options( 'singular_name' ). ' Fields' ),
+			'fields'     => array(),
+			'location'   => array(
+				array(
+					array(
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => $this->options( 'name' ),
+						'order_no' => 0,
+						'group_no' => 0
+					)
+				)
+			),
+			'options' => array(
+				'position' => 'normal',
+				'layout' => 'default'
+			),
+			'menu_order' => 0,
+		);
+
+		$options = $this->override_field_options( $options );
+
+		foreach( $this->fields() as $field ) {
+			$opts = array_merge( $field,
+				array(
+					'key'          => $field['id'],
+					'label'        => $field['name'],
+					'name'         => $field['id'],
+					'instructions' => $field['description'],
+					'required'     => $field['required'] ? $field['required'] : false
+				)
+			);
+
+			switch( $field['type'] ) {
+				case 'text':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'text',
+							'default_value' => $field['default'] ? $field['default'] : '',
+							'placeholder'   => $field['placeholder'] ? $field['placeholder'] : '',
+							'formatting'    => 'html'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'textarea':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'textarea',
+							'default_value' => $field['default'] ? $field['default'] : '',
+							'placeholder'   => $field['placeholder'] ? $field['placeholder'] : '',
+							'formatting'    => 'html'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'number':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'number',
+							'default_value' => $field['default'] ? $field['default'] : '',
+							'placeholder'   => $field['placeholder'] ? $field['placeholder'] : '',
+							'min'           => $field['min'] ? $field['min'] : null,
+							'max'           => $field['max'] ? $field['max'] : null
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'email':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'email',
+							'default_value' => $field['default'] ? $default['default'] : '',
+							'placeholder'   => $field['placeholder'] ? $field['placeholder'] : '',
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'image':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'image',
+							'preview_size'  => 'thumbnail',
+							'save_format'   => 'object',
+							'library'       => $field['library'] ? $field['library'] : 'all'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'file':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'file',
+							'save_format'   => $field['save_as'] ? $field['save_as'] : 'object',
+							'library'       => $field['library'] ? $field['library'] : 'all'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'select':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'select',
+							'choices'       => $field['choices'],
+							'default_value' => $field['default'] ? $field['default'] : '',
+							'allow_null'    => $field['allow_null'] ? $field['allow_null'] : 0,
+							'multiple'      => $field['multiple'] ? $field['multiple'] : 0
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'checkbox-list':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'checkbox',
+							'choices'       => $field['choices'],
+							'default_value' => $field['default'] ? $field['default'] : null,
+							'layout'        => $field['layout'] ? $field['layout'] : 'vertical'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'radio':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'radio',
+							'choices'       => $field['choices'],
+							'default_value' => $field['default'] ? $field['default'] : null,
+							'layout'        => $field['layout'] ? $field['layout'] : 'vertical'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'checkbox':
+					$opts = array_merge( $opts,
+						array(
+							'type'          => 'true_false',
+							'message'       => $field['name'],
+							'default_value' => $field['default'] ? $field['default'] : 0
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'color':
+					$opts = array_merge( $opts,
+						array(
+							'type'              => 'color_picker',
+							'default_value'     => $field['default'] ? $field['default'] : null
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'icon':
+					$opts = array_merge( $opts,
+						array(
+							'type'              => 'fa_icon'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'wysiwyg':
+					$opts = array_merge( $opts,
+						array(
+							'type'              => 'wysiwyg',
+							'toolbar'           => $field['toolbar'] ? $field['toolbar'] : 'full',
+							'media_upload'      => $field['media_upload'] ? $field['media_upload'] : 'no'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'post_object':
+					$opts = array_merge( $opts,
+						array(
+							'type'              => 'post_object',
+							'post_type'         => $field['post_type'] ? $field['post_type'] : array( 'post' ),
+							'taxonomy'          => $field['taxonomy'] ? $field['taxonomy'] : array( 'all' ),
+							'allow_null'        => $field['allow_null'] ? $field['allow_null'] : 1,
+							'multiple'          => $field['multiple'] ? $field['multiple'] : 0
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+				case 'menu':
+					$opts = array_merge( $opts,
+						array(
+							'type'              => 'menu_select'
+						)
+					);
+					$options['fields'][] = $opts;
+					break;
+			}
+		}
+
+		if ( function_exists( 'register_field_group' ) ) {
+			register_field_group( $options );
+		}
+	}
+
 
 	/**
 	 * Shortcode for this custom post type.  Can be overridden for descendants.
@@ -261,15 +470,26 @@ class Page extends CustomPostType {
 		$prefix = $this->options( 'name' ).'_';
 		return array(
 			array(
-				'name' => 'Stylesheet',
-				'description' => '',
-				'id' => $prefix.'stylesheet',
-				'type' => 'file',
+				'name'        => 'Home Page Message',
+				'description' => 'The message that appears below the header',
+				'id'          => $prefix.'message',
+				'type'        => 'textarea'
+			),
+			array(
+				'name'        => 'Home Page Spotlight',
+				'description' => 'The active spotlight on the home page',
+				'id'          => $prefix.'spotlight',
+				'type'        => 'post_object',
+				'post_type'   => array( 'spotlight' )
 			),
 		);
 	}
-}
 
+	public function override_field_options( $options ) {
+
+		return $options;
+	}
+}
 
 class Post extends CustomPostType {
 	public
@@ -330,14 +550,14 @@ class IconLink extends CustomPostType {
 	}
 }
 
-class CallToAction extends CustomPostType {
+class Spotlight extends CustomPostType {
 	public
-		$name           = 'call_to_action',
-		$plural_name    = 'Calls to Action',
-		$singular_name  = 'Call to Action',
-		$add_new_item   = 'Add New Call to Action',
-		$edit_item      = 'Edit Call to Action',
-		$new_item       = 'New Call to Action',
+		$name           = 'spotlight',
+		$plural_name    = 'Spotlights',
+		$singular_name  = 'Spotlight',
+		$add_new_item   = 'Add New Spotlight',
+		$edit_item      = 'Edit Spotlight',
+		$new_item       = 'New Spotlight',
 		$public         = True,
 		$use_editor     = False,
 		$use_thumbnails = True,
@@ -350,34 +570,34 @@ class CallToAction extends CustomPostType {
 		$prefix = $this->options( 'name' ).'_';
 		return array(
 			array(
-				'name'        => 'Call to Action Title Text Color',
+				'name'        => 'Title Text Color',
 				'description' => 'The color of the overlay text',
 				'id'          => $prefix.'text_color',
 				'type'        => 'color',
 				'default'     => '#ffffff'
 			),
 			array(
-				'name'        => 'Call to Action Button Color',
+				'name'        => 'Button Color',
 				'description' => 'The background color of the call to action button',
 				'id'          => $prefix.'btn_background',
 				'type'        => 'color',
 				'default'     => '#ffcc00'
 			),
 			array(
-				'name'        => 'Call to Action Button Text Color',
+				'name'        => 'Button Text Color',
 				'description' => 'The text color of the call to action button',
 				'id'          => $prefix.'btn_foreground',
 				'type'        => 'color',
 				'default'     => '#ffffff'
 			),
 			array(
-				'name'        => 'Call to Action Button Text',
+				'name'        => 'Button Text',
 				'description' => 'The text of the call to action button',
 				'id'          => $prefix.'btn_text',
 				'type'        => 'text'
 			),
 			array(
-				'name'        => 'Call to Action URL',
+				'name'        => 'URL',
 				'description' => 'The url of the call to action',
 				'id'          => $prefix.'url',
 				'type'        => 'text'
@@ -387,14 +607,19 @@ class CallToAction extends CustomPostType {
 
 	public function toHTML( $object ) {
 		$image_url = has_post_thumbnail( $object->ID ) ?
-			wp_get_attachment_image_src( get_post_thumbnail_id( $object->ID ), 'call_to_action' )[0] :
+			wp_get_attachment_image_src( get_post_thumbnail_id( $object->ID ), 'spotlight' ) :
 			null;
-		$url = get_post_meta( $object->ID, 'call_to_action_url', True );
 
-		$title_color = get_post_meta( $object->ID, 'call_to_action_text_color', True );
-		$btn_background = get_post_meta( $object->ID, 'call_to_action_btn_background', True );
-		$btn_foreground = get_post_meta( $object->ID, 'call_to_action_btn_foreground', True );
-		$btn_text = get_post_meta( $object->ID, 'call_to_action_btn_text', True );
+		if ( $image_url ) {
+			$image_url = $image_url[0];
+		}
+
+		$url = get_field( 'spotlight_url', $object->ID );
+
+		$title_color = get_field( 'spotlight_text_color', $object->ID );
+		$btn_background = get_field( 'spotlight_btn_background', $object->ID );
+		$btn_foreground = get_field( 'spotlight_btn_foreground', $object->ID );
+		$btn_text = get_field( 'spotlight_btn_text', $object->ID );
 
 		$btn_styles = array();
 		if ( $btn_background ) : $btn_styles[] = 'background: '.$btn_background; endif;
@@ -403,18 +628,220 @@ class CallToAction extends CustomPostType {
 		ob_start();
 		if ( $image_url && $url ) :
 ?>
-		<div class="call-to-action" style="background: url('<?php echo $image_url; ?>'">
-			<a href="<?php echo $url; ?>" target="_blank">
-				<h2 <?php if ( $title_color ) : echo 'style="color: '.$title_color.'"'; ?>><?php echo $object->post_title; endif; ?></h2>
-				<?php if ( $btn_text ) : ?>
-				<span class="btn btn-lg" <?php if ( !empty( $btn_styles ) ) : echo explode( $$btn_styles, ' ' ); endif; ?>>
+		<a class="call-to-action" href="<?php echo $url; ?>" target="_blank">
+			<img src="<?php echo $image_url; ?>" alt="<?php echo $object->post_title; ?>">
+			<h2 <?php if ( $title_color ) : echo 'style="color: '.$title_color.'"'; ?>><?php echo $object->post_title; endif; ?></h2>
+			<?php if ( $btn_text ) : ?>
+			<div class="btn-wrapper">
+				<span class="btn btn-lg btn-ucf" <?php if ( !empty( $btn_styles) ) : echo implode( ' ', $btn_styles ); endif; ?>>
 					<?php echo $btn_text; ?>
 				</span>
-				<?php endif; ?>
-			</a>
-		</div>
+			</div>
+			<?php endif; ?>
+		</a>
 <?php
 		endif;
+		return ob_get_clean();
+	}
+}
+
+class Section extends CustomPostType {
+	public
+		$name           = 'section',
+		$plural_name    = 'Sections',
+		$singular_name  = 'Section',
+		$add_new_item   = 'Add New Section',
+		$edit_item      = 'Edit Section',
+		$new_item       = 'New Section',
+		$public         = True,
+		$use_editor     = False,
+		$use_thumbnails = True,
+		$use_order      = False,
+		$use_title      = True,
+		$use_metabox    = True,
+		$taxonomies     = array();
+
+	public function fields() {
+		$prefix = $this->options( 'name' ).'_';
+		return array(
+			array(
+				'name'        => 'Header Image',
+				'description' => 'This image will be used in the section header when the header video ends or if the user\'s browser does not support video playback.',
+				'id'          => $prefix.'header_image',
+				'type'        => 'image'
+			),
+			array(
+				'name'        => 'Header Video (mp4)',
+				'description' => 'The video that appears as the header background (mp4).',
+				'id'          => $prefix.'header_video_mp4',
+				'type'        => 'file'
+			),
+			array(
+				'name'        => 'Loop Video',
+				'description' => 'Loop video.',
+				'id'          => $prefix.'header_video_loop',
+				'type'        => 'checkbox'
+			),
+			array(
+				'name'        => 'Header Text',
+				'description' => 'The text that will appear over the video header.',
+				'id'          => $prefix.'header_text',
+				'type'        => 'text'
+			),
+			array(
+				'name'        => 'Header Text Color',
+				'description' => 'The color of the header text.',
+				'id'          => $prefix.'header_text_color',
+				'type'        => 'color'
+			),
+			array(
+				'name'        => 'Lead Text',
+				'description' => 'The lead text that will appear immediately under the section title.',
+				'id'          => $prefix.'lead_text',
+				'type'        => 'textarea'
+			),
+			array(
+				'name'        => 'Feature Type',
+				'description' => 'Choose the kind of feature to use for this section.',
+				'id'          => $prefix.'feature_type',
+				'type'        => 'radio',
+				'choices'     => array(
+					'feature_image' => 'Image',
+					'feature_spotlight' => 'Spotlight'
+				),
+				'default'     => 'feature_image'
+			),
+			array(
+				'name'        => 'Feature Image',
+				'description' => 'The image that will appear in the content area.',
+				'id'          => $prefix.'feature_image',
+				'type'        => 'image',
+				'conditional_logic' => array(
+					'status' => 1,
+					'rules'  => array(
+						array(
+							'field' => $prefix.'feature_type',
+							'operator' => '==',
+							'value' => 'feature_image'
+						)
+					),
+					'allorany' => 'all'
+				)
+			),
+			array(
+				'name'        => 'Feature Spotlight',
+				'description' => 'The call to action that will appear in the content area.',
+				'id'          => $prefix.'feature_spotlight',
+				'type'        => 'post_object',
+				'post_type'   => array( 'spotlight' ),
+				'conditional_logic' => array(
+					'status' => 1,
+					'rules'  => array(
+						array(
+							'field'    => $prefix.'feature_type',
+							'operator' => '==',
+							'value'    => 'feature_spotlight'
+						)
+					),
+					'allorany' => 'all'
+				)
+			),
+			array(
+				'name'        => 'Content',
+				'description' => 'The content that will appear to the right of the featured image.',
+				'id'          => $prefix.'content',
+				'type'        => 'wysiwyg',
+				'toolbar'     => 'basic'
+			),
+			array(
+				'name'        => 'Resource Links',
+				'description' => 'A menu of external links to display',
+				'id'          => $prefix.'resource_links',
+				'type'        => 'menu'
+			),
+		);
+	}
+
+	function add_post_meta( $object ) {
+
+		$post_id    = $object->ID;
+		$prefix     = 'section_';
+
+		$object->header_image        = get_field( $prefix.'header_image', $post_id );
+		$object->header_video_mp4    = get_field( $prefix.'header_video_mp4', $post_id );
+		$object->header_video_loop   = get_field( $prefix.'header_video_loop', $post_id );
+		$object->header_text         = get_field( $prefix.'header_text', $post_id );
+		$object->header_text_color   = get_field( $prefix.'header_text_color', $post_id );
+		$object->lead_text           = get_field( $prefix.'lead_text', $post_id );
+		$object->feature_type        = get_field( $prefix.'feature_type', $post_id );
+		$object->feature_image       = get_field( $prefix.'feature_image', $post_id );
+		$object->feature_spotlight   = get_field( $prefix.'feature_spotlight', $post_id );
+		$object->content             = get_field( $prefix.'content', $post_id );
+		$object->menu                = get_field( $prefix.'resource_links', $post_id );
+
+		return $object;
+	}
+
+	public function toHTML( $object ) {
+		$object = Section::add_post_meta( $object );
+		ob_start();
+?>
+		<section id="<?php echo $object->post_name; ?>" class="bucket-section">
+			<div class="section-header">
+				<div class="section-header-text-wrapper">
+					<span class="section-header-text" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
+					<?php echo $object->header_text; ?>
+					</span>
+				</div>
+				<?php if ( $object->header_image ) : ?>
+					<?php $header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) ); ?>
+					<div class="section-header-image-container">
+						<img class="section-header-image" src="<?php echo $header_img[0]; ?>" alt="">
+					</div>
+				<?php endif; ?>
+				<?php if ( $object->header_video_mp4 ) : ?>
+					<?php
+						$header_video_url = wp_get_attachment_url( $object->header_video_mp4 );
+						$header_video_meta = wp_get_attachment_metadata( $object->header_video_mp4 );
+					?>
+
+					<div class="section-header-video-container" data-video-src="<?php echo $header_video_url; ?>" data-video-width="<?php echo $header_video_meta['width']; ?>" data-video-height="<?php echo $header_video_meta['height']; ?>" data-video-loop="<?php echo $object->header_video_loop ? 'true' : 'false'; ?>">
+						<video class="section-header-video"></video>
+					</div>
+				<?php endif; ?>
+			</div>
+			<div class="container">
+				<h2><?php echo $object->post_title; ?></h2>
+				<p class="lead"><?php echo $object->lead_text; ?></p>
+				<div class="row">
+					<div class="col-md-5 col-sm-6 col-xs-12">
+					<?php if ( $object->feature_type == 'feature_image' ) : ?>
+						<?php $featured_img = wp_get_attachment_image_src( $object->feature_image, 'large' ); ?>
+						<img class="img-responsive" src="<?php echo $featured_img[0]; ?>">
+					<?php else: ?>
+						<?php echo Spotlight::toHTML( $object->feature_spotlight ); ?>
+					<?php endif; ?>
+					</div>
+					<div class="col-md-6 col-md-offset-1">
+						<?php echo apply_filters( 'the_content', $object->content); ?>
+						<?php if ( $object->menu ) : ?>
+						<div class="menu-wrapper">
+							<h2>Explore Further</h2>
+							<?php
+								wp_nav_menu(
+									array(
+										'menu'  => $object->menu,
+										'container' => ''
+									)
+								);
+							?>
+						</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			</div>
+		</section>
+<?php
 		return ob_get_clean();
 	}
 }

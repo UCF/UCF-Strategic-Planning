@@ -3,7 +3,7 @@
 function add_shortcode_interface() {
 	ob_start();
 ?>
-	<a href="#TB_inline?width=600&height=700&inlineId=select-shortcode-form" class="thickbox button" id="add-shortcode" title="Add Shortcode">Add Shortcode</a>
+	<a href="#TB_inline?width=600&height=700&inlineId=select-shortcode-form" class="thickbox button" id="add-shortcode" title="Add Shortcode"><span class="fa fa-code"></span> Add Shortcode</a>
 <?php
 	echo ob_get_clean();
 }
