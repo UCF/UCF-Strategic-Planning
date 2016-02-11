@@ -19,9 +19,10 @@
     position: absolute;
     top: 0;
     z-index: 80;
-
     opacity: 1;
     transition: opacity 1s ease;
+
+    width: 100%;
   }
 
     &.has-video .section-header-image  {
@@ -39,8 +40,6 @@
     z-index: -1;
 
     .section-header-video {
-      width: 100%;
-
       position: absolute;
       z-index: 0;
     }

@@ -149,13 +149,13 @@ function display_footer_events() {
             $day = $item->get_date( 'j' );
         ?>
         <div class="row">
-        	<div class="col-xs-2 col-sm-4 col-md-3">
+        	<div class="col-xs-3 col-sm-4 col-md-3">
         		<div class="event-date">
         			<span class="month"><?php echo $month; ?></span>
                 	<span class="day"><?php echo $day; ?></span>
                	</div>
         	</div>
-        	<div class="col-xs-10 col-sm-8 col-md-9">
+        	<div class="col-xs-9 col-sm-8 col-md-9">
         		<div class="event-details">
 	                <h4><?php echo $item->get_title(); ?></h4>
 	                <p><?php echo wp_trim_words( $item->get_description(), 15 ); ?></p>

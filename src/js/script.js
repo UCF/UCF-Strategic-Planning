@@ -7,11 +7,10 @@
 // https://stackoverflow.com/questions/487073/check-if-element-is-visible-after-scrolling/488073#488073
 function isScrolledIntoView(elem)
 {
-		var docViewTop = $(window).scrollTop();
-		var docViewBottom = docViewTop + $(window).height();
-
-		var elemTop = $(elem).offset().top;
-		var elemBottom = elemTop + $(elem).height();
+		var docViewTop = $(window).scrollTop(),
+			docViewBottom = docViewTop + $(window).height(),
+			elemTop = $(elem).offset().top,
+			elemBottom = elemTop + $(elem).height();
 
 	 return (docViewBottom >= elemTop && docViewTop <= elemBottom);
 }
@@ -38,31 +37,21 @@ var footerAdjustments = function($) {
 
 var positionHeaderBackgrounds = function($) {
 
-	var resizeImages = function() {
-		$('.section-header-image, .section-header-video').each( function() {
-			var $this = $(this);
-			var canvasWidth = parseInt($this.parent().width());
-			var canvasHeight = parseInt($this.parent().height());
+	$('.section-header-image, .section-header-video').each( function() {
 
-			var minRatio = Math.max(canvasWidth / $this.width(), canvasHeight / $this.height());
+		var $this = $(this),
+			canvasWidth = parseInt($this.parent().width()),
+			canvasHeight = parseInt($this.parent().height()),
+			maxRatio = Math.max(canvasWidth / $this.width(), canvasHeight / $this.height()),
+			newImgWidth = maxRatio * $this.width(),
+			newImgHeight = maxRatio * $this.height(),
+			newImgX = (canvasWidth - newImgWidth) / 2,
+			newImgY = (canvasHeight - newImgHeight) / 2;
 
-			var newImgWidth = minRatio * $this.width();
-			var newImgHeight = minRatio * $this.height();
-
-			var newImgX = (canvasWidth - newImgWidth) / 2;
-			var newImgY = (canvasHeight - newImgHeight) / 2;
-
-			$this.css('width', newImgWidth);
-			$this.css('height', newImgHeight);
-			$this.css('left', newImgX);
-			$this.css('top', newImgY);
-		});
-	};
-
-	setTimeout(resizeImages, 1000);
-
-	$(window).on('resize', function () {
-			resizeImages();
+		$this.css('width', newImgWidth);
+		$this.css('height', newImgHeight);
+		$this.css('left', newImgX);
+		$this.css('top', newImgY);
 	});
 };
 
@@ -110,35 +99,40 @@ var isAutoPlay = function($) {
 		clearTimeout(removeVideoTimeout);
 		body.removeChild(video);
 		loadVideos($);
+		positionHeaderBackgrounds($);
 		sessionStorage.canplayvideo = true;
 	}, false);
+};
+
+var checkVideoPositionToPlay = function($) {
+	$('.section-header-video').each(function () {
+		if (isScrolledIntoView(this)) {
+			this.play();
+		}
+		else {
+			this.pause();
+		}
+	});
 };
 
 // Place videos inside placeholders
 var loadVideos = function($) {
 
 	$('.section-header-video-container').each( function() {
-		var $this = $(this);
-		var $video = $this.children('.section-header-video');
-		var video_loop = $this.data('video-loop') ? ' loop' : '';
-		var video_src = $this.data('video-src');
+		var $this = $(this),
+			$video = $this.children('.section-header-video'),
+			video_loop = $this.data('video-loop') ? ' loop' : '',
+			video_width = $this.data('video-loop') ? parseInt($this.data('video-width')) : 0,
+			video_height = $this.data('video-loop') ? parseInt($this.data('video-height')) : 0,
+			video_src = $this.data('video-src');
 
 		$video.attr('loop', video_loop);
 		$video.html('<source src="' + video_src + '" type="video/mp4">');
+		$video.css('width', video_width);
+		$video.css('height', video_height);
+
 		$this.parent().children('.section-header-image-container').addClass('has-video');
 	});
-
-	$(window).on('scroll', function () {
-		$('video').each(function () {
-			if (isScrolledIntoView(this)) {
-				this.play();
-			}
-			else {
-				this.pause();
-			}
-		});
-	});
-
 };
 
 Number.prototype.clamp = function(min, max) {
@@ -150,7 +144,14 @@ if (typeof jQuery !== 'undefined') {
 		headerImage($);
 		footerAdjustments($);
 		isAutoPlay($);
-		positionHeaderBackgrounds($);
+		checkVideoPositionToPlay($);
+
+		$(window).on('resize', function() {
+			positionHeaderBackgrounds($);
+		});
+		$(window).on('scroll', function() {
+			checkVideoPositionToPlay($);
+		});
 	});
 }
 

@@ -4,7 +4,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-7 col-sm-6 col-xs-12">
-				<div class="page">
+				<div class="page-wrap">
 					<h2><?php echo the_title(); ?></h2>
 					<div class="content">
 						<?php
