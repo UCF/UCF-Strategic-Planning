@@ -145,7 +145,7 @@ class acf_field_menu_field extends acf_field {
 
 	function get_menus() {
 	    $menus = wp_get_nav_menus();
-	    $retval = [];
+	    $retval = array();
 	    foreach( $menus as $menu ) {
 	    	$retval[$menu->term_id] = $menu->name;
 	    }
