@@ -79,11 +79,13 @@ body.admin-bar .navbar-fixed-top {
     }
   }
 
-  @media (min-width: $screen-sm-min) {
-    max-height: 50px;
-  }
+  .navbar-collapse {
+    @media (min-width: $screen-sm-min) {
+      max-height: 50px;
+    }
 
-  @media (max-width: $screen-xs-max) {
-    max-height: auto;
+    @media (max-width: $screen-xs-max) {
+      max-height: auto;
+    }
   }
 }
