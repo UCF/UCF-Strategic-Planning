@@ -298,6 +298,7 @@
   background-color: $ucf-bg-default;
   border: none;
   border-radius: 0;
+  overflow-y: hidden;
 
   .navbar-brand {
     color: $ucf-col-default;
@@ -386,11 +387,12 @@
   .navbar-link {
     color: $ucf-col-default;
     &:hover {
-      color: $ucf-col-highlight; }
+      color: $ucf-col-highlight;
     }
   }
+}
 
-@media (max-width: 767px) {
+@media (max-width: $screen-xs-max) {
   .navbar-default .navbar-nav .open .dropdown-menu {
     > li > a {
       color: $ucf-col-default;
