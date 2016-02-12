@@ -75,9 +75,10 @@
 
   }
 
-  .section-header:hover .section-header-image {
-    opacity: 1;
-  }
+  // leaving this here for demonstration purposes. Will remove before project is moved to a production envrionment.
+  // .section-header:hover .section-header-image {
+  //   opacity: 1;
+  // }
 
   .section-header-text-wrapper {
     display: table;
@@ -140,6 +141,97 @@
       .menu-item a {
         font-size: 16px;
       }
+    }
+  }
+}
+
+.map-search {
+  background-image: url('../img/campus-map.png');
+  // background-size: cover;
+  background-position: center center;
+  margin-top: 70px;
+  text-align: center;
+
+  position: relative;
+  height: 530px;
+  width: 100%;
+
+  @media (max-width: $screen-md-max) {
+    height: 400px;
+  }
+  @media (max-width: $screen-sm-max) {
+    height: 300px;
+  }
+
+  .section-header-text {
+    font-size: 45px;
+    font-family: $font-family-sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #000;
+    width: 30%;
+    text-align: center;
+    letter-spacing: 2px;
+    min-width: 600px;
+    margin: 0 auto;
+    padding-top: 190px;
+    margin-bottom: 15px;
+
+    @media (max-width: $screen-md-max) {
+      font-size: 40px;
+      padding-top: 135px;
+      min-width: 515px;
+    }
+    @media (max-width: $screen-sm-max) {
+      font-size: 30px;
+      padding-top: 118px;
+      min-width: 400px;
+    }
+  }
+
+  .search-form {
+
+    width: 650px;
+    margin: 0 auto;
+    padding: 15px;
+    border-radius: 200px;
+    height: 80px;
+    position: relative;
+    font-style: italic;
+
+    background: #F7F7F7; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#fff, #eee); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#fff, #eee); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#fff, #eee); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#fff, #eee); /* Standard syntax */
+
+
+    .search-term {
+      padding: 13px 25px;
+      border-radius: 50px;
+      border: 1px solid #E8E8E8;
+      width: 540px;
+      float: left;
+      font-size: 17px;
+      letter-spacing: .5px;
+      font-weight: 100;
+      font-family: $font-family-serif-alt;
+      outline: none;
+
+      // &::placeholder {
+      // }
+    }
+
+    .search-button {
+      background: gold;
+      border: 0;
+      height: 50px;
+      border-radius: 50%;
+      width: 50px;
+      color: #fff;
+      float: right;
+      font-size: 26px;
+
     }
   }
 }

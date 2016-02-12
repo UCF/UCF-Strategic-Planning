@@ -10,7 +10,7 @@ abstract class Shortcode {
         $params      = array(), // The parameters used by the shortcode.
         $callback    = 'callback',
         $wysiwyg     = True; // Whether to add it to the shortcode Wysiwyg modal.
-    
+
     /*
      * Register the shortcode.
      * @since v0.0.1
@@ -20,7 +20,7 @@ abstract class Shortcode {
     public function register_shortcode() {
         add_shortcode( $this->command, array( $this, $this->callback ) );
     }
-    
+
     /*
      * Returns the html option markup.
      * @since v0.0.1
@@ -30,7 +30,7 @@ abstract class Shortcode {
     public function get_option_markup() {
         return sprintf('<option value="%s">%s</option>', $this->command, $this->name);
     }
-    
+
     /*
      * Returns the description html markup.
      * @since v0.0.1
@@ -40,7 +40,7 @@ abstract class Shortcode {
     public function get_description_markup() {
         return sprintf('<li class="shortcode-%s">%s</li>', $this->command, $this->description);
     }
-    
+
     /*
      * Returns the form html markup.
      * @since v0.0.1
@@ -65,7 +65,7 @@ abstract class Shortcode {
 <?php
         return ob_get_clean();
     }
-    
+
     /*
      * Returns the appropriate markup for the field.
      * @since v0.0.1
@@ -79,11 +79,11 @@ abstract class Shortcode {
         $type      = isset( $field['type'] ) ? $field['type'] : 'text';
         $default   = isset( $field['default'] ) ? $field['default'] : '';
         $template  = isset( $field['template'] ) ? $tempalte['template'] : '';
-        
+
         $retval = '<h4>' . $name . '</h4>';
         if ( $help_text ) {
             $retval .= '<p class="help">' . $help_text . '</p>';
-        } 
+        }
         switch( $type ) {
             case 'text':
             case 'date':
@@ -102,7 +102,7 @@ abstract class Shortcode {
                 $retval .= '</select>';
                 break;
         }
-        
+
         return $retval;
     }
 }
@@ -202,6 +202,35 @@ class SectionSC extends Shortcode {
         } else {
             return '';
         }
+    }
+}
+
+class MapSearchSC extends Shortcode {
+    public
+        $name        = 'MapSearch', // The name of the shortcode.
+        $command     = 'map-search', // The command used to call the shortcode.
+        $description = 'Displays map stripe', // The description of the shortcode.
+        $callback    = 'callback',
+        $wysiwyg     = True; // Whether to add it to the shortcode Wysiwyg modal.
+
+    public static function callback( $attr, $content='' ) {
+        ob_start();
+?>
+
+<section id="map" class="map-search">
+    <div class="search-box-container">
+        <div class="section-header-text-wrapper">
+            <h2 class="section-header-text">Locate Student Services on Campus</h2>
+            <form class="search-form" action="http://map.ucf.edu/search/">
+                <input class="search-term" type="text" name="q" placeholder="Health Services, Graduation, Etc.">
+                <button class="search-button" type="submit"><span class="fa fa-search"></span></button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<?php
+        return ob_get_clean();
     }
 }
 
