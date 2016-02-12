@@ -521,6 +521,59 @@ class Post extends CustomPostType {
 	}
 }
 
+class IconLink extends CustomPostType {
+	public
+		$name           = 'icon_link',
+		$plural_name    = 'Icon Links',
+		$singular_name  = 'Icon Link',
+		$add_new_item   = 'Add New Icon Link',
+		$edit_item      = 'Edit Icon Link',
+		$new_item       = 'New Icon Link',
+		$public         = True,
+		$use_editor     = True,
+		$use_thumbnails = False,
+		$use_order      = True,
+		$use_title      = True,
+		$use_metabox    = True,
+		$taxonomies     = array( );
+
+	public function fields() {
+		$prefix = $this->options( 'name' ) . '_';
+		return array(
+			array(
+				'name' => 'Icon',
+				'description' => '',
+				'id' => $prefix.'icon',
+				'type' => 'icon'
+			),
+			array(
+				'name' => 'URL',
+				'description' => 'The URL of the icon link',
+				'id' => $prefix.'url',
+				'type' => 'text'
+			)
+		);
+	}
+
+	public function toHTML( $object ) {
+		$icon = get_field( 'icon_link_icon', $object->ID );
+		$url = get_field( 'icon_link_url', $object->ID );
+		ob_start();
+?>
+		<div class="icon-link">
+			<a href="<?php echo $url; ?>" target="_blank">
+				<div class="icon-wrapper">
+					<span class="fa <?php echo $icon; ?>"></span>
+				</div>
+				<h3><?php echo $object->post_title; ?></h3>
+				<p><?php echo $object->post_content; ?></p>
+			</a>
+		</div>
+<?php
+		return ob_get_clean();
+	}
+}
+
 class Spotlight extends CustomPostType {
 	public
 		$name           = 'spotlight',
@@ -700,7 +753,7 @@ class Section extends CustomPostType {
 				)
 			),
 			array(
-				'name'        => 'Feature Call to Action',
+				'name'        => 'Feature Spotlight',
 				'description' => 'The call to action that will appear in the content area.',
 				'id'          => $prefix.'feature_spotlight',
 				'type'        => 'post_object',
