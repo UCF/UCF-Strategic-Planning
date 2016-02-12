@@ -835,7 +835,7 @@ class Section extends CustomPostType {
 				<?php endif; ?>
 			</div>
 			<div class="container">
-				<h2><?php echo $object->post_title; ?></h2>
+				<h2 class="section-title"><?php echo $object->post_title; ?></h2>
 				<p class="lead"><?php echo $object->lead_text; ?></p>
 				<div class="row">
 					<div class="col-md-5 col-sm-6 col-xs-12">

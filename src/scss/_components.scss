@@ -5,7 +5,7 @@
 .btn,
 .carousel,
 .collapse,
-.dropdown,
+.ucf-dropdown,
 .jumbotron,
 .label,
 .list-group,
@@ -24,7 +24,7 @@
 // Add animations to dropdowns
 // Adapted from https://gist.github.com/orizens/4994397
 @include body-prefix(':not(.ie8)') {
-  .dropdown-menu {
+  .ucf-dropdown-menu {
     @include animation-fill-mode(forwards); // NOTE: deprecated mixin
     @include scale(1, 0);
     @include transform-origin(top);
@@ -33,12 +33,12 @@
     display: block;
   }
 
-  .open > .dropdown-menu {
+  .open > .ucf-dropdown-menu {
     @include scale(1, 1);
     box-shadow: 0 6px 12px rgba(0, 0, 0, .08);
   }
 
-  .dropup .dropdown-menu {
+  .dropup .ucf-dropdown-menu {
     @include transform-origin(bottom);
 
     &:after {
@@ -294,3 +294,120 @@
   color: #fff;
 }
 
+.navbar-gold {
+  background-color: $ucf-bg-default;
+  border: none;
+  border-radius: 0;
+  overflow-y: hidden;
+
+  .navbar-brand {
+    color: $ucf-col-default;
+
+    &:hover, 
+    &:focus {
+      color: $ucf-col-highlight;
+    }
+  }
+
+  .navbar-text {
+    color: $ucf-col-default; 
+  }
+
+  .navbar-nav {
+    > li {
+      > a {
+        color: $ucf-col-default;
+        &:hover,
+        &:focus {
+          background: $ucf-bg-highlight;
+          color: $ucf-col-highlight; 
+        }
+      }
+
+      > .dropdown-menu {
+        background-color: $ucf-bg-default;
+        > li {
+          > a {
+            color: $ucf-col-default;
+            &:hover,
+            &:focus {
+              color: $ucf-col-highlight;
+              background-color: $ucf-bg-highlight; 
+            }
+          }
+          > .divider {
+            background-color: $ucf-bg-highlight;
+          }
+        }
+      }
+    }
+    .open .dropdown-menu > .active {
+      > a,
+      > a:hover, 
+      > a:focus {
+        color: $ucf-col-highlight;
+        background-color: $ucf-bg-highlight; 
+      }
+    }
+    > .active {
+      > a,
+      > a:hover,
+      > a:focus {
+        color: $ucf-col-highlight;
+        background-color: $ucf-bg-highlight; 
+      }
+    }
+    > .open {
+      > a,
+      > a:hover,
+      > a:focus {
+        color: $ucf-col-highlight;
+        background-color: $ucf-bg-highlight;
+      }
+    }
+  }
+
+  .navbar-toggle {
+    border-color: $ucf-bg-highlight;
+
+    &:hover,
+    &:focus {
+      background-color: $ucf-bg-highlight; 
+    }
+    .icon-bar {
+      background-color: $ucf-col-default; 
+    }
+  }
+
+  .navbar-collapse,
+  .navbar-form {
+    border-color: $ucf-col-default; 
+  }
+
+  .navbar-link {
+    color: $ucf-col-default;
+    &:hover {
+      color: $ucf-col-highlight;
+    }
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .navbar-default .navbar-nav .open .dropdown-menu {
+    > li > a {
+      color: $ucf-col-default;
+      &:hover,
+      &:focus {
+        color: $ucf-col-highlight; 
+      }
+    }
+    > .active {
+      > a, 
+      > a:hover, 
+      > a:focus {
+        color: $ucf-col-highlight;
+        background-color: $ucf-bg-highlight; 
+      }
+    }
+  }
+}

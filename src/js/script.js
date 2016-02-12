@@ -143,6 +143,59 @@ var loadVideos = function($) {
 	});
 };
 
+var sectionsMenu = function($) {
+	var $sectionsMenu = $('#sections-menu');
+	if ( $sectionsMenu.length ) {
+		var clickHandler = function(e) {
+			e.preventDefault();
+
+			var $target = $(this.hash);
+			$target = $target.length ? $target : $('[name=' + this.hash.slice() + ']');
+
+			if ($target.length) {
+				$('html, body').animate({
+					scrollTop: $target.offset().top
+				}, 750);
+			}
+		};
+
+		var addToMenu = function($i, $section) {
+			var $item  = $( $section ),
+					url = $item.attr('id'),
+					text = $item.find('h2.section-title').text(),
+					$listItem = $('<li></li>'),
+					$anchor = $('<a href="#' + url + '">' + text + '</a>');
+
+			$anchor.on('click', clickHandler);
+			$listItem.append($anchor);
+			$menuList.append($listItem);
+			
+		};
+
+		var scroll = function() {
+			if ($(window).scrollTop() >= offset) {
+				$menu.removeClass('center');
+				$menu.addClass('navbar-fixed-top');
+				$('body').addClass('fixed-navbar');
+			} else {
+				$menu.addClass('center');
+				$menu.removeClass('navbar-fixed-top');
+				$('body').removeClass('fixed-navbar');
+			}
+		};
+
+		var $sections = $('section'),
+				$menuList = $sectionsMenu.find('ul.nav'),
+				$menu = $('#sections-navbar'),
+				offset = $menu.offset().top + $menu.height();
+
+		$.each($sections, addToMenu);
+		$(document).on('scroll', scroll);
+		$('body').scrollspy({target: '#sections-menu'});
+		
+	}
+};
+
 Number.prototype.clamp = function(min, max) {
 	return Math.min(Math.max(this, min), max);
 };
@@ -152,6 +205,7 @@ if (typeof jQuery !== 'undefined') {
 		headerImage($);
 		footerAdjustments($);
 		isAutoPlay($);
+		sectionsMenu($);
 
 		$(window).on('resize', function() {
 			positionHeaderBackgrounds($);
