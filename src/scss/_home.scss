@@ -28,6 +28,10 @@ body.fixed-navbar {
   }
 }
 
+body.admin-bar .navbar-fixed-top {
+  margin-top: 32px;
+}
+
 .navbar {
   max-height: 50px;
   text-align: center;
