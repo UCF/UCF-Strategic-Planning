@@ -191,6 +191,7 @@ var sectionsMenu = function($) {
 
 		$.each($sections, addToMenu);
 		$(document).on('scroll', scroll);
+		$('body').scrollspy({target: '#sections-menu'});
 		
 	}
 };
