@@ -393,20 +393,22 @@
 }
 
 @media (max-width: $screen-xs-max) {
-  .navbar-default .navbar-nav .open .dropdown-menu {
-    > li > a {
-      color: $ucf-col-default;
-      &:hover,
-      &:focus {
-        color: $ucf-col-highlight; 
+  .navbar-gold {
+    .navbar-nav .open .dropdown-menu {
+      > li > a {
+        color: $ucf-col-default;
+        &:hover,
+        &:focus {
+          color: $ucf-col-highlight; 
+        }
       }
-    }
-    > .active {
-      > a, 
-      > a:hover, 
-      > a:focus {
-        color: $ucf-col-highlight;
-        background-color: $ucf-bg-highlight; 
+      > .active {
+        > a, 
+        > a:hover, 
+        > a:focus {
+          color: $ucf-col-highlight;
+          background-color: $ucf-bg-highlight; 
+        }
       }
     }
   }

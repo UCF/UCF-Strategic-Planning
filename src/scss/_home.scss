@@ -2,6 +2,10 @@ body.fixed-navbar {
   padding-top: 50px;
 }
 
+.page-wrap {
+  margin-bottom: 32px;
+}
+
 .call-to-action {
   img {
     position: relative;
@@ -10,10 +14,11 @@ body.fixed-navbar {
 
   h2 {
     position: absolute;
-    margin: 0 auto;
+    left: auto;
+    margin: 0 22%;
     text-align: center;
     top: 20px;
-    width: 92.5%;
+    width: 50%;
   }
 
   .btn-wrapper {
@@ -30,13 +35,15 @@ body.fixed-navbar {
 
 body.admin-bar .navbar-fixed-top {
   margin-top: 32px;
+
+  @media (max-width: $screen-xs-max) {
+    margin-top: 0;
+  }
 }
 
 .navbar {
   box-shadow: 0 2px 32px rgba(0, 0, 0, 0.75);
-  max-height: 50px;
   text-align: center;
-
   transition: box-shadow .75s;
 
   &.center {
@@ -63,9 +70,20 @@ body.admin-bar .navbar-fixed-top {
 
     transition: margin .75s;
 
+    @media (max-width: $screen-xs-max) {
+      display: none;
+    }
+
     .icon {
       color: #fc0;
     }
   }
-}
 
+  @media (min-width: $screen-sm-min) {
+    max-height: 50px;
+  }
+
+  @media (max-width: $screen-xs-max) {
+    max-height: auto;
+  }
+}
