@@ -33,10 +33,14 @@ body.admin-bar .navbar-fixed-top {
 }
 
 .navbar {
+  box-shadow: 0 2px 32px rgba(0, 0, 0, 0.75);
   max-height: 50px;
   text-align: center;
 
+  transition: box-shadow .75s;
+
   &.center {
+    box-shadow: none;
     margin-bottom: 0;
 
     .weather {
