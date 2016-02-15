@@ -1,5 +1,5 @@
 <?php
-
+include_once ABSPATH . 'wp-admin/includes/plugin.php';
 /**
  * Set theme constants
  **/
@@ -18,6 +18,7 @@ define( 'CB_UID', get_theme_mod_or_default( 'cb_uid' ) );
 define( 'CB_DOMAIN', get_theme_mod_or_default( 'cb_domain' ) );
 
 define( 'THEME_CUSTOMIZER_PREFIX', 'ucfgeneric_' ); // a unique prefix for panel/section IDs
+date_default_timezone_set( 'EST' );
 
 
 /**
@@ -29,6 +30,8 @@ define( 'THEME_CUSTOMIZER_PREFIX', 'ucfgeneric_' ); // a unique prefix for panel
 
 Config::$custom_post_types = array(
 	'Page',
+	'Post',
+	'IconLink',
     'Post',
     'Spotlight',
     'Section'
@@ -36,12 +39,14 @@ Config::$custom_post_types = array(
 
 
 Config::$custom_taxonomies = array(
-	
+
 );
 
 Config::$shortcodes = array(
 	'CallToActionSC',
-	'SectionSC'
+	'SectionSC',
+	'CalloutSC',
+	'IconLinkSC'
 );
 
 
@@ -62,7 +67,7 @@ if ( get_theme_mod_or_default( 'cloud_typography_key' ) ) {
 
 
 Config::$scripts = array(
-	array( 'admin' => True, 'src' => THEME_JS_URL.'/admin.min.js', ),
+	array( 'name' => 'admin-script', 'admin' => True, 'src' => THEME_JS_URL.'/admin.min.js', ),
 	array( 'name' => 'ucfhb-script', 'src' => '//universityheader.ucf.edu/bar/js/university-header.js?use-1200-breakpoint=1', ),
 	array( 'name' => 'theme-script', 'src' => THEME_JS_URL.'/script.min.js', ),
 );
@@ -97,6 +102,7 @@ Config::$setting_defaults = array(
 	'search_per_page' => 10,
 	'cloud_typography_key' => '//cloud.typography.com/730568/675644/css/fonts.css', // Main site css key
 	'weather_feed_url' => 'http://weather.smca.ucf.edu/',
+	'header_menu_feed' => ''
 );
 
 
@@ -144,6 +150,13 @@ function define_customizer_sections( $wp_customize ) {
 		array(
 			'title'       => 'Events',
 			'description' => 'Settings for event lists used throughout the site.'
+		)
+	);
+	$wp_customize->add_section(
+		THEME_CUSTOMIZER_PREFIX . 'org_info',
+		array(
+			'title'       => 'Organization Info',
+			'description' => 'Contact information'
 		)
 	);
 	$wp_customize->add_section(
@@ -212,9 +225,36 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
+	$form_choices = array( '' => '-- Choose Form --');
+
+	if ( method_exists( 'RGFormsModel', 'get_forms' ) ) {
+		$forms = RGFormsModel::get_forms( null, 'title' );
+		foreach( $forms as $form ) {
+			$form_choices[$form->id] = $form->title;
+		}
+	}
+
+	$wp_customize->add_setting(
+		'footer_contact_form'
+	);
+
+	$wp_customize->add_control(
+		'footer_contact_form',
+		array(
+			'type'        => 'select',
+			'label'       => 'Footer Contact Form',
+			'description' => 'The form that will be shown in the footer.',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'home_custom',
+			'choices'     => $form_choices
+		)
+	);
+
 	// Menus
 	$wp_customize->add_setting(
-		'header_menu_feed'
+		'header_menu_feed',
+		array(
+			'default'     => get_setting_default( 'header_menu_feed' ),
+		)
 	);
 
 	$wp_customize->add_control(
@@ -310,6 +350,46 @@ function define_customizer_fields( $wp_customize ) {
 	);
 
 
+	// Org Info
+	$wp_customize->add_setting(
+		'organization_name'
+	);
+	$wp_customize->add_control(
+		'organization_name',
+		array(
+			'type'        => 'text',
+			'label'       => 'Oragnization Name',
+			'description' => 'The name that will be displayed with organization info is displayed',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'org_info'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'organization_phone'
+	);
+	$wp_customize->add_control(
+		'organization_phone',
+		array(
+			'type'        => 'text',
+			'label'       => 'Oragnization Phone',
+			'description' => 'The phone number that will be displayed with organization info is displayed',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'org_info'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'organization_email'
+	);
+	$wp_customize->add_control(
+		'organization_email',
+		array(
+			'type'        => 'email',
+			'label'       => 'Oragnization Email',
+			'description' => 'The email address that will be displayed with organization info is displayed',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'org_info'
+		)
+	);
+
 	// News
 	$wp_customize->add_setting(
 		'news_max_items',
@@ -350,6 +430,20 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'news_placeholder_image'
+	);
+
+	$wp_customize->add_control(
+		new WP_Customize_Image_Control(
+			$wp_customize,
+			'news_placeholder_image',
+			array(
+				'label'     => __( 'Placeholder thumbnail for news stories.' ),
+				'section'   => THEME_CUSTOMIZER_PREFIX.'news'
+			)
+		)
+	);
 
 	// Search
 	$wp_customize->add_setting(
@@ -431,6 +525,31 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'googleplus_url'
+	);
+	$wp_customize->add_control(
+		'googleplus_url',
+		array(
+			'type'        => 'url',
+			'label'       => 'Google+ URL',
+			'description' => 'URL to the Google+ user account you would like to direct visitors to.  Example: <em>http://plus.google.com/UCF</em>',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'social'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'linkedin_url'
+	);
+	$wp_customize->add_control(
+		'linkedin_url',
+		array(
+			'type'        => 'url',
+			'label'       => 'LinkedIn URL',
+			'description' => 'URL to the LinkedIn user account you would like to direct visitors to.  Example: <em>http://linkedin.com/UCF</em>',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'social'
+		)
+	);
 
 	// Web Fonts
 	$wp_customize->add_setting(
@@ -457,7 +576,6 @@ function define_customizer_fields( $wp_customize ) {
 	 * If Yoast SEO is activated, assume we're handling ALL SEO-related
 	 * modifications with it.  Don't add Facebook Opengraph theme options.
 	 **/
-	include_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 	if ( !is_plugin_active( 'wordpress-seo/wp-seo.php' ) ) {
 
@@ -595,12 +713,11 @@ function hook_frontend_theme_scripts() {
 	</script>
 	<?php endif;?>
 
-	
+
 <?php
 	echo ob_get_clean();
 }
 add_action( 'wp_head', 'hook_frontend_theme_scripts' );
-
 
 /**
  * Register backend scripts and stylesheets.
@@ -619,5 +736,19 @@ function enqueue_backend_theme_assets() {
 	}
 }
 add_action( 'admin_enqueue_scripts', 'enqueue_backend_theme_assets' );
+
+function localize_backend_theme_assets() {
+	$localization_array = array(
+		'baseUrl'   => get_site_url(),
+		'menuAdmin' => get_admin_url() . '/nav-menus.php'
+	);
+
+	if ( is_plugin_active( 'ucf-rest-menus/ucf-rest-menus.php' ) ) {
+		$localization_array['menuApi'] = get_site_url() . '/wp-json/ucf-rest-menus/v1';
+	}
+
+	wp_localize_script( 'admin-script', 'WebcomLocal', $localization_array );
+}
+add_action( 'admin_enqueue_scripts', 'localize_backend_theme_assets', 999 );
 
 ?>

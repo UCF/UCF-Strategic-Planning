@@ -10,7 +10,7 @@ abstract class Shortcode {
         $params      = array(), // The parameters used by the shortcode.
         $callback    = 'callback',
         $wysiwyg     = True; // Whether to add it to the shortcode Wysiwyg modal.
-    
+
     /*
      * Register the shortcode.
      * @since v0.0.1
@@ -20,7 +20,7 @@ abstract class Shortcode {
     public function register_shortcode() {
         add_shortcode( $this->command, array( $this, $this->callback ) );
     }
-    
+
     /*
      * Returns the html option markup.
      * @since v0.0.1
@@ -30,7 +30,7 @@ abstract class Shortcode {
     public function get_option_markup() {
         return sprintf('<option value="%s">%s</option>', $this->command, $this->name);
     }
-    
+
     /*
      * Returns the description html markup.
      * @since v0.0.1
@@ -40,7 +40,7 @@ abstract class Shortcode {
     public function get_description_markup() {
         return sprintf('<li class="shortcode-%s">%s</li>', $this->command, $this->description);
     }
-    
+
     /*
      * Returns the form html markup.
      * @since v0.0.1
@@ -65,7 +65,7 @@ abstract class Shortcode {
 <?php
         return ob_get_clean();
     }
-    
+
     /*
      * Returns the appropriate markup for the field.
      * @since v0.0.1
@@ -79,11 +79,11 @@ abstract class Shortcode {
         $type      = isset( $field['type'] ) ? $field['type'] : 'text';
         $default   = isset( $field['default'] ) ? $field['default'] : '';
         $template  = isset( $field['template'] ) ? $tempalte['template'] : '';
-        
+
         $retval = '<h4>' . $name . '</h4>';
         if ( $help_text ) {
             $retval .= '<p class="help">' . $help_text . '</p>';
-        } 
+        }
         switch( $type ) {
             case 'text':
             case 'date':
@@ -102,7 +102,7 @@ abstract class Shortcode {
                 $retval .= '</select>';
                 break;
         }
-        
+
         return $retval;
     }
 }
@@ -213,5 +213,93 @@ function sc_search_form() {
     return ob_get_clean();
 }
 add_shortcode( 'search_form', 'sc_search_form' );
+
+class CalloutSC extends Shortcode {
+    public
+        $name        = 'Callout', // The name of the shortcode.
+        $command     = 'callout', // The command used to call the shortcode.
+        $description = 'Creates a callout box', // The description of the shortcode.
+        $params      = array(
+            array(
+                'name'      => 'Color',
+                'id'        => 'color',
+                'help_text' => 'The color of the callout box',
+                'type'      => 'color',
+                'default'   => '#ffcc00'
+            )
+        ), // The parameters used by the shortcode.
+        $callback    = 'callback',
+        $wysiwyg     = True; // Whether to add it to the shortcode Wysiwyg modal.
+
+    public static function callback( $attr, $content='' ) {
+        $attr = shortcode_atts( array(
+                'color' => '#ffcc00'
+            ),
+            $attr
+        );
+
+        ob_start();
+?>
+        <aside class="callout"<?php echo !empty( $attr['color'] ) ? ' style="background: ' . $attr['color'] . '"' : ''; ?>>
+            <div class="container">
+                <?php echo apply_filters( 'the_content', $content ); ?>
+            </div>
+        </aside>
+<?php
+        return ob_get_clean();
+    }
+}
+
+/**
+ * Create a full-width box with icon_links centered inside.
+ **/
+class IconLinkSC extends Shortcode {
+    public
+        $name        = 'Icon Link', // The name of the shortcode.
+        $command     = 'icon_link', // The command used to call the shortcode.
+        $description = 'Displays the specified icon link', // The description of the shortcode.
+        $params      = array(
+            array(
+                'name'      => 'Icon Link',
+                'id'        => 'icon_link_id',
+                'help_text' => 'The icon link you want to display',
+                'type'      => 'dropdown',
+                'choices'   => array()
+            )
+        ), // The parameters used by the shortcode.
+        $callback    = 'callback',
+        $wysiwyg     = True; // Whether to add it to the shortcode Wysiwyg modal.
+
+    public function __construct() {
+        $this->params[0]['choices'] = $this->get_choices();
+    }
+
+    private function get_choices() {
+        $posts = get_posts( array( 'post_type' => 'icon_link' ) );
+        $retval = array( array( 'name' => '-- Choose Icon Link --', 'value' => '' ) );
+        foreach( $posts as $post ) {
+            $retval[] = array(
+                'name'  => $post->post_title,
+                'value' => $post->ID
+            );
+        }
+
+        return $retval;
+    }
+
+    public static function callback( $attr, $content='' ) {
+        $attr = shortcode_atts( array(
+                'icon_link_id' => ''
+            ), $attr
+        );
+
+        if ( isset( $attr['icon_link_id'] ) ) {
+            $post = get_post( $attr['icon_link_id'] );
+            return IconLink::toHTML( $post );
+        } else {
+            return '';
+        }
+    }
+}
 
 ?>

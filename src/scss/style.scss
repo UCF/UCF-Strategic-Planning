@@ -5,6 +5,7 @@
 // Import vendor assets
 @import '../components/bootstrap-sass-official/assets/stylesheets/bootstrap';
 @import '../components/font-awesome/scss/font-awesome';
+@import '../components/weather-icons/sass/weather-icons';
 
 
 // Import individual components for our theme here:
@@ -31,5 +32,3 @@
 @import 'home';
 @import 'sections';
 @import 'page';
-
-

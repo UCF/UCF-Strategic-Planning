@@ -5,7 +5,7 @@
 	</head>
 	<body ontouchstart <?php echo body_class(); ?>>
 		<header class="site-header">
-			<div class="header-image" style="background-image: url(<?php echo header_image(); ?>">
+			<div class="header-image" style="background-image: url(<?php echo header_image(); ?>);">
 				<nav class="site-nav">
 					<?php display_header_menu(); ?>
 				</nav>
@@ -16,9 +16,11 @@
 							<?php $weather = get_weather_data(); ?>
 							<?php if ( $weather ) : ?>
 								<div class="weather">
-									<span class="icon">
-										<span class="fa fa-<?php echo $weather->icon; ?>"></span>
-									</span>
+									<?php if ( $weather->icon ) : ?>
+										<span class="icon" title="<?php echo $weather->condition; ?>">
+											<span class="<?php echo $weather->icon; ?>"></span>
+										</span>
+									<?php endif; ?>
 									<span class="location">Orlando, FL</span>
 									<span class="vertical-rule"></span>
 									<span class="temp"><?php echo $weather->tempN; ?>&deg;F</span>

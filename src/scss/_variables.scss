@@ -3,11 +3,17 @@
 $ucf-gold: #ffc904;
 $ucf-gold-light: #ffeeaf;
 
+$ucf-bg-default      : #fc0;
+$ucf-bg-highlight    : #c90;
+$ucf-col-default     : #000;
+$ucf-col-highlight   : #fff;
+
+$grid-float-breakpoint: 992px;
 
 // Bootstrap overrides:
 
 $icon-font-path: '../fonts/bootstrap/';
 $fa-font-path: '../fonts/font-awesome/';
 
-$font-family-serif: "Archer A", "Archer B", serif !default;
-$font-family-sans-serif: "Gotham SSm A", "Gotham SSm B";
+$font-family-serif: "Archer A", "Archer B", Georgia, serif !default;
+$font-family-sans-serif: "Gotham SSm A", "Gotham SSm B", Helvetica, Arial, sans-serif !default;
