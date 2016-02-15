@@ -175,7 +175,7 @@ var sectionsMenu = function($) {
 			$anchor.on('click', clickHandler);
 			$listItem.append($anchor);
 			$menuList.append($listItem);
-			
+
 		};
 
 		var scroll = function() {
@@ -212,12 +212,25 @@ Number.prototype.clamp = function(min, max) {
 };
 
 var searchListeners = function($) {
+	var $mapSearchBar = $('.map-search');
 	var $searchButton = $('.search-button');
+	var movementStrength = 35;
+	var height = movementStrength / $(window).height();
+	var width = movementStrength / $(window).width();
 
 	$searchButton.removeClass('loading');
 
-	$('.search-box-container').on('click', '.search-button', function() {
+	$mapSearchBar.on('click', '.search-button', function() {
 		$searchButton.addClass('loading');
+	});
+
+	//http://codepen.io/chrisboon27/pen/rEDIC
+	$mapSearchBar.mousemove(function(e){
+		var pageX = e.pageX - ($(window).width() / 2);
+		var pageY = e.pageY - ($(window).height() / 2);
+		var newvalueX = width * pageX * -1 - 25;
+		var newvalueY = height * pageY * -1 - 50;
+		$mapSearchBar.css("background-position", newvalueX+"px     "+newvalueY+"px");
 	});
 };
 
