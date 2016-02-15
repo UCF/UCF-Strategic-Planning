@@ -28,27 +28,34 @@ function get_call_to_action() {
 	return CallToAction::toHTML( $post );
 }
 
-function get_header_menu() {
-	$opts = array(
-		'http' => array(
-			'timeout' => 15
-		)
-	);
+function get_remote_menu( $menu_name ) {
+	$result_name = $menu_name.'_json';
 
-	$context = stream_context_create( $opts );
+	$result = get_transient( $result_name );
 
-	$file_location = get_theme_mod_or_default( 'header_menu_feed' );
-	if ( empty( $file_location ) ) {
-		return;
+	if ( false === $result ) {
+		$opts = array(
+			'http' => array(
+				'timeout' => 15
+			)
+		);
+
+		$context = stream_context_create( $opts );
+
+		$file_location = get_theme_mod_or_default( $menu_name.'_feed' );
+		if ( empty( $file_location ) ) {
+			return;
+		}
+
+		$result = json_decode( file_get_contents( $file_location, false, $context ) );
+		set_transient( $result_name, $result, (60 * 60 * 24) );
 	}
 
-	$file = file_get_contents( $file_location , false, $context );
-
-	return json_decode( $file );
+	return $result;
 }
 
 function display_header_menu() {
-	$menu = get_header_menu();
+	$menu = get_remote_menu( 'header_menu' );
 
 	if ( empty( $menu ) ) {
 		return;
@@ -65,28 +72,8 @@ function display_header_menu() {
 	echo ob_get_clean();
 }
 
-function get_footer_menu() {
-	$opts = array(
-		'http' => array(
-			'timeout' => 15
-		)
-	);
-
-	$context = stream_context_create( $opts );
-
-	$file_location = get_theme_mod_or_default( 'footer_menu_feed' );
-
-	if ( empty( $file_location ) ) {
-		return;
-	}
-
-	$file = file_get_contents( $file_location, false, $context );
-
-	return json_decode( $file );
-}
-
 function display_footer_menu() {
-	$menu = get_footer_menu();
+	$menu = get_remote_menu( 'footer_menu' );
 
 	if ( empty( $menu) ) {
 		return;
