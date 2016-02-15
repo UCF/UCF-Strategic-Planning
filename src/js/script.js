@@ -155,6 +155,7 @@ var sectionsMenu = function($) {
 			var scrollTo = $target.offset().top;
 			if ( $(window).width() < 991 ) {
 				scrollTo -= 50;
+				$sectionsMenu.collapse('toggle');
 			}
 
 			if ($target.length) {
@@ -162,8 +163,6 @@ var sectionsMenu = function($) {
 					scrollTop: scrollTo
 				}, 750);
 			}
-
-			$sectionsMenu.collapse('toggle');
 		};
 
 		var addToMenu = function($i, $section) {
