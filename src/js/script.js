@@ -147,11 +147,23 @@ Number.prototype.clamp = function(min, max) {
 	return Math.min(Math.max(this, min), max);
 };
 
+var searchListeners = function($) {
+	var $searchButton = $('.search-button');
+
+	$searchButton.removeClass('loading');
+
+	$('.search-box-container').on('click', '.search-button', function() {
+		$searchButton.addClass('loading');
+	});
+};
+
 if (typeof jQuery !== 'undefined') {
 	jQuery(document).ready( function($) {
 		headerImage($);
 		footerAdjustments($);
 		isAutoPlay($);
+
+		searchListeners($);
 
 		$(window).on('resize', function() {
 			positionHeaderBackgrounds($);

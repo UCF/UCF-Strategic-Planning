@@ -221,9 +221,9 @@ class MapSearchSC extends Shortcode {
     <div class="search-box-container">
         <div class="section-header-text-wrapper">
             <h2 class="section-header-text">Locate Student Services on Campus</h2>
-            <form class="search-form" action="http://map.ucf.edu/search/">
-                <input class="search-term" type="text" name="q" placeholder="Health Services, Graduation, Etc.">
-                <button class="search-button" type="submit"><span class="fa fa-search"></span></button>
+            <form class="search-form" action="<?php echo get_theme_mod_or_default( 'map_search_url' ) ?>">
+                <input class="search-term" type="text" name="s" placeholder="First Year Experience, Career Services, Etc.">
+                <button class="search-button" type="submit"><span class="fa fa-search"></span><span class="fa fa-spinner fa-spin"></span></button>
             </form>
         </div>
     </div>

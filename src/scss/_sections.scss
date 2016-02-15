@@ -179,13 +179,13 @@
 
     @media (max-width: $screen-md-max) {
       font-size: 40px;
-      padding-top: 135px;
-      min-width: 515px;
+      padding-top: 115px;
+      min-width: 540px;
     }
     @media (max-width: $screen-sm-max) {
       font-size: 30px;
-      padding-top: 118px;
-      min-width: 400px;
+      padding-top: 70px;
+      min-width: 420px;
     }
   }
 
@@ -232,6 +232,27 @@
       float: right;
       font-size: 26px;
 
+      .fa-spinner {
+        display: none;
+      }
+
+      &.loading {
+        .fa-search {
+          display: none;
+        }
+        .fa-spinner {
+          display: inline-block;
+        }
+      }
     }
+  }
+
+  .campus-map-embed {
+    border:none;
+    width:100%;
+    height:560px;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 }
