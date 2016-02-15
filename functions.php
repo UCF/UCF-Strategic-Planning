@@ -112,7 +112,7 @@ function display_footer_news() {
 	<a class="all-link" href="http://today.ucf.edu">All News &rsaquo;</a>
 	<div class="footer-news">
 	<?php foreach( $items as $key=>$item ) : $image = get_article_image( $item ); ?>
-		<div class="row">
+		<div class="row news-item">
 			<a href="<?php echo $item->get_link(); ?>">
 				<div class="col-xs-2 col-sm-4 col-md-3">
 					<div class="news-thumbnail">
