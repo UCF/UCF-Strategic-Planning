@@ -190,6 +190,10 @@ var sectionsMenu = function($) {
 			}
 		};
 
+		var onResize = function() {
+			offset = $menu.offset().top;
+		};
+
 		var $sections = $('section'),
 				$menuList = $sectionsMenu.find('ul.nav'),
 				$menu = $('#sections-navbar'),
@@ -198,6 +202,7 @@ var sectionsMenu = function($) {
 		$.each($sections, addToMenu);
 		$(document).on('scroll', scroll);
 		$('body').scrollspy({target: '#sections-menu'});
+		$(window).on('resize', onResize);
 		scroll();
 	}
 };
