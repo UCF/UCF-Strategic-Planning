@@ -184,10 +184,7 @@
 
   .search-form {
     background: #F7F7F7; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(#fff, #eee); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#fff, #eee); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#fff, #eee); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#fff, #eee); /* Standard syntax */
+    background: linear-gradient(#fff, #eee);
     border-radius: 200px;
     font-style: italic;
     height: 80px;

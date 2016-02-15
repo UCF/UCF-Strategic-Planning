@@ -99,7 +99,6 @@ Config::$setting_defaults = array(
 	'search_per_page' => 10,
 	'cloud_typography_key' => '//cloud.typography.com/730568/675644/css/fonts.css', // Main site css key
 	'weather_feed_url' => 'http://weather.smca.ucf.edu/',
-	'header_menu_feed' => '',
 	'map_search_url' => 'http://map.ucf.edu/'
 );
 
