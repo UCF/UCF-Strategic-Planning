@@ -218,9 +218,9 @@ WebcomAdmin.iconModal = function($) {
 };
 
 WebcomAdmin.menuField = function($) {
-  if ($('.meta-menu-field').length) {
-    var $field = $('.meta-menu-field'),
-        apiURL = WebcomLocal.menuApi;
+  var $field = $('.meta-menu-field');
+  if ($field.length) {
+    var apiURL = WebcomLocal.menuApi;
 
     var updateMenu = function() {
       $.getJSON(apiURL + '/menus', function(data) {
@@ -249,7 +249,7 @@ WebcomAdmin.menuField = function($) {
       setInterval(updateMenu, 5000);
     }
 
-    $('.meta-menu-field').on('change', onSelectUpdate);
+    $field.on('change', onSelectUpdate);
   }
 };
 

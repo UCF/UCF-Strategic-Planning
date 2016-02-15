@@ -30,6 +30,8 @@ date_default_timezone_set( 'EST' );
 
 Config::$custom_post_types = array(
 	'Page',
+	'Post',
+	'IconLink',
     'Post',
     'Spotlight',
     'Section'
@@ -43,7 +45,9 @@ Config::$custom_taxonomies = array(
 Config::$shortcodes = array(
 	'CallToActionSC',
 	'SectionSC',
-	'MapSearchSC'
+	'MapSearchSC',
+	'CalloutSC',
+	'IconLinkSC'
 );
 
 
