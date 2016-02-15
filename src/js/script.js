@@ -152,11 +152,18 @@ var sectionsMenu = function($) {
 			var $target = $(this.hash);
 			$target = $target.length ? $target : $('[name=' + this.hash.slice() + ']');
 
+			var scrollTo = $target.offset().top;
+			if ( $(window).width() < 991 ) {
+				scrollTo -= 50;
+			}
+
 			if ($target.length) {
 				$('html, body').animate({
-					scrollTop: $target.offset().top
+					scrollTop: scrollTo
 				}, 750);
 			}
+
+			$sectionsMenu.collapse('toggle');
 		};
 
 		var addToMenu = function($i, $section) {
