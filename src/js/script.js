@@ -133,6 +133,10 @@ var loadVideos = function($) {
 
 		if ($this.data('video-loop')) {
 			$video.attr('loop', '');
+			$video.addClass('loop');
+		}
+		else {
+			$video.addClass('noLoop');
 		}
 
 		$video.html('<source src="' + video_src + '" type="video/mp4">');
