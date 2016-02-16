@@ -216,7 +216,6 @@
     .search-term {
       border: 1px solid #E8E8E8;
       border-radius: 50px;
-      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
       float: left;
       font-weight: 100;
       font-family: $font-family-serif-alt;
@@ -227,10 +226,11 @@
       width: 540px;
 
       @media (max-width: $screen-sm-max) {
-        float: none;
-        width: 100%;
         border: 11px solid $ucf-gold-light;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        float: none;
         padding-right: 65px;
+        width: 100%;
       }
     }
 
