@@ -191,7 +191,9 @@
     @media (max-width: $screen-sm-max) {
       font-size: 30px;
       padding-top: 70px;
-      min-width: 420px;
+      max-width: 420px;
+      min-width: 100%;
+      width: 100%;
     }
   }
 
