@@ -198,7 +198,7 @@ var sectionsMenu = function($) {
 			offset = $menu.offset().top;
 		};
 
-		var $sections = $('section'),
+		var $sections = $('section.bucket-section'),
 				$menuList = $sectionsMenu.find('ul.nav'),
 				$menu = $('#sections-navbar'),
 				offset = $menu.offset().top + $menu.height();

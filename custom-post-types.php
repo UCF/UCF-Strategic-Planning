@@ -846,7 +846,7 @@ class Section extends CustomPostType {
 						<?php echo Spotlight::toHTML( $object->feature_spotlight ); ?>
 					<?php endif; ?>
 					</div>
-					<div class="col-md-6 col-md-offset-1">
+					<div class="col-md-6 col-md-offset-1 col-sm-6">
 						<?php echo apply_filters( 'the_content', $object->content); ?>
 						<?php if ( $object->menu ) : ?>
 						<div class="menu-wrapper">
