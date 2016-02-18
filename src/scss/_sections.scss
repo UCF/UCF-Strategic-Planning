@@ -162,6 +162,13 @@
     height: 300px;
   }
 
+  .search-box-background {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
   .section-header-text {
     font-size: 45px;
     font-family: $font-family-sans-serif;
@@ -184,7 +191,9 @@
     @media (max-width: $screen-sm-max) {
       font-size: 30px;
       padding-top: 70px;
-      min-width: 420px;
+      max-width: 420px;
+      min-width: 100%;
+      width: 100%;
     }
   }
 
@@ -200,6 +209,12 @@
     position: relative;
     width: 650px;
 
+    @media (max-width: $screen-sm-max) {
+      width: 80%;
+      background: transparent;
+      box-shadow: none;
+    }
+
     .search-term {
       border: 1px solid #E8E8E8;
       border-radius: 50px;
@@ -211,6 +226,14 @@
       outline: none;
       padding: 13px 25px;
       width: 540px;
+
+      @media (max-width: $screen-sm-max) {
+        border: 11px solid $ucf-gold-light;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        float: none;
+        padding-right: 65px;
+        width: 100%;
+      }
     }
 
     .search-button {
@@ -222,6 +245,13 @@
       font-size: 26px;
       height: 50px;
       width: 50px;
+
+      @media (max-width: $screen-sm-max) {
+        float: none;
+        position: absolute;
+        top: 26px;
+        right: 25px;
+      }
 
       .fa-spinner {
         display: none;
