@@ -309,6 +309,19 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'gtm_id'
+	);
+
+	$wp_customize->add_control(
+		'gtm_id',
+		array(
+			'type'        => 'text',
+			'label'       => 'Google Tag Manager ID',
+			'description' => 'Example: <em>MTG-ABC123</em>. Leave blank for development.',
+			'section'     => THEME_CUSTOMIZER_PREFIX.'analytics'
+ 		)
+	);
 
 	// Events
 	$wp_customize->add_setting(
