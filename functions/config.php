@@ -667,13 +667,13 @@ function __init__() {
 
 	// add_image_size( 'my-image-size', 620 );
 
-	// register_sidebar( array(
-	// 	'name'          => __( 'Sidebar' ),
-	// 	'id'            => 'sidebar',
-	// 	'description'   => 'Sidebar found on two column page templates and search pages',
-	// 	'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-	// 	'after_widget'  => '</aside>',
-	// ) );
+	register_sidebar( array(
+		'name'          => __( 'Sidebar' ),
+		'id'            => 'sidebar',
+	 	'description'   => 'Sidebar found on two column page templates and search pages',
+	 	'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+	 	'after_widget'  => '</aside>',
+	 ) );
 }
 add_action( 'after_setup_theme', '__init__' );
 
