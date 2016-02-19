@@ -302,14 +302,14 @@
   .navbar-brand {
     color: $ucf-col-default;
 
-    &:hover, 
+    &:hover,
     &:focus {
       color: $ucf-col-highlight;
     }
   }
 
   .navbar-text {
-    color: $ucf-col-default; 
+    color: $ucf-col-default;
   }
 
   .navbar-nav {
@@ -319,7 +319,7 @@
         &:hover,
         &:focus {
           background: $ucf-bg-highlight;
-          color: $ucf-col-highlight; 
+          color: $ucf-col-highlight;
         }
       }
 
@@ -331,7 +331,7 @@
             &:hover,
             &:focus {
               color: $ucf-col-highlight;
-              background-color: $ucf-bg-highlight; 
+              background-color: $ucf-bg-highlight;
             }
           }
           > .divider {
@@ -342,10 +342,10 @@
     }
     .open .dropdown-menu > .active {
       > a,
-      > a:hover, 
+      > a:hover,
       > a:focus {
         color: $ucf-col-highlight;
-        background-color: $ucf-bg-highlight; 
+        background-color: $ucf-bg-highlight;
       }
     }
     > .active {
@@ -353,7 +353,7 @@
       > a:hover,
       > a:focus {
         color: $ucf-col-highlight;
-        background-color: $ucf-bg-highlight; 
+        background-color: $ucf-bg-highlight;
       }
     }
     > .open {
@@ -371,16 +371,16 @@
 
     &:hover,
     &:focus {
-      background-color: $ucf-bg-highlight; 
+      background-color: $ucf-bg-highlight;
     }
     .icon-bar {
-      background-color: $ucf-col-default; 
+      background-color: $ucf-col-default;
     }
   }
 
   .navbar-collapse,
   .navbar-form {
-    border-color: $ucf-col-default; 
+    border-color: $ucf-col-default;
   }
 
   .navbar-link {
@@ -398,15 +398,15 @@
         color: $ucf-col-default;
         &:hover,
         &:focus {
-          color: $ucf-col-highlight; 
+          color: $ucf-col-highlight;
         }
       }
       > .active {
-        > a, 
-        > a:hover, 
+        > a,
+        > a:hover,
         > a:focus {
           color: $ucf-col-highlight;
-          background-color: $ucf-bg-highlight; 
+          background-color: $ucf-bg-highlight;
         }
       }
     }
