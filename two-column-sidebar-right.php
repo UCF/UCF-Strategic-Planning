@@ -9,11 +9,13 @@
 	<div class="container">
 		<div class="row page-wrap">
 			<div class="col-md-8">
-				<h2><?php echo the_title(); ?></h2>
-				<?php echo the_content(); ?>
+				<div class="content">
+					<h2><?php echo the_title(); ?></h2>
+					<?php echo the_content(); ?>
+				</div>
 			</div>
 			<div class="col-md-4">
-			<?php 
+			<?php
 			if ( is_active_sidebar( 'sidebar' ) ) {
 				dynamic_sidebar( 'sidebar' );
 			}
