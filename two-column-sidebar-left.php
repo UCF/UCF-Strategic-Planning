@@ -16,8 +16,8 @@
 			?>
 			</div>
 			<div class="col-md-8">
+				<h2><?php echo the_title(); ?></h2>
 				<div class="content">
-					<h2><?php echo the_title(); ?></h2>
 					<?php echo the_content(); ?>
 				</div>
 			</div>
