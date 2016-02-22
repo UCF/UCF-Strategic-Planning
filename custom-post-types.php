@@ -129,44 +129,6 @@ abstract class CustomPostType {
 		);
 	}
 
-
-	/**
-	 * Creates metabox array for custom post type. Override method in
-	 * descendants to add or modify metaboxes.
-	 * */
-	public function metabox() {
-		if ( $this->options( 'use_metabox' ) ) {
-			return array(
-				'id'       => $this->options( 'name' ).'_metabox',
-				'title'    => __( $this->options( 'singular_name' ).' Fields' ),
-				'page'     => $this->options( 'name' ),
-				'context'  => 'normal',
-				'priority' => 'high',
-				'fields'   => $this->fields(),
-			);
-		}
-		return null;
-	}
-
-
-	/**
-	 * Registers metaboxes defined for custom post type.
-	 * */
-	public function register_metaboxes() {
-		if ( $this->options( 'use_metabox' ) ) {
-			$metabox = $this->metabox();
-			add_meta_box(
-				$metabox['id'],
-				$metabox['title'],
-				'show_meta_boxes',
-				$metabox['page'],
-				$metabox['context'],
-				$metabox['priority']
-			);
-		}
-	}
-
-
 	/**
 	 * Registers the custom post type and any other ancillary actions that are
 	 * required for the post to function properly.
@@ -196,7 +158,7 @@ abstract class CustomPostType {
 	 **/
 	public function register_fields() {
 		$options = array(
-			'id'         => $this->options( 'name' ).'_fields',
+			'id'         => 'custom_'.$this->options( 'name' ).'_fields',
 			'title'      => __( $this->options( 'singular_name' ). ' Fields' ),
 			'fields'     => array(),
 			'location'   => array(
@@ -211,8 +173,9 @@ abstract class CustomPostType {
 				)
 			),
 			'options' => array(
-				'position' => 'normal',
-				'layout' => 'default'
+				'position'       => 'normal',
+				'layout'         => 'default',
+				'hide_on_screen' => array(),
 			),
 			'menu_order' => 0,
 		);
@@ -486,6 +449,25 @@ class Page extends CustomPostType {
 	}
 
 	public function override_field_options( $options ) {
+		// Fields should appear for front_page.
+		$options['location'][0][] = array(
+			'param'    => 'page_type',
+			'operator' => '==',
+			'value'    => 'front_page',
+			'order_no' => 1,
+			'group_no' => 0
+		);
+
+		// Or page should appear for posts_page.
+		$options['location'][] = array( array(
+			'param'    => 'page_type',
+			'operator' => '==',
+			'value'    => 'posts_page',
+			'order_no' => 0,
+			'group_no' => 1
+		) );
+
+		$options['options']['position'] = 'acf_after_title';
 
 		return $options;
 	}
