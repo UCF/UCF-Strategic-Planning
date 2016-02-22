@@ -12,7 +12,7 @@ function isScrolledIntoView(elem)
 			elemTop = $(elem).offset().top,
 			elemBottom = elemTop + $(elem).height();
 
-	 return (docViewBottom >= elemTop && docViewTop <= elemBottom);
+	 return (docViewBottom >= (elemTop)  && docViewTop <= (elemBottom));
 }
 
 var headerImage = function($) {
@@ -112,7 +112,11 @@ var isAutoPlay = function($) {
 
 var checkVideoPositionToPlay = function($) {
 	$('.section-header-video').each(function () {
-		if (isScrolledIntoView(this)) {
+		var $this = $(this);
+		var loop = $this.attr('loop');
+		var stopped = $this.data('video-stopped');
+
+		if (isScrolledIntoView(this) && stopped !== true) {
 			this.play();
 		}
 		else {
@@ -120,6 +124,12 @@ var checkVideoPositionToPlay = function($) {
 		}
 	});
 };
+
+// var videoFinished = function(e) {
+// 	console.log(e);
+// 	var $this = $(e.target);
+// 	$this.data('video-stopped', 'true');
+// };
 
 // Place videos inside placeholders
 var loadVideos = function($) {
@@ -129,11 +139,13 @@ var loadVideos = function($) {
 			$video = $this.children('.section-header-video'),
 			video_width = $this.data('video-width') ? parseInt($this.data('video-width')) : 0,
 			video_height = $this.data('video-height') ? parseInt($this.data('video-height')) : 0,
-			video_src = $this.data('video-src');
+			video_src = $this.data('video-src'),
+			loop = false;
 
 		if ($this.data('video-loop')) {
 			$video.attr('loop', '');
 			$video.addClass('loop');
+			loop = true;
 		}
 		else {
 			$video.addClass('noLoop');
@@ -142,6 +154,12 @@ var loadVideos = function($) {
 		$video.html('<source src="' + video_src + '" type="video/mp4">');
 		$video.css('width', video_width);
 		$video.css('height', video_height);
+
+		$video.on('ended', function() {
+			if (loop !== true) {
+				$video.data('video-stopped', true);
+			}
+		});
 
 		$this.parent().children('.section-header-image-container').addClass('has-video');
 	});
