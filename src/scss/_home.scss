@@ -68,6 +68,10 @@ body.admin-bar .navbar-fixed-top {
       > a {
         padding-bottom: 17px;
         padding-top: 17px;
+
+        &:focus {
+          outline: none;
+        }
       }
     }
   }
@@ -95,6 +99,10 @@ body.admin-bar .navbar-fixed-top {
     padding: 17px 60px 17px 82px;
     text-transform: none;
     transition: transform .75s;
+
+    @media (max-width: $screen-md-max) {
+      padding: 17px 30px 17px 52px;
+    }
 
     .location {
       @media (max-width: $screen-md-max) {

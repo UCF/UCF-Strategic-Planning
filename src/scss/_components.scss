@@ -316,8 +316,12 @@
     > li {
       > a {
         color: $ucf-col-default;
-        &:hover,
         &:focus {
+          background-color: $ucf-bg-default;
+          color: $ucf-col-default;
+        }
+
+        &:hover {
           background: $ucf-bg-highlight;
           color: $ucf-col-highlight;
         }
