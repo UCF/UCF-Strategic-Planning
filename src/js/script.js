@@ -174,7 +174,7 @@ var sectionsMenu = function($) {
 					url = $item.attr('id'),
 					text = $item.find('h2.section-title').text(),
 					$listItem = $('<li></li>'),
-					$anchor = $('<a href="#' + url + '">' + text + '</a>');
+					$anchor = $('<a class="section-link" href="#' + url + '">' + text + '</a>');
 
 			$anchor.on('click', clickHandler);
 			$listItem.append($anchor);
