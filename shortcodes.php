@@ -102,7 +102,7 @@ abstract class Shortcode {
                 $retval .= '</select>';
                 break;
             case 'checkbox':
-                $retval = '<input type="checkbox" name="' . $command . '-' . $id . '" data-parameter="' . $id . '"><label>'.$name.'</label>';
+                $retval = '<input id="'.$command.'-'.$id.'" type="checkbox" name="' . $command . '-' . $id . '" data-parameter="' . $id . '"><label for="'.$command.'-'.$id.'">'.$name.'</label>';
                 break;
         }
 
@@ -492,7 +492,7 @@ class ColumnSC extends Shortcode {
 
     public static function callback( $attr, $content='' ) {
         // Size classes
-        $classes = array( $attr['class'] ? $attr['class'] : null );
+        $classes = array( $attr['class'] ? $attr['class'] : '' );
 
         $prefixes = array( 'xs', 'sm', 'md', 'lg' );
         $suffixes = array( '', '_offset', '_pull', '_push' );
@@ -510,7 +510,7 @@ class ColumnSC extends Shortcode {
 
         ob_start();
 ?>
-        <div class="<?php echo $cls_str; ?>"<?php echo $attr['style'] ? ' '.$attr['style'] : ''; ?>>
+        <div class="<?php echo $cls_str; ?>"<?php echo $attr['style'] ? ' style="'.$attr['style'].'"' : ''; ?>>
             <?php echo apply_filters( 'the_content', $content ); ?>
         </div>
 <?php

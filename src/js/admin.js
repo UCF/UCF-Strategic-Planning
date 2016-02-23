@@ -300,7 +300,6 @@ WebcomAdmin.shortcodeInterfaceTool = function($) {
     if (editor.length === 1) {
       editor.children().each(function() {
         var $formElement = $(this);
-        console.log($formElement.prop('tagName'));
         switch($formElement.prop('tagName')) {
           case 'INPUT':
           case 'TEXTAREA':
