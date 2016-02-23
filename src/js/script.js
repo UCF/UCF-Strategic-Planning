@@ -12,7 +12,7 @@ function isScrolledIntoView(elem)
 			elemTop = $(elem).offset().top,
 			elemBottom = elemTop + $(elem).height();
 
-	 return (docViewBottom >= (elemTop)  && docViewTop <= (elemBottom));
+	 return (docViewBottom >= elemTop  && docViewTop <= elemBottom);
 }
 
 var headerImage = function($) {
@@ -124,12 +124,6 @@ var checkVideoPositionToPlay = function($) {
 		}
 	});
 };
-
-// var videoFinished = function(e) {
-// 	console.log(e);
-// 	var $this = $(e.target);
-// 	$this.data('video-stopped', 'true');
-// };
 
 // Place videos inside placeholders
 var loadVideos = function($) {
