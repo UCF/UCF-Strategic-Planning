@@ -300,11 +300,16 @@ WebcomAdmin.shortcodeInterfaceTool = function($) {
     if (editor.length === 1) {
       editor.children().each(function() {
         var $formElement = $(this);
+        console.log($formElement.prop('tagName'));
         switch($formElement.prop('tagName')) {
           case 'INPUT':
           case 'TEXTAREA':
           case 'SELECT':
-            parameters[$formElement.attr('data-parameter')] = $formElement.val();
+            if ($formElement.prop('type') === 'checkbox') {
+              parameters[$formElement.attr('data-parameter')] = String($formElement.prop('checked'));
+            } else {
+              parameters[$formElement.attr('data-parameter')] = $formElement.val();
+            }
             break;
         }
       });
