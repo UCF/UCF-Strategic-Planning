@@ -112,9 +112,9 @@ var isAutoPlay = function($) {
 
 var checkVideoPositionToPlay = function($) {
 	$('.section-header-video').each(function () {
-		var $this = $(this);
-		var loop = $this.attr('loop');
-		var stopped = $this.data('video-stopped');
+		var $this = $(this),
+			loop = $this.attr('loop'),
+			stopped = $this.data('video-stopped');
 
 		if (isScrolledIntoView(this) && stopped !== true) {
 			this.play();
@@ -137,17 +137,19 @@ var loadVideos = function($) {
 			loop = false;
 
 		if ($this.data('video-loop')) {
-			$video.attr('loop', '');
-			$video.addClass('loop');
+			$video.attr('loop', '')
+				.addClass('loop');
 			loop = true;
 		}
 		else {
 			$video.addClass('noLoop');
 		}
 
-		$video.html('<source src="' + video_src + '" type="video/mp4">');
-		$video.css('width', video_width);
-		$video.css('height', video_height);
+		$video.html('<source src="' + video_src + '" type="video/mp4">')
+			.css({
+				'width': video_width,
+				'height': video_height
+			});
 
 		$video.on('ended', function() {
 			if (loop !== true) {
