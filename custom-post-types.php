@@ -297,7 +297,7 @@ abstract class CustomPostType {
 					$opts = array_merge( $opts,
 						array(
 							'type'          => 'true_false',
-							'message'       => $field['name'],
+							'message'       => $field['label'] ? $field['label'] : $field['name'],
 							'default_value' => $field['default'] ? $field['default'] : 0
 						)
 					);
@@ -683,9 +683,10 @@ class Section extends CustomPostType {
 				'type'        => 'file'
 			),
 			array(
-				'name'        => 'Loop Video',
-				'description' => 'Loop video.',
+				'name'        => 'Loop Header Video',
+				'description' => 'If a header video is set, replay it indefinitely.',
 				'id'          => $prefix.'header_video_loop',
+				'label'       => 'Enable',
 				'type'        => 'checkbox'
 			),
 			array(
