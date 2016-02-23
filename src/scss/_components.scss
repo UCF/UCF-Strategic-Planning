@@ -416,3 +416,11 @@
     }
   }
 }
+
+.no-pad-left {
+  padding-left: 0;
+
+  @media (max-width: $screen-xs-max) {
+    padding-left: inherit;
+  }
+}

@@ -105,6 +105,23 @@
     }
   }
 
+  .section-content {
+    $offset: (100 / 24) * 1%;
+    border-left: 1px solid #acacac;
+    margin-left: $offset;
+    padding-left: $offset;
+
+    @media (max-width: $screen-sm-max) {
+      border: none;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    @media (max-width: $screen-xs-max) {
+      margin-top: 24px;
+    }
+  }
+
   h2 {
     display: inline-block;
     font-family: $font-family-sans-serif;

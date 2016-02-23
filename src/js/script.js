@@ -31,8 +31,21 @@ var headerImage = function($) {
 	});
 };
 
-var footerAdjustments = function($) {
-	$('.site-footer').find('.footer-col').matchHeight();
+var heightAdjustments = function($) {
+	var $footer = $('.site-footer').find('.footer-col').matchHeight();
+	var $sections = $('.bucket-section .row').find('div').matchHeight();
+
+	var beforeUpdate = function(event, groups) {
+		if ($(window).width() < 768) {
+			$.each(groups, function(i, $group) {
+				var $items = $group.elements;
+				$items.matchHeight({remove: true});
+			});
+		}
+	};
+
+	$footer.matchHeight._beforeUpdate = beforeUpdate;
+	$sections.matchHeight._beforeUpdate = beforeUpdate;
 };
 
 var positionHeaderBackgrounds = function($) {
@@ -229,7 +242,7 @@ var searchListeners = function($) {
 if (typeof jQuery !== 'undefined') {
 	jQuery(document).ready( function($) {
 		headerImage($);
-		footerAdjustments($);
+		heightAdjustments($);
 		isAutoPlay($);
 		sectionsMenu($);
 
