@@ -87,8 +87,8 @@
       color: #fff;
       display: table-cell;
       font-family: $font-family-serif;
-      font-size: 72px;
-      font-weight: 800;
+      font-size: 60px;
+      font-weight: 700;
       letter-spacing: 2px;
       line-height: 1;
       padding: 0 27%;
@@ -97,10 +97,10 @@
       vertical-align: middle;
 
       @media (max-width: $screen-md-max) {
-        font-size: 60px;
+        font-size: 52px;
       }
       @media (max-width: $screen-sm-max) {
-        font-size: 50px;
+        font-size: 40px;
       }
     }
   }
