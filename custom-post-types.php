@@ -509,6 +509,13 @@ class Page extends CustomPostType {
 		$prefix = $this->options( 'name' ).'_';
 		return array(
 			array(
+				'name'        => 'Custom Header Image',
+				'description' => 'Replace the them header image with a custom iamge',
+				'id'          => $prefix.'header_image',
+				'type'        => 'image',
+				'save_format' => 'object'
+			),
+			array(
 				'name'        => 'Page Stylesheet',
 				'description' => 'Add a custom stylesheet to this page',
 				'id'          => $prefix.'stylesheet',
