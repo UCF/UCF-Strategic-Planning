@@ -4,10 +4,19 @@
 .site-header {
   margin-bottom: 20px;
   padding-bottom: 70px;
+
+  @media (max-width: $screen-sm-max) {
+    padding-bottom: 20px;
+  }
 }
 
 .site-nav {
   text-align: center;
+
+  @media (max-width: $screen-sm-max) {
+    position: absolute;
+    top: 90px;
+  }
 
   ul {
     background: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.01) );
@@ -49,14 +58,26 @@
 }
 
 .header-image {
-  width: 100%;
   background-position: center center;
+  width: 100%;
+  min-height: 600px;
+
+  @media (max-width: $screen-sm-max) {
+    background-size: cover;
+    min-height: auto;
+  }
 }
 
 .header-center {
   display: table;
   height: 100%;
   width: 100%;
+
+  @media (max-width: $screen-sm-max) {
+    height: 400px;
+    position: relative;
+    top: 0;
+  }
 
   .title-wrapper {
     display: table-cell;
@@ -76,6 +97,10 @@
     margin: 0 auto;
     position: relative;
     top: -80px;
+
+    @media (max-width: $screen-sm-max) {
+      top: auto;
+    }
 
     > h1,
     > span {
