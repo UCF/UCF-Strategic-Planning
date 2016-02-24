@@ -29,7 +29,7 @@ abstract class CustomPostType {
 
 
 	public function __construct() {
-		if ( is_array( $this->get_fields() ) ) {
+		if ( !empty( $this->get_fields() ) ) {
 			$this->metaboxes[] = array(
 				'fields' => $this->get_fields()
 			);
@@ -192,10 +192,13 @@ abstract class CustomPostType {
 		);
 	}
 
-	public function get_fields() {
+	public function get_fields( $fields=null ) {
+
+		$fields = $fields ? $fields : $this->fields();
+
 		$retval = array();
 
-		foreach( $this->fields() as $field ) {
+		foreach( $fields as $field ) {
 			$opts = array_merge( $field,
 				array(
 					'key'          => $field['id'],
@@ -444,27 +447,22 @@ class Page extends CustomPostType {
 		$homepage_metabox = array(
 			'id'        => 'custom_homepage_fields',
 			'title'     => 'Home Page Fields',
-			'fields'    => array(
+			'fields'    => $this->get_fields ( 
 				array(
-					'key'          => 'homepage_message',
-					'label'        => __( 'Home Page Message' ),
-					'name'           => 'homepage_message',
-					'instructions' => 'The message that will appear below the header image',
-					'required'     => true,
-					'type'         => 'textarea',
-					'formatting'   => 'html'
-				),
-				array(
-					'key'          => 'homepage_spotlight',
-					'label'        => __( 'Home Page Spotlight' ),
-					'name'           => 'homepage_spotlight',
-					'instructions' => 'The spotlight that will appear to the right of the home page message',
-					'required'     => true,
-					'type'         => 'post_object',
-					'post_type'    => array( 'spotlight' ),
-					'taxonomy'     => array( 'all' ),
-					'allow_null'   => 1,
-					'multiple'     => 0
+					array(
+						'id'          => 'homepage_message',
+						'name'        => __( 'Home Page Message' ),
+						'description' => 'The message that will appear below the header image',
+						'type'        => 'textarea',
+						'formatting'  => 'html'
+					),
+					array(
+						'id'          => 'homepage_spotlight',
+						'name'        => __( 'Home Page Spotlight' ),
+						'description' => 'The spotlight that will appear to the right of the home page message',
+						'type'         => 'post_object',
+						'post_type'    => array( 'spotlight' )
+					)
 				)
 			),
 			'location' => array(
@@ -496,13 +494,12 @@ class Page extends CustomPostType {
 			),
 			'options' => array(
 				'position'       => 'acf_after_title',
-				'layout'         => 'default',
-				'hide_on_screen' => array()
 			)
 		);
 
 		$this->metaboxes[] = $homepage_metabox;
 
+		// Build default post type meta fields
 		parent::__construct();
 
 	}
