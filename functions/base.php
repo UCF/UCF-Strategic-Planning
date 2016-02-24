@@ -946,7 +946,7 @@ add_action( 'init', 'register_custom_post_types' );
 
 function register_custom_post_type_fields() {
 	foreach ( installed_custom_post_types() as $custom_post_type ) {
-		$custom_post_type->register_fields();
+		$custom_post_type->register_metaboxes();
 	}
 
 	flush_rewrite_rules_if_necessary();

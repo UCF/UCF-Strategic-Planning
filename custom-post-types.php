@@ -21,11 +21,20 @@ abstract class CustomPostType {
 		                         // (see also objectsToHTML and toHTML methods)
 		$taxonomies     = array( 'post_tag' ),
 		$built_in       = False,
+		$metaboxes      = array(),
 
 		// Optional default ordering for generic shortcode if not specified by user.
 		$default_orderby = null,
 		$default_order   = null;
 
+
+	public function __construct() {
+		if ( !empty( $this->get_fields() ) ) {
+			$this->metaboxes[] = array(
+				'fields' => $this->get_fields()
+			);
+		}
+	}
 
 	/**
 	 * Wrapper for get_posts function, that predefines post_type for this
@@ -81,13 +90,6 @@ abstract class CustomPostType {
 	 * */
 	public function fields() {
 		return array();
-	}
-
-	/**
-	 * Additional settings for overriding field layout.
-	 **/
-	public function override_field_options( $options ) {
-		return $options;
 	}
 
 	/**
@@ -154,12 +156,21 @@ abstract class CustomPostType {
 	}
 
 	/**
-	 * Registers the fields for the custom post type.
+	 * Registers the metaboxes for the custom post type.
 	 **/
-	public function register_fields() {
-		$options = array(
+	public function register_metaboxes() {
+		foreach( $this->metaboxes as $metabox ) {
+			$options = array_merge( $this->default_metabox_options(), $metabox );
+			if ( function_exists( 'register_field_group' ) ) {
+				register_field_group( $options );
+			}
+		}
+	}
+
+	private function default_metabox_options() {
+		return array(
 			'id'         => 'custom_'.$this->options( 'name' ).'_fields',
-			'title'      => __( $this->options( 'singular_name' ). ' Fields' ),
+			'title'      => __( $this->options( 'singular_name' ) . ' Fields' ),
 			'fields'     => array(),
 			'location'   => array(
 				array(
@@ -175,14 +186,19 @@ abstract class CustomPostType {
 			'options' => array(
 				'position'       => 'normal',
 				'layout'         => 'default',
-				'hide_on_screen' => array(),
+				'hide_on_screen' => array()
 			),
-			'menu_order' => 0,
+			'menu_order' => 0
 		);
+	}
 
-		$options = $this->override_field_options( $options );
+	public function get_fields( $fields=null ) {
 
-		foreach( $this->fields() as $field ) {
+		$fields = $fields ? $fields : $this->fields();
+
+		$retval = array();
+
+		foreach( $fields as $field ) {
 			$opts = array_merge( $field,
 				array(
 					'key'          => $field['id'],
@@ -203,7 +219,7 @@ abstract class CustomPostType {
 							'formatting'    => 'html'
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 				case 'textarea':
 					$opts = array_merge( $opts,
@@ -214,7 +230,7 @@ abstract class CustomPostType {
 							'formatting'    => 'html'
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 				case 'number':
 					$opts = array_merge( $opts,
@@ -226,7 +242,7 @@ abstract class CustomPostType {
 							'max'           => $field['max'] ? $field['max'] : null
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 				case 'email':
 					$opts = array_merge( $opts,
@@ -236,7 +252,7 @@ abstract class CustomPostType {
 							'placeholder'   => $field['placeholder'] ? $field['placeholder'] : '',
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 				case 'image':
 					$opts = array_merge( $opts,
@@ -247,7 +263,7 @@ abstract class CustomPostType {
 							'library'       => $field['library'] ? $field['library'] : 'all'
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 				case 'file':
 					$opts = array_merge( $opts,
@@ -257,7 +273,7 @@ abstract class CustomPostType {
 							'library'       => $field['library'] ? $field['library'] : 'all'
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 				case 'select':
 					$opts = array_merge( $opts,
@@ -269,7 +285,7 @@ abstract class CustomPostType {
 							'multiple'      => $field['multiple'] ? $field['multiple'] : 0
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 				case 'checkbox-list':
 					$opts = array_merge( $opts,
@@ -280,7 +296,7 @@ abstract class CustomPostType {
 							'layout'        => $field['layout'] ? $field['layout'] : 'vertical'
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 				case 'radio':
 					$opts = array_merge( $opts,
@@ -291,7 +307,7 @@ abstract class CustomPostType {
 							'layout'        => $field['layout'] ? $field['layout'] : 'vertical'
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 				case 'checkbox':
 					$opts = array_merge( $opts,
@@ -301,7 +317,7 @@ abstract class CustomPostType {
 							'default_value' => $field['default'] ? $field['default'] : 0
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 				case 'color':
 					$opts = array_merge( $opts,
@@ -310,7 +326,7 @@ abstract class CustomPostType {
 							'default_value'     => $field['default'] ? $field['default'] : null
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 				case 'icon':
 					$opts = array_merge( $opts,
@@ -318,7 +334,7 @@ abstract class CustomPostType {
 							'type'              => 'fa_icon'
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 				case 'wysiwyg':
 					$opts = array_merge( $opts,
@@ -328,7 +344,7 @@ abstract class CustomPostType {
 							'media_upload'      => $field['media_upload'] ? $field['media_upload'] : 'no'
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 				case 'post_object':
 					$opts = array_merge( $opts,
@@ -340,7 +356,7 @@ abstract class CustomPostType {
 							'multiple'          => $field['multiple'] ? $field['multiple'] : 0
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 				case 'menu':
 					$opts = array_merge( $opts,
@@ -353,11 +369,8 @@ abstract class CustomPostType {
 			}
 		}
 
-		if ( function_exists( 'register_field_group' ) ) {
-			register_field_group( $options );
-		}
+		return $retval;
 	}
-
 
 	/**
 	 * Shortcode for this custom post type.  Can be overridden for descendants.
@@ -429,47 +442,84 @@ class Page extends CustomPostType {
 		$use_metabox    = True,
 		$built_in       = True;
 
+	public function __construct() {
+		// Register Home Page fields for front_page and posts_page only
+		$homepage_metabox = array(
+			'id'        => 'custom_homepage_fields',
+			'title'     => 'Home Page Fields',
+			'fields'    => $this->get_fields ( 
+				array(
+					array(
+						'id'          => 'homepage_message',
+						'name'        => __( 'Home Page Message' ),
+						'description' => 'The message that will appear below the header image',
+						'type'        => 'textarea',
+						'formatting'  => 'html'
+					),
+					array(
+						'id'          => 'homepage_spotlight',
+						'name'        => __( 'Home Page Spotlight' ),
+						'description' => 'The spotlight that will appear to the right of the home page message',
+						'type'         => 'post_object',
+						'post_type'    => array( 'spotlight' )
+					)
+				)
+			),
+			'location' => array(
+				array(
+					array(
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => 'page',
+						'order_no' => 0,
+						'group_no' => 0
+					), // and
+					array(
+						'param'    => 'page_type',
+						'operator' => '==',
+						'value'    => 'front_page',
+						'order_no' => 1,
+						'group_no' => 0
+					)
+				), // or
+				array(
+					array(
+						'param'    => 'page_type',
+						'operator' => '==',
+						'value'    => 'posts_page',
+						'order_no' => 0,
+						'group_no' => 1
+					)
+				)
+			),
+			'options' => array(
+				'position'       => 'acf_after_title',
+			)
+		);
+
+		$this->metaboxes[] = $homepage_metabox;
+
+		// Build default post type meta fields
+		parent::__construct();
+
+	}
+
 	public function fields() {
 		$prefix = $this->options( 'name' ).'_';
 		return array(
 			array(
-				'name'        => 'Home Page Message',
-				'description' => 'The message that appears below the header',
-				'id'          => $prefix.'message',
-				'type'        => 'textarea'
+				'name'        => 'Page Stylesheet',
+				'description' => 'Add a custom stylesheet to this page',
+				'id'          => $prefix.'stylesheet',
+				'type'        => 'file'
 			),
 			array(
-				'name'        => 'Home Page Spotlight',
-				'description' => 'The active spotlight on the home page',
-				'id'          => $prefix.'spotlight',
-				'type'        => 'post_object',
-				'post_type'   => array( 'spotlight' )
+				'name'        => 'Page Javascript',
+				'description' => 'Add a custom javascript file to this page',
+				'id'          => $prefix.'javascript',
+				'type'        => 'file'
 			),
 		);
-	}
-
-	public function override_field_options( $options ) {
-		// Fields should appear for front_page.
-		$options['location'][0][] = array(
-			'param'    => 'page_type',
-			'operator' => '==',
-			'value'    => 'front_page',
-			'order_no' => 1,
-			'group_no' => 0
-		);
-
-		// Or page should appear for posts_page.
-		$options['location'][] = array( array(
-			'param'    => 'page_type',
-			'operator' => '==',
-			'value'    => 'posts_page',
-			'order_no' => 0,
-			'group_no' => 1
-		) );
-
-		$options['options']['position'] = 'acf_after_title';
-
-		return $options;
 	}
 }
 
