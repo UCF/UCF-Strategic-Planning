@@ -345,14 +345,28 @@ class RowSC extends Shortcode {
                 'id'        => 'container',
                 'help_text' => 'Wrap the row in a container div',
                 'type'      => 'checkbox'
-            )
+            ),
+            array(
+                'name'      => 'Additional Classes',
+                'id'        => 'class',
+                'help_text' => 'Additional css classes',
+                'type'      => 'text'
+            ),
+            array(
+                'name'      => 'Inline Styles',
+                'id'        => 'style',
+                'help_text' => 'Inline css styles',
+                'type'      => 'text'
+            ),
         ),
         $callback    = 'callback',
         $wysiwyg     = True;
 
         public static function callback( $attr, $content='' ) {
             $attr = shortcode_atts( array( 
-                    'container' => False
+                    'container' => False,
+                    'class'     => '',
+                    'style'    => ''
                 ), $attr
             );
 
@@ -361,7 +375,7 @@ class RowSC extends Shortcode {
             <?php if ( $attr['container'] ) : ?>
             <div class="container">
             <?php endif; ?>
-                <div class="row">
+                <div class="row <?php echo $attr['class'] ? $attr['class'] : ''; ?>"<?php echo $attr['style'] ? ' style="' . $attr['style'] . '"' : '';?>>
                     <?php echo apply_filters( 'the_content', $content); ?>
                 </div>
             <?php if ( $attr['container'] ) : ?>
