@@ -28,6 +28,17 @@ function get_call_to_action() {
 	return CallToAction::toHTML( $post );
 }
 
+function get_custom_header_image() {
+	global $post;
+	$image_id = get_field( 'page_header_image', $post->ID );
+	if ( is_front_page() || is_home() || empty( $image_id ) ) {
+		return header_image();
+	} else {
+		$image = wp_get_attachment_image_src( $image_id, 'large' );
+		return $image[0];
+	}
+}
+
 function get_remote_menu( $menu_name ) {
 	$result_name = $menu_name.'_json';
 
