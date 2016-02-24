@@ -43,7 +43,11 @@ body.admin-bar .navbar-fixed-top {
 
 .navbar {
   box-shadow: 0 2px 32px rgba(0, 0, 0, 0.50);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
   transition: box-shadow .75s;
+
 
   &.center {
     box-shadow: none;
@@ -59,13 +63,46 @@ body.admin-bar .navbar-fixed-top {
     }
   }
 
+  .navbar-nav {
+    > li {
+      > a {
+        padding-bottom: 17px;
+        padding-top: 17px;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+
+  .navbar-title {
+    float: left;
+    padding: 18px 0 0 18px;
+
+    @media (min-width: $screen-md-min) {
+      display: none;
+    }
+  }
+
+
+
+
   .weather {
     background: #000;
     color: #fff;
+    font-family: $font-family-serif;
+    font-size: 18px;
+    font-weight: 100;
     line-height: 20px;
     margin-right: -15px;
-    padding: 15px 60px;
+    padding: 17px 60px 17px 82px;
+    text-transform: none;
     transition: transform .75s;
+
+    @media (max-width: $screen-md-max) {
+      padding: 17px 30px 17px 52px;
+    }
 
     .location {
       @media (max-width: $screen-md-max) {
@@ -78,7 +115,11 @@ body.admin-bar .navbar-fixed-top {
     }
 
     .icon {
-      color: #fc0;
+      color: $ucf-gold;
+      position: absolute;
+      top: 16px;
+      font-size: 22px;
+      margin-left: -30px;
     }
   }
 }

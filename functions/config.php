@@ -45,8 +45,11 @@ Config::$custom_taxonomies = array(
 Config::$shortcodes = array(
 	'CallToActionSC',
 	'SectionSC',
+	'MapSearchSC',
 	'CalloutSC',
-	'IconLinkSC'
+	'IconLinkSC',
+	'RowSC',
+	'ColumnSC'
 );
 
 
@@ -102,7 +105,7 @@ Config::$setting_defaults = array(
 	'search_per_page' => 10,
 	'cloud_typography_key' => '//cloud.typography.com/730568/675644/css/fonts.css', // Main site css key
 	'weather_feed_url' => 'http://weather.smca.ucf.edu/',
-	'header_menu_feed' => ''
+	'map_search_url' => 'http://map.ucf.edu/'
 );
 
 
@@ -308,6 +311,19 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'gtm_id'
+	);
+
+	$wp_customize->add_control(
+		'gtm_id',
+		array(
+			'type'        => 'text',
+			'label'       => 'Google Tag Manager ID',
+			'description' => 'Example: <em>MTG-ABC123</em>. Leave blank for development.',
+			'section'     => THEME_CUSTOMIZER_PREFIX.'analytics'
+ 		)
+	);
 
 	// Events
 	$wp_customize->add_setting(
@@ -497,6 +513,22 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'map_search_url',
+		array(
+			'default'     => get_setting_default( 'map_search_url' )
+		)
+	);
+	$wp_customize->add_control(
+		'map_search_url',
+		array(
+			'type'        => 'text',
+			'label'       => 'Campus Map Domain',
+			'description' => 'Domain to use for the "Search Student Services on Campus" search at the bottom of the home page.',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'home_custom'
+		)
+	);
+
 
 	// Social Media
 	$wp_customize->add_setting(
@@ -637,13 +669,13 @@ function __init__() {
 
 	// add_image_size( 'my-image-size', 620 );
 
-	// register_sidebar( array(
-	// 	'name'          => __( 'Sidebar' ),
-	// 	'id'            => 'sidebar',
-	// 	'description'   => 'Sidebar found on two column page templates and search pages',
-	// 	'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-	// 	'after_widget'  => '</aside>',
-	// ) );
+	register_sidebar( array(
+		'name'          => __( 'Sidebar' ),
+		'id'            => 'sidebar',
+	 	'description'   => 'Sidebar found on two column page templates and search pages',
+	 	'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+	 	'after_widget'  => '</aside>',
+	 ) );
 }
 add_action( 'after_setup_theme', '__init__' );
 

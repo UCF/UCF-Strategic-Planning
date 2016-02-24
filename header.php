@@ -2,6 +2,7 @@
 <html lang="en-US">
 	<head>
 		<?php wp_head(); ?>
+		<?php echo google_tag_manager(); ?>
 	</head>
 	<body ontouchstart <?php echo body_class(); ?>>
 		<header class="site-header">

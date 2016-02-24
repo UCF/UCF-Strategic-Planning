@@ -12,7 +12,7 @@ function isScrolledIntoView(elem)
 			elemTop = $(elem).offset().top,
 			elemBottom = elemTop + $(elem).height();
 
-	 return (docViewBottom >= elemTop && docViewTop <= elemBottom);
+	 return (docViewBottom >= elemTop  && docViewTop <= elemBottom);
 }
 
 var headerImage = function($) {
@@ -31,8 +31,21 @@ var headerImage = function($) {
 	});
 };
 
-var footerAdjustments = function($) {
-	$('.site-footer').find('.footer-col').matchHeight();
+var heightAdjustments = function($) {
+	var $footer = $('.site-footer').find('.footer-col').matchHeight();
+	var $sections = $('.bucket-section .row').find('div').matchHeight();
+
+	var beforeUpdate = function(event, groups) {
+		if ($(window).width() < 768) {
+			$.each(groups, function(i, $group) {
+				var $items = $group.elements;
+				$items.matchHeight({remove: true});
+			});
+		}
+	};
+
+	$footer.matchHeight._beforeUpdate = beforeUpdate;
+	$sections.matchHeight._beforeUpdate = beforeUpdate;
 };
 
 var positionHeaderBackgrounds = function($) {
@@ -112,7 +125,11 @@ var isAutoPlay = function($) {
 
 var checkVideoPositionToPlay = function($) {
 	$('.section-header-video').each(function () {
-		if (isScrolledIntoView(this)) {
+		var $this = $(this),
+			loop = $this.attr('loop'),
+			stopped = $this.data('video-stopped');
+
+		if (isScrolledIntoView(this) && stopped !== true) {
 			this.play();
 		}
 		else {
@@ -129,15 +146,29 @@ var loadVideos = function($) {
 			$video = $this.children('.section-header-video'),
 			video_width = $this.data('video-width') ? parseInt($this.data('video-width')) : 0,
 			video_height = $this.data('video-height') ? parseInt($this.data('video-height')) : 0,
-			video_src = $this.data('video-src');
+			video_src = $this.data('video-src'),
+			loop = false;
 
 		if ($this.data('video-loop')) {
-			$video.attr('loop', '');
+			$video.attr('loop', '')
+				.addClass('loop');
+			loop = true;
+		}
+		else {
+			$video.addClass('noLoop');
 		}
 
-		$video.html('<source src="' + video_src + '" type="video/mp4">');
-		$video.css('width', video_width);
-		$video.css('height', video_height);
+		$video.html('<source src="' + video_src + '" type="video/mp4">')
+			.css({
+				'width': video_width,
+				'height': video_height
+			});
+
+		$video.on('ended', function() {
+			if (loop !== true) {
+				$video.data('video-stopped', true);
+			}
+		});
 
 		$this.parent().children('.section-header-image-container').addClass('has-video');
 	});
@@ -170,12 +201,12 @@ var sectionsMenu = function($) {
 					url = $item.attr('id'),
 					text = $item.find('h2.section-title').text(),
 					$listItem = $('<li></li>'),
-					$anchor = $('<a href="#' + url + '">' + text + '</a>');
+					$anchor = $('<a class="section-link" href="#' + url + '">' + text + '</a>');
 
 			$anchor.on('click', clickHandler);
 			$listItem.append($anchor);
 			$menuList.append($listItem);
-			
+
 		};
 
 		var scroll = function() {
@@ -194,7 +225,7 @@ var sectionsMenu = function($) {
 			offset = $menu.offset().top;
 		};
 
-		var $sections = $('section'),
+		var $sections = $('section.bucket-section'),
 				$menuList = $sectionsMenu.find('ul.nav'),
 				$menu = $('#sections-navbar'),
 				offset = $menu.offset().top + $menu.height();
@@ -211,12 +242,25 @@ Number.prototype.clamp = function(min, max) {
 	return Math.min(Math.max(this, min), max);
 };
 
+var searchListeners = function($) {
+	var $mapSearchBar = $('.map-search'),
+		$searchButton = $('.search-button');
+
+	$searchButton.removeClass('loading');
+
+	$mapSearchBar.on('click', '.search-button', function() {
+		$searchButton.addClass('loading');
+	});
+};
+
 if (typeof jQuery !== 'undefined') {
 	jQuery(document).ready( function($) {
 		headerImage($);
-		footerAdjustments($);
+		heightAdjustments($);
 		isAutoPlay($);
 		sectionsMenu($);
+
+		searchListeners($);
 
 		$(window).on('resize', function() {
 			positionHeaderBackgrounds($);

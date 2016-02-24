@@ -1,5 +1,6 @@
 .bucket-section {
-  margin-bottom: 24px;
+  margin-bottom: 60px;
+
   .section-header {
     position: relative;
     height: 750px;
@@ -74,10 +75,6 @@
 
   }
 
-  .section-header:hover .section-header-image {
-    opacity: 1;
-  }
-
   .section-header-text-wrapper {
     display: table;
     height: 100%;
@@ -90,33 +87,63 @@
       color: #fff;
       display: table-cell;
       font-family: $font-family-serif;
-      font-size: 72px;
-      font-weight: 800;
+      font-size: 60px;
+      font-weight: 700;
       letter-spacing: 2px;
+      line-height: 1;
+      padding: 0 27%;
       position: relative;
       text-align: center;
       vertical-align: middle;
 
       @media (max-width: $screen-md-max) {
-        font-size: 60px;
+        font-size: 52px;
       }
       @media (max-width: $screen-sm-max) {
-        font-size: 50px;
+        font-size: 40px;
       }
     }
   }
 
+  .section-content {
+    $offset: (100 / 24) * 1%;
+    border-left: 1px solid #acacac;
+    margin-left: $offset;
+    padding-left: $offset;
+
+    @media (max-width: $screen-sm-max) {
+      border: none;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    @media (max-width: $screen-xs-max) {
+      margin-top: 24px;
+    }
+  }
+
   h2 {
-    border-bottom: 1px solid #fc0;
     display: inline-block;
     font-family: $font-family-sans-serif;
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 14px;
+    font-weight: 700;
     text-transform: uppercase;
+
+    letter-spacing: 0;
+    padding: 0 0 10px 0;
 
     &.section-title {
       margin-bottom: 18px;
-      margin-top: 50px;
+      margin-top: 60px;
+    }
+
+    &::after {
+      background: $ucf-gold;
+      content: " ";
+      display: block;
+      height: 2px;
+      margin-top: 15px;
+      width: 25px;
     }
   }
 
@@ -127,12 +154,17 @@
     &.lead {
       font-size: 24px;
       line-height: 32px;
+      padding-bottom: 20px;
     }
   }
 
   .menu-wrapper {
     h2 {
       padding-top: 14px;
+
+      &::after {
+        display: none;
+      }
     }
 
     .menu {
