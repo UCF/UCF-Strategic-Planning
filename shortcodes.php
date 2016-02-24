@@ -101,6 +101,9 @@ abstract class Shortcode {
                 }
                 $retval .= '</select>';
                 break;
+            case 'checkbox':
+                $retval = '<input id="'.$command.'-'.$id.'" type="checkbox" name="' . $command . '-' . $id . '" data-parameter="' . $id . '"><label for="'.$command.'-'.$id.'">'.$name.'</label>';
+                break;
         }
 
         return $retval;
@@ -328,6 +331,190 @@ class IconLinkSC extends Shortcode {
         } else {
             return '';
         }
+    }
+}
+
+class RowSC extends Shortcode {
+    public
+        $name        = 'Row',
+        $command     = 'row',
+        $description = 'Wraps content in a bootstrap row.',
+        $params      = array(
+            array(
+                'name'      => 'Add Container',
+                'id'        => 'container',
+                'help_text' => 'Wrap the row in a container div',
+                'type'      => 'checkbox'
+            )
+        ),
+        $callback    = 'callback',
+        $wysiwyg     = True;
+
+        public static function callback( $attr, $content='' ) {
+            $attr = shortcode_atts( array( 
+                    'container' => False
+                ), $attr
+            );
+
+            ob_start();
+?>
+            <?php if ( $attr['container'] ) : ?>
+            <div class="container">
+            <?php endif; ?>
+                <div class="row">
+                    <?php echo apply_filters( 'the_content', $content); ?>
+                </div>
+            <?php if ( $attr['container'] ) : ?>
+            </div>
+            <?php endif; ?>
+<?php
+            return ob_get_clean();
+        }
+}
+
+class ColumnSC extends Shortcode {
+    public
+        $name        = 'Column',
+        $command     = 'column',
+        $description = 'Wraps content in a bootstrap column',
+        $params      = array(
+            array(
+                'name'      => 'Large Size',
+                'id'        => 'lg',
+                'help_text' => 'The size of the column when the screen is > 1200px wide (1-12)',
+                'type'      => 'text'
+            ),
+            array(
+                'name'      => 'Medium Size',
+                'id'        => 'md',
+                'help_text' => 'The size of the column when the screen is between 992px and 1199px wide (1-12)',
+                'type'      => 'text' 
+            ),
+            array(
+                'name'      => 'Small Size',
+                'id'        => 'sm',
+                'help_text' => 'The size of the column when the screen is between 768px and 991px wide (1-12)',
+                'type'      => 'text' 
+            ),
+            array(
+                'name'      => 'Extra Small Size',
+                'id'        => 'xs',
+                'help_text' => 'The size of the column when the screen is < 767px wide (1-12)',
+                'type'      => 'text' 
+            ),
+            array(
+                'name'      => 'Large Offset',
+                'id'        => 'lg_offset',
+                'help_text' => 'The offset of the column when the screen is > 1200px wide (1-12)',
+                'type'      => 'text'
+            ),
+            array(
+                'name'      => 'Medium Offset',
+                'id'        => 'md_offset',
+                'help_text' => 'The offset of the column when the screen is between 992px and 1199px wide (1-12)',
+                'type'      => 'text' 
+            ),
+            array(
+                'name'      => 'Small Offset',
+                'id'        => 'sm_offset',
+                'help_text' => 'The offset of the column when the screen is between 768px and 991px wide (1-12)',
+                'type'      => 'text' 
+            ),
+            array(
+                'name'      => 'Extra Small Offset',
+                'id'        => 'xs_offset',
+                'help_text' => 'The offset of the column when the screen is < 767px wide (1-12)',
+                'type'      => 'text' 
+            ),
+            array(
+                'name'      => 'Large Push',
+                'id'        => 'lg_push',
+                'help_text' => 'Pushes the column the specified number of column widths when the screen is > 1200px (1-12)',
+                'type'      => 'text'
+            ),
+            array(
+                'name'      => 'Medium Push',
+                'id'        => 'md_push',
+                'help_text' => 'Pushes the column the specified number of column widths when the screen is between 992px and 1199px wide (1-12)',
+                'type'      => 'text' 
+            ),
+            array(
+                'name'      => 'Small Push',
+                'id'        => 'sm_push',
+                'help_text' => 'Pushes the column the specified number of column widths when the screen is between 768px and 991px wide (1-12)',
+                'type'      => 'text' 
+            ),
+            array(
+                'name'      => 'Extra Small Push',
+                'id'        => 'xs_push',
+                'help_text' => 'Pushes the column the specified number of column widths when the screen is < 767px wide (1-12)',
+                'type'      => 'text' 
+            ),
+            array(
+                'name'      => 'Large Pull',
+                'id'        => 'lg_pull',
+                'help_text' => 'Pulls the column the specified number of column widths when the screen is > 1200px wide (1-12)',
+                'type'      => 'text'
+            ),
+            array(
+                'name'      => 'Medium Offset Size',
+                'id'        => 'md_pull',
+                'help_text' => 'Pulls the column the specified number of column widths when the screen is between 992px and 1199px wide (1-12)',
+                'type'      => 'text' 
+            ),
+            array(
+                'name'      => 'Small Offset Size',
+                'id'        => 'sm_pull',
+                'help_text' => 'Pulls the column the specified number of column widths when the screen is between 768px and 991px wide (1-12)',
+                'type'      => 'text' 
+            ),
+            array(
+                'name'      => 'Extra Small Offset Size',
+                'id'        => 'xs_pull',
+                'help_text' => 'Pulls the column the specified number of column widths when the screen is < 767px wide (1-12)',
+                'type'      => 'text' 
+            ),
+            array(
+                'name'      => 'Additional Classes',
+                'id'        => 'class',
+                'help_text' => 'Any additional classes for the column',
+                'type'      => 'text'
+            ),
+            array(
+                'style'     => 'Inline Styles',
+                'id'        => 'style',
+                'help_text' => 'Any additional inline styles for the column',
+                'type'      => 'text'
+            ),
+        ),
+        $callback    = 'callback',
+        $wysiwig     = True;
+
+    public static function callback( $attr, $content='' ) {
+        // Size classes
+        $classes = array( $attr['class'] ? $attr['class'] : '' );
+
+        $prefixes = array( 'xs', 'sm', 'md', 'lg' );
+        $suffixes = array( '', '_offset', '_pull', '_push' );
+
+        foreach( $prefixes as $prefix ) {
+            foreach( $suffixes as $suffix ) {
+                if ( $attr[$prefix.$suffix] ) {
+                    $suf = str_replace('_', '-', $suffix);
+                    $classes[] = 'col-'.$prefix.$suf.'-'.$attr[$prefix.$suffix];
+                }
+            }
+        }
+
+        $cls_str = implode( ' ', $classes );
+
+        ob_start();
+?>
+        <div class="<?php echo $cls_str; ?>"<?php echo $attr['style'] ? ' style="'.$attr['style'].'"' : ''; ?>>
+            <?php echo apply_filters( 'the_content', $content ); ?>
+        </div>
+<?php
+        return ob_get_clean();
     }
 }
 

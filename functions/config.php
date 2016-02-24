@@ -47,7 +47,9 @@ Config::$shortcodes = array(
 	'SectionSC',
 	'MapSearchSC',
 	'CalloutSC',
-	'IconLinkSC'
+	'IconLinkSC',
+	'RowSC',
+	'ColumnSC'
 );
 
 
