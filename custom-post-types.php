@@ -28,7 +28,7 @@ abstract class CustomPostType {
 		$default_order   = null;
 
 
-	public function __construct() {
+	public function CustomPostType() {
 		if ( !empty( $this->get_fields() ) ) {
 			$this->metaboxes[] = array(
 				'fields' => $this->get_fields()
@@ -442,7 +442,7 @@ class Page extends CustomPostType {
 		$use_metabox    = True,
 		$built_in       = True;
 
-	public function __construct() {
+	public function Page() {
 		// Register Home Page fields for front_page and posts_page only
 		$homepage_metabox = array(
 			'id'        => 'custom_homepage_fields',
