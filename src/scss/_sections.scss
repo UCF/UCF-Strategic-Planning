@@ -207,3 +207,46 @@
     }
   }
 }
+
+.calendar-events {
+  text-align: left;
+
+  h2 {
+        display: inline-block;
+    font-family: $font-family-sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    float: left;
+
+    letter-spacing: 0;
+    padding: 0 0 10px 0;
+    margin-top: 0;
+  }
+
+  .all-link {
+    float: right;
+    font-size: 16px;
+    font-family: $font-family-serif;
+
+    color: $ucf-gold;
+  }
+
+  a {
+    color: #fff;
+
+    &:link,
+    &:active,
+    &:focus {
+    }
+
+    &:hover {
+      text-decoration: underline;
+
+      > * {
+        text-decoration: underline;
+      }
+    }
+  }
+
+}

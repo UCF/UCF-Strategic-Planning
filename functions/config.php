@@ -49,7 +49,8 @@ Config::$shortcodes = array(
 	'CalloutSC',
 	'IconLinkSC',
 	'RowSC',
-	'ColumnSC'
+	'ColumnSC',
+	'AcademicCalendarSC'
 );
 
 

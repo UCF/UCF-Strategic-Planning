@@ -237,6 +237,93 @@ class MapSearchSC extends Shortcode {
     }
 }
 
+class AcademicCalendarSC extends Shortcode {
+    public
+        $name        = 'AcademicCalendar', // The name of the shortcode.
+        $command     = 'calendar-entries', // The command used to call the shortcode.
+        $description = 'Displays up and coming academic calendar entries', // The description of the shortcode.
+        $callback    = 'callback',
+        $wysiwyg     = True; // Whether to add it to the shortcode Wysiwyg modal.
+
+    public static function callback( $attr, $content='' ) {
+        $max_events = 6;
+        $items = get_events( 0, $max_events );
+        $first_item = array_shift( $items );
+        ob_start();
+?>
+    <div class="calendar-events">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Academic Calendar</h2>
+                <a class="all-link" href="http://calendar.ucf.edu">Full Academic Calendar &rsaquo;</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Up Next</h3>
+                <div class="row event">
+                    <a href="<?php echo $first_item->get_link(); ?>" target="_blank">
+                        <div class="col-xs-2 col-sm-4 col-md-3">
+                            <div class="event-date">
+                                <span class="month"><?php echo $first_item->get_date( 'M' ); ?></span>
+                                <span class="day"><?php echo $first_item->get_date( 'j' ); ?></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-10 col-sm-8 col-md-9">
+                            <div class="event-details">
+                                <h4><?php echo $first_item->get_title(); ?></h4>
+                                <p class="time"><?php echo $timeString; ?></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Up And Coming</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                    <?php foreach( $items as $key=>$item ) : ?>
+                        <?php
+                            $month = $item->get_date( 'M' );
+                            $day = $item->get_date( 'j' );
+                            $startDate = $item->get_item_tags( 'http://events.ucf.edu', 'startdate' );
+                            $endDate = $item->get_item_tags( 'http://events.ucf.edu', 'enddate' );
+                        ?>
+                        <div class="row event">
+                            <a href="<?php echo $item->get_link(); ?>" target="_blank">
+                                <div class="col-xs-2 col-sm-4 col-md-3">
+                                    <div class="event-date">
+                                        <span class="month"><?php echo $month; ?></span>
+                                        <span class="day"><?php echo $day; ?></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-10 col-sm-8 col-md-9">
+                                    <div class="event-details">
+                                        <h4><?php echo $item->get_title(); ?></h4>
+                                        <p class="time"><?php echo $timeString; ?></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <?php if ( ( $key + 1 ) % 3 == 0 ): ?>
+                            </div>
+                            <div class="col-md-6">
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+        return ob_get_clean();
+    }
+}
+
 function sc_search_form() {
     ob_start();
 ?>
@@ -258,6 +345,13 @@ class CalloutSC extends Shortcode {
                 'help_text' => 'The color of the callout box',
                 'type'      => 'color',
                 'default'   => '#ffcc00'
+            ),
+            array(
+                'name'      => 'Text',
+                'id'        => 'text-color',
+                'help_text' => 'The color of the text within the callout box',
+                'type'      => 'color',
+                'default'   => null
             )
         ), // The parameters used by the shortcode.
         $callback    = 'callback',
@@ -265,14 +359,18 @@ class CalloutSC extends Shortcode {
 
     public static function callback( $attr, $content='' ) {
         $attr = shortcode_atts( array(
-                'color' => '#ffcc00'
+                'color' => '#ffcc00',
+                'text-color' => '#000'
             ),
             $attr
         );
+        $style = '';
+        $style .= !empty( $attr['color'] ) ? 'background: ' . $attr['color'] . ';' : '';
+        $style .= !empty( $attr['text-color'] ) ? ' color: ' . $attr['text-color'] . ';' : '';
 
         ob_start();
 ?>
-        <aside class="callout"<?php echo !empty( $attr['color'] ) ? ' style="background: ' . $attr['color'] . '"' : ''; ?>>
+        <aside class="callout"<?php echo !empty( $style ) ? ' style="' . $style . '"' : ''; ?>>
             <div class="container">
                 <?php echo apply_filters( 'the_content', $content ); ?>
             </div>
@@ -363,7 +461,7 @@ class RowSC extends Shortcode {
         $wysiwyg     = True;
 
         public static function callback( $attr, $content='' ) {
-            $attr = shortcode_atts( array( 
+            $attr = shortcode_atts( array(
                     'container' => False,
                     'class'     => '',
                     'style'    => ''
@@ -402,19 +500,19 @@ class ColumnSC extends Shortcode {
                 'name'      => 'Medium Size',
                 'id'        => 'md',
                 'help_text' => 'The size of the column when the screen is between 992px and 1199px wide (1-12)',
-                'type'      => 'text' 
+                'type'      => 'text'
             ),
             array(
                 'name'      => 'Small Size',
                 'id'        => 'sm',
                 'help_text' => 'The size of the column when the screen is between 768px and 991px wide (1-12)',
-                'type'      => 'text' 
+                'type'      => 'text'
             ),
             array(
                 'name'      => 'Extra Small Size',
                 'id'        => 'xs',
                 'help_text' => 'The size of the column when the screen is < 767px wide (1-12)',
-                'type'      => 'text' 
+                'type'      => 'text'
             ),
             array(
                 'name'      => 'Large Offset',
@@ -426,19 +524,19 @@ class ColumnSC extends Shortcode {
                 'name'      => 'Medium Offset',
                 'id'        => 'md_offset',
                 'help_text' => 'The offset of the column when the screen is between 992px and 1199px wide (1-12)',
-                'type'      => 'text' 
+                'type'      => 'text'
             ),
             array(
                 'name'      => 'Small Offset',
                 'id'        => 'sm_offset',
                 'help_text' => 'The offset of the column when the screen is between 768px and 991px wide (1-12)',
-                'type'      => 'text' 
+                'type'      => 'text'
             ),
             array(
                 'name'      => 'Extra Small Offset',
                 'id'        => 'xs_offset',
                 'help_text' => 'The offset of the column when the screen is < 767px wide (1-12)',
-                'type'      => 'text' 
+                'type'      => 'text'
             ),
             array(
                 'name'      => 'Large Push',
@@ -450,19 +548,19 @@ class ColumnSC extends Shortcode {
                 'name'      => 'Medium Push',
                 'id'        => 'md_push',
                 'help_text' => 'Pushes the column the specified number of column widths when the screen is between 992px and 1199px wide (1-12)',
-                'type'      => 'text' 
+                'type'      => 'text'
             ),
             array(
                 'name'      => 'Small Push',
                 'id'        => 'sm_push',
                 'help_text' => 'Pushes the column the specified number of column widths when the screen is between 768px and 991px wide (1-12)',
-                'type'      => 'text' 
+                'type'      => 'text'
             ),
             array(
                 'name'      => 'Extra Small Push',
                 'id'        => 'xs_push',
                 'help_text' => 'Pushes the column the specified number of column widths when the screen is < 767px wide (1-12)',
-                'type'      => 'text' 
+                'type'      => 'text'
             ),
             array(
                 'name'      => 'Large Pull',
@@ -474,19 +572,19 @@ class ColumnSC extends Shortcode {
                 'name'      => 'Medium Offset Size',
                 'id'        => 'md_pull',
                 'help_text' => 'Pulls the column the specified number of column widths when the screen is between 992px and 1199px wide (1-12)',
-                'type'      => 'text' 
+                'type'      => 'text'
             ),
             array(
                 'name'      => 'Small Offset Size',
                 'id'        => 'sm_pull',
                 'help_text' => 'Pulls the column the specified number of column widths when the screen is between 768px and 991px wide (1-12)',
-                'type'      => 'text' 
+                'type'      => 'text'
             ),
             array(
                 'name'      => 'Extra Small Offset Size',
                 'id'        => 'xs_pull',
                 'help_text' => 'Pulls the column the specified number of column widths when the screen is < 767px wide (1-12)',
-                'type'      => 'text' 
+                'type'      => 'text'
             ),
             array(
                 'name'      => 'Additional Classes',
