@@ -365,7 +365,7 @@ abstract class CustomPostType {
 							'type'              => 'menu_select'
 						)
 					);
-					$options['fields'][] = $opts;
+					$retval[] = $opts;
 					break;
 			}
 		}
