@@ -339,4 +339,47 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	return ob_get_clean();
 }
 
+function add_advanced_styles_button( $buttons ) {
+	array_unshift( $buttons, 'styleselect' );
+	return $buttons;
+}
+add_filter( 'mce_buttons_2', 'add_advanced_styles_button' );
+
+function add_editor_styles( $init_array ) {
+	$style_formats = array(
+		array(
+			'title'    => 'Lead',
+			'selector' => 'p',
+			'classes'  => 'lead'
+		),
+		array(
+			'title'    => 'Uppercase',
+			'selector' => 'h1,h2,h3,h4,h5,p',
+			'classes'  => 'upper'
+		),
+		array(
+			'title'    => 'Lowercase',
+			'selector' => 'h1,h2,h3,h4,h5,p',
+			'classes'  => 'lower'
+		),
+	);
+
+	$init_array['style_formats'] = json_encode( $style_formats );
+
+	return $init_array;
+}
+
+add_filter( 'tiny_mce_before_init', 'add_editor_styles' );
+
+function add_mce_stylesheet( $url ) {
+	if ( ! empty( $url ) ) {
+		$url .= ',';
+	}
+
+	$url .= THEME_CSS_URL . '/style.min.css';
+
+	return $url;
+}
+add_filter( 'mce_css', 'add_mce_stylesheet' );
+
 ?>

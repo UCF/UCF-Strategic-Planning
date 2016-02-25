@@ -91,7 +91,7 @@ abstract class Shortcode {
             case 'url':
             case 'number':
             case 'color':
-                $retval .= '<input type="' . $type . '" name="' . $command . '-' . $id . '" value="" default-value="' . $default . '" data-parameter="' . $id . '">';
+                $retval .= '<input type="' . $type . '" name="' . $command . '-' . $id . '" value="'.$default.'" default-value="' . $default . '" data-parameter="' . $id . '">';
                 break;
             case 'dropdown':
                 $choices = is_array( $field['choices'] ) ? $field['choices'] : array();

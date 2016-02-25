@@ -20,6 +20,13 @@
   font-family: $font-family-sans-serif;
 }
 
+.upper {
+  text-transform: uppercase;
+}
+
+.lower {
+  text-transform: lowercase;
+}
 
 // Add animations to dropdowns
 // Adapted from https://gist.github.com/orizens/4994397
