@@ -448,7 +448,7 @@ class Page extends CustomPostType {
 		$homepage_metabox = array(
 			'id'        => 'custom_homepage_fields',
 			'title'     => 'Home Page Fields',
-			'fields'    => $this->get_fields ( 
+			'fields'    => $this->get_fields (
 				array(
 					array(
 						'id'          => 'homepage_message',
@@ -882,7 +882,7 @@ class Section extends CustomPostType {
 					<div class="col-md-5 col-sm-6 col-xs-12 no-pad">
 					<?php if ( $object->feature_type == 'feature_image' ) : ?>
 						<?php $featured_img = wp_get_attachment_image_src( $object->feature_image, 'large' ); ?>
-						<img class="img-responsive" src="<?php echo $featured_img[0]; ?>">
+						<img class="img-responsive section-image" src="<?php echo $featured_img[0]; ?>">
 					<?php else: ?>
 						<?php echo Spotlight::toHTML( $object->feature_spotlight ); ?>
 					<?php endif; ?>

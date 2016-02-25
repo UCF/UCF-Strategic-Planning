@@ -82,6 +82,10 @@
       border-radius: 4px;
       text-align: center;
 
+      @media (max-width: $screen-xs-max) {
+        border: 0;
+      }
+
       .month {
         background: #fff;
         color: #000;
@@ -89,6 +93,11 @@
         font-weight: 700;
         padding: 12px auto;
         text-transform: uppercase;
+
+        @media (max-width: $screen-xs-max) {
+          background: transparent;
+          color: #fff;
+        }
       }
 
       .day {

@@ -1,6 +1,10 @@
 .bucket-section {
   margin-bottom: 60px;
 
+  @media (max-width: $screen-xs-max) {
+    margin-bottom: 30px;
+  }
+
   .section-header {
     position: relative;
     height: 750px;
@@ -10,7 +14,10 @@
       height: 500px;
     }
     @media (max-width: $screen-sm-max) {
-      height: 360px;
+      height: 400px;
+    }
+    @media (max-width: $screen-xs-max) {
+      height: 230px;
     }
   }
 
@@ -21,6 +28,16 @@
     top: 0;
     width: 100%;
     z-index: 80;
+
+    @media (max-width: $screen-md-max) {
+      height: 500px;
+    }
+    @media (max-width: $screen-sm-max) {
+      height: 400px;
+    }
+    @media (max-width: $screen-xs-max) {
+      height: 230px;
+    }
 
     .section-header-image {
       position: absolute;
@@ -50,29 +67,16 @@
       height: 500px;
     }
     @media (max-width: $screen-sm-max) {
-      height: 360px;
+      height: 400px;
+    }
+    @media (max-width: $screen-xs-max) {
+      height: 230px;
     }
 
     .section-header-video {
       position: absolute;
       z-index: 0;
     }
-  }
-
-  .section-header-image-container {
-    height: 750px;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    width: 100%;
-
-    @media (max-width: $screen-md-max) {
-      height: 500px;
-    }
-    @media (max-width: $screen-sm-max) {
-      height: 360px;
-    }
-
   }
 
   .section-header-text-wrapper {
@@ -100,7 +104,11 @@
         font-size: 52px;
       }
       @media (max-width: $screen-sm-max) {
+        font-size: 45px;
+      }
+      @media (max-width: $screen-xs-max) {
         font-size: 40px;
+        padding: 0 10%;
       }
     }
   }
@@ -122,6 +130,12 @@
     }
   }
 
+  .section-image {
+    @media (max-width: $screen-xs-max) {
+      padding-bottom: 25px;
+    }
+  }
+
   h2 {
     display: inline-block;
     font-family: $font-family-sans-serif;
@@ -135,6 +149,11 @@
     &.section-title {
       margin-bottom: 18px;
       margin-top: 60px;
+
+      @media (max-width: $screen-xs-max) {
+        margin-top: 40px;
+        margin-bottom: 10px;
+      }
     }
 
     &::after {
@@ -155,6 +174,13 @@
       font-size: 24px;
       line-height: 32px;
       padding-bottom: 20px;
+
+      @media (max-width: $screen-sm-max) {
+        font-size: 20px;
+        line-height: 1.5;
+        padding-bottom: 5px;
+      }
+
     }
   }
 
