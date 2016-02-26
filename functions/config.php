@@ -157,6 +157,13 @@ function define_customizer_sections( $wp_customize ) {
 		)
 	);
 	$wp_customize->add_section(
+		THEME_CUSTOMIZER_PREFIX . 'academic_calendar',
+		array(
+			'title'       => 'Calendar',
+			'description' => 'Settings for academic calendar dates list.'
+		)
+	);
+	$wp_customize->add_section(
 		THEME_CUSTOMIZER_PREFIX . 'org_info',
 		array(
 			'title'       => 'Organization Info',
@@ -363,6 +370,38 @@ function define_customizer_fields( $wp_customize ) {
 			'label'       => 'Events Calendar URL',
 			'description' => 'Base URL for the calendar you wish to use. Example: <em>http://events.ucf.edu/mycalendar</em>',
 			'section'     => THEME_CUSTOMIZER_PREFIX . 'events'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'academic_calendar_feed_url',
+		array(
+			'default'     => get_setting_default( 'academic_calendar_feed_url' ),
+		)
+	);
+	$wp_customize->add_control(
+		'academic_calendar_feed_url',
+		array(
+			'type'        => 'text',
+			'label'       => 'Academic Calendar Feed URL',
+			'description' => 'Base URL for the calendar feed you wish to use. Example: <em>http://calendar.ucf.edu/json/2016/spring</em>',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'academic_calendar'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'academic_calendar_full_url',
+		array(
+			'default'     => get_setting_default( 'academic_calendar_full_url' ),
+		)
+	);
+	$wp_customize->add_control(
+		'academic_calendar_full_url',
+		array(
+			'type'        => 'text',
+			'label'       => 'Academic Calendar URL',
+			'description' => 'Base URL for the calendar you wish to use. Example: <em>http://calendar.ucf.edu/</em>',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'academic_calendar'
 		)
 	);
 

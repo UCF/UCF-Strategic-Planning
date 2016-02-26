@@ -247,7 +247,7 @@ class AcademicCalendarSC extends Shortcode {
 
     public static function callback( $attr, $content='' ) {
         $max_events = 6;
-        $items = get_events( 0, $max_events );
+        $items = get_calendar_dates( 0, $max_events );
         $first_item = array_shift( $items );
         ob_start();
 ?>
@@ -260,49 +260,39 @@ class AcademicCalendarSC extends Shortcode {
         </div>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 first-item">
                 <h3>Up Next</h3>
-                <div class="row event">
-                    <a href="<?php echo $first_item->get_link(); ?>" target="_blank">
-                        <div class="col-xs-2 col-sm-4 col-md-3">
-                            <div class="event-date">
-                                <span class="month"><?php echo $first_item->get_date( 'M' ); ?></span>
-                                <span class="day"><?php echo $first_item->get_date( 'j' ); ?></span>
-                            </div>
-                        </div>
-                        <div class="col-xs-10 col-sm-8 col-md-9">
-                            <div class="event-details">
-                                <h4><?php echo $first_item->get_title(); ?></h4>
-                                <p class="time"><?php echo $timeString; ?></p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                    <div class="giant-event-date">
+                        <span class="month"><?php echo $first_item->get_date( 'F' ); ?></span>
+                        <span class="day"><?php echo $first_item->get_date( 'j' ); ?></span>
+                    </div>
+                    <h4><?php echo $first_item->get_title(); ?></h4>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lorem eros, mollis quis consectetur eget, vestibulum pharetra augue.</p>
             </div>
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3>Up And Coming</h3>
+                        <h3>Looking Ahead</h3>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                     <?php foreach( $items as $key=>$item ) : ?>
                         <?php
-                            $month = $item->get_date( 'M' );
+                            $month = $item->get_date( 'F' );
                             $day = $item->get_date( 'j' );
                             $startDate = $item->get_item_tags( 'http://events.ucf.edu', 'startdate' );
                             $endDate = $item->get_item_tags( 'http://events.ucf.edu', 'enddate' );
                         ?>
                         <div class="row event">
                             <a href="<?php echo $item->get_link(); ?>" target="_blank">
-                                <div class="col-xs-2 col-sm-4 col-md-3">
+                                <div class="col-md-12">
                                     <div class="event-date">
                                         <span class="month"><?php echo $month; ?></span>
                                         <span class="day"><?php echo $day; ?></span>
                                     </div>
                                 </div>
-                                <div class="col-xs-10 col-sm-8 col-md-9">
+                                <div class="col-md-12">
                                     <div class="event-details">
                                         <h4><?php echo $item->get_title(); ?></h4>
                                         <p class="time"><?php echo $timeString; ?></p>
