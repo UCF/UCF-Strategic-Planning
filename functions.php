@@ -319,6 +319,33 @@ function get_weather_icon( $condition ) {
 	return false;
 }
 
+function get_academic_calendar_items() {
+
+	$result = get_transient( $result_name );
+
+	if ( false === $result ) {
+		$opts = array(
+			'http' => array(
+				'timeout' => 15
+			)
+		);
+
+		$context = stream_context_create( $opts );
+
+		$file_location = get_theme_mod_or_default( 'academic_calendar_feed_url' );
+		if ( empty( $file_location ) ) {
+			return;
+		}
+
+		$result = json_decode( file_get_contents( $file_location, false, $context ) );
+		$result = array_slice($result->terms[0]->events, 0, 7);
+		set_transient( $result_name, $result, (60 * 60 * 12) );
+	}
+
+	return $result;
+
+}
+
 function google_tag_manager() {
 	ob_start();
 	$gtm_id = get_theme_mod_or_default( 'gtm_id' );

@@ -204,14 +204,6 @@ function get_events( $start=null, $limit=null ) {
 	return $events;
 }
 
-function get_calendar_dates( $start=null, $limit=null ) {
-	//$url     = get_theme_mod_or_default( 'academic_calendar_feed_url' ) . '?format=json';
-	$url     = get_theme_mod_or_default( 'events_url' );
-	$dates  = array_reverse( FeedManager::get_items( $url ) );
-	$dates  = array_slice( $dates, $start, $limit );
-	return $dates;
-}
-
 function get_news( $start=null, $limit=null ) {
 	$url     = get_theme_mod_or_default( 'news_url' );
 	$news    = FeedManager::get_items( $url, $start, $limit );

@@ -247,7 +247,7 @@ class AcademicCalendarSC extends Shortcode {
 
     public static function callback( $attr, $content='' ) {
         $max_events = 6;
-        $items = get_calendar_dates( 0, $max_events );
+        $items = get_academic_calendar_items();
         $first_item = array_shift( $items );
         ob_start();
 ?>
@@ -263,11 +263,12 @@ class AcademicCalendarSC extends Shortcode {
             <div class="col-md-4 first-item">
                 <h3>Up Next</h3>
                     <div class="giant-event-date">
-                        <span class="month"><?php echo $first_item->get_date( 'F' ); ?></span>
-                        <span class="day"><?php echo $first_item->get_date( 'j' ); ?></span>
+                        <?php $date = strtotime( $first_item->dtstart ); ?>
+                        <span class="month"><?php echo date( 'F', $date ); ?></span>
+                        <span class="day"><?php echo date( 'j', $date ); ?></span>
                     </div>
-                    <h4><?php echo $first_item->get_title(); ?></h4>
-                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lorem eros, mollis quis consectetur eget, vestibulum pharetra augue.</p>
+                    <h4><?php echo $first_item->summary; ?></h4>
+                    <p class="description"><?php echo $first_item->description; ?></p>
             </div>
             <div class="col-md-8">
                 <div class="row">
@@ -279,13 +280,16 @@ class AcademicCalendarSC extends Shortcode {
                     <div class="col-md-6">
                     <?php foreach( $items as $key=>$item ) : ?>
                         <?php
-                            $month = $item->get_date( 'F' );
-                            $day = $item->get_date( 'j' );
-                            $startDate = $item->get_item_tags( 'http://events.ucf.edu', 'startdate' );
-                            $endDate = $item->get_item_tags( 'http://events.ucf.edu', 'enddate' );
+                            $date = strtotime( $item->dtstart );
+                            $endDt = strtotime( $item->dtend );
+                            $month = date( 'F', $date );
+                            $day = date( 'j', $date );
+                            $startDate = date( 'm/d/Y', $date );
+                            $endDate = date( 'm/d/Y', $date );
+                            $timeString = $startDate . ' - ' . $endDate;
                         ?>
                         <div class="row event">
-                            <a href="<?php echo $item->get_link(); ?>" target="_blank">
+                            <a href="<?php echo $item->directUrl; ?>" target="_blank">
                                 <div class="col-md-12">
                                     <div class="event-date">
                                         <span class="month"><?php echo $month; ?></span>
@@ -294,7 +298,7 @@ class AcademicCalendarSC extends Shortcode {
                                 </div>
                                 <div class="col-md-12">
                                     <div class="event-details">
-                                        <h4><?php echo $item->get_title(); ?></h4>
+                                        <h4><?php echo $item->summary; ?></h4>
                                         <p class="time"><?php echo $timeString; ?></p>
                                     </div>
                                 </div>
