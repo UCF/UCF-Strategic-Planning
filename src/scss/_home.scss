@@ -13,10 +13,11 @@ body.fixed-navbar {
   }
 
   h2 {
-    position: absolute;
     left: auto;
     margin: 0 22%;
+    position: absolute;
     text-align: center;
+    text-shadow: 1px 1px 4px #000;
     top: 20px;
     width: 50%;
   }
