@@ -348,19 +348,114 @@ add_filter( 'mce_buttons_2', 'add_advanced_styles_button' );
 function add_editor_styles( $init_array ) {
 	$style_formats = array(
 		array(
+			'title' => 'Text Transforms',
+			'items' => array(
+				array(
+					'title'    => 'Uppercase Text',
+					'selector' => 'h1,h2,h3,h4,h5,p',
+					'classes'  => 'text-uppercase',
+				),
+				array(
+					'title'    => 'Lowercase Text',
+					'selector' => 'h1,h2,h3,h4,h5,p',
+					'classes'  => 'text-lowercase'
+				),
+				array(
+					'title'    => 'Capitalize Text',
+					'selector' => 'h1,h2,h3,h4,h5,p',
+					'classes'  => 'text-capitalize'
+				),
+			)
+		),
+		array(
+			'title' => 'List Styles',
+			'items' => array(
+				array(
+					'title'    => 'Unstyled List',
+					'selector' => 'ul,ol',
+					'classes'  => 'list-unstyled'
+				),
+				array(
+					'title'    => 'Horizontal List',
+					'selector' => 'ul,ol',
+					'classes'  => 'list-inline'
+				),
+			),
+		),
+		array(
+			'title' => 'Buttons',
+			'items' => array(
+				array(
+					'title' => 'Button Sizes',
+					'items' => array(
+						array(
+							'title'    => "Large Button",
+							'selector' => 'a,button',
+							'classes'  => 'btn btn-lg'
+						),
+						array(
+							'title'    => 'Default Button',
+							'selector' => 'a,button',
+							'classes'  => 'btn'
+						),
+						array(
+							'title'    => 'Small Button',
+							'selector' => 'a,button',
+							'classes'  => 'btn btn-sm'
+						),
+						array(
+							'title'    => 'Extra Small Button',
+							'selector' => 'a,button',
+							'classes'  => 'btn btn-xs'
+						),
+					),
+				),
+				array(
+					'title' => 'Button Styles',
+					'items' => array(
+						array(
+							'title'    => 'Default',
+							'selector' => 'a.btn,button.btn',
+							'classes'  => 'btn-default'
+						),
+						array(
+							'title'    => 'UCF Gold',
+							'selector' => 'a.btn,button.btn',
+							'classes'  => 'btn-ucf'
+						),
+						array(
+							'title'    => 'Primary',
+							'selector' => 'a.btn,button.btn',
+							'classes'  => 'btn-primary'
+						),
+						array(
+							'title'    => 'Success',
+							'selector' => 'a.btn,button.btn',
+							'classes'  => 'btn-success'
+						),
+						array(
+							'title'    => 'Info',
+							'selector' => 'a.btn,button.btn',
+							'classes'  => 'btn-info'
+						),
+						array(
+							'title'    => 'Warning',
+							'selector' => 'a.btn,button.btn',
+							'classes'  => 'btn-warning'
+						),
+						array(
+							'title'    => 'Danger',
+							'selector' => 'a.btn,button.btn',
+							'classes'  => 'btn-danger'
+						),
+					),
+				)
+			),
+		),
+		array(
 			'title'    => 'Lead',
 			'selector' => 'p',
 			'classes'  => 'lead'
-		),
-		array(
-			'title'    => 'Uppercase',
-			'selector' => 'h1,h2,h3,h4,h5,p',
-			'classes'  => 'upper'
-		),
-		array(
-			'title'    => 'Lowercase',
-			'selector' => 'h1,h2,h3,h4,h5,p',
-			'classes'  => 'lower'
 		),
 	);
 
