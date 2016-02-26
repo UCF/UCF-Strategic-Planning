@@ -4,10 +4,20 @@
 .site-header {
   margin-bottom: 20px;
   padding-bottom: 70px;
+
+  @media (max-width: $screen-xs-max) {
+    padding-bottom: 20px;
+  }
 }
 
 .site-nav {
   text-align: center;
+
+  @media (max-width: $screen-xs-max) {
+    position: absolute;
+    top: 90px;
+    z-index: 100;
+  }
 
   ul {
     background: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.01) );
@@ -20,6 +30,12 @@
     font-family: Georgia,"Times New Roman",Times,serif;
     font-size: 17px;
     padding: 7px;
+
+    @media (max-width: $screen-sm-max) {
+      font-size: 14.25px;
+      line-height: 27px;
+      padding: 7px 5px;
+    }
 
     &:hover,
     &:active,
@@ -49,14 +65,26 @@
 }
 
 .header-image {
-  width: 100%;
   background-position: center center;
+  width: 100%;
+  min-height: 600px;
+
+  @media (max-width: $screen-xs-max) {
+    background-size: cover;
+    min-height: auto;
+  }
 }
 
 .header-center {
   display: table;
   height: 100%;
   width: 100%;
+
+  @media (max-width: $screen-xs-max) {
+    height: 400px;
+    position: relative;
+    top: 0;
+  }
 
   .title-wrapper {
     display: table-cell;
@@ -76,6 +104,10 @@
     margin: 0 auto;
     position: relative;
     top: -80px;
+
+    @media (max-width: $screen-xs-max) {
+      top: auto;
+    }
 
     > h1,
     > span {
