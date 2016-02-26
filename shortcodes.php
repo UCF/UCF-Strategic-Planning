@@ -281,12 +281,12 @@ class AcademicCalendarSC extends Shortcode {
                     <?php foreach( $items as $key=>$item ) : ?>
                         <?php
                             $date = strtotime( $item->dtstart );
-                            $endDt = strtotime( $item->dtend );
+                            $endDt = empty( $item->dtend ) ? '' : strtotime( $item->dtend );
                             $month = date( 'F', $date );
                             $day = date( 'j', $date );
                             $startDate = date( 'F j', $date );
-                            $endDate = date( 'F j', $date );
-                            if ( $startDate == $endDate ) {
+                            $endDate = date( 'F j', $endDt );
+                            if ( $startDate == $endDate || empty( $endDt ) ) {
                                 $timeString = $startDate;
                             } else {
                                 $timeString = $startDate . ' - ' . $endDate;
