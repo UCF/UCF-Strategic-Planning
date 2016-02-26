@@ -249,6 +249,24 @@ class AcademicCalendarSC extends Shortcode {
         $max_events = 6;
         $items = get_academic_calendar_items();
         $first_item = array_shift( $items );
+
+        $date = strtotime( $first_item->dtstart );
+        $endDt = empty( $first_item->dtend ) ? '' : strtotime( $first_item->dtend );
+        $month = date( 'F', $date );
+        $day = date( 'j', $date );
+        $startDate = date( 'F j', $date );
+        $endDate = empty( $endDt ) ? $endDt : date( 'F j', $endDt );
+        $displayRange = False;
+        if ( $startDate == $endDate || empty( $endDt ) ) {
+            $timeString = $startDate;
+        } else {
+            $timeString = $startDate . ' - ' . $endDate;
+            $displayRange = True;
+        }
+
+
+        // $displayRange = False;
+
         ob_start();
 ?>
     <div class="calendar-events">
@@ -262,13 +280,23 @@ class AcademicCalendarSC extends Shortcode {
         <div class="row">
             <div class="col-md-4 first-item">
                 <h3>Up Next</h3>
-                    <div class="giant-event-date">
-                        <?php $date = strtotime( $first_item->dtstart ); ?>
-                        <span class="month"><?php echo date( 'F', $date ); ?></span>
-                        <span class="day"><?php echo date( 'j', $date ); ?></span>
-                    </div>
-                    <h4><?php echo $first_item->summary; ?></h4>
-                    <p class="description"><?php echo $first_item->description; ?></p>
+                    <?php if ( !$displayRange ): ?>
+                        <div class="giant-event-date">
+                            <?php $date = strtotime( $first_item->dtstart ); ?>
+                            <span class="month"><?php echo $month; ?></span>
+                            <span class="day"><?php echo $day; ?></span>
+                        </div>
+                        <div class="event-details">
+                            <h4><?php echo $first_item->summary; ?></h4>
+                            <p><?php echo $first_item->description; ?></p>
+                        </div>
+                    <?php else: ?>
+                        <div class="event-details event-date-range">
+                            <h4><span class="fa fa-calendar-o icon"></span><?php echo $timeString; ?></h4>
+                            <span class="title"><?php echo $first_item->summary; ?></span>
+                            <p><?php echo $first_item->description; ?></p>
+                        </div>
+                    <?php endif; ?>
             </div>
             <div class="col-md-8">
                 <div class="row">
@@ -285,13 +313,12 @@ class AcademicCalendarSC extends Shortcode {
                             $month = date( 'F', $date );
                             $day = date( 'j', $date );
                             $startDate = date( 'F j', $date );
-                            $endDate = date( 'F j', $endDt );
+                            $endDate = empty( $endDt ) ? $endDt : date( 'F j', $endDt );
                             if ( $startDate == $endDate || empty( $endDt ) ) {
                                 $timeString = $startDate;
                             } else {
                                 $timeString = $startDate . ' - ' . $endDate;
                             }
-                            
                         ?>
                         <div class="row event">
                             <a href="<?php echo $item->directUrl; ?>" target="_blank">
