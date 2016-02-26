@@ -321,9 +321,13 @@ function get_weather_icon( $condition ) {
 
 function get_academic_calendar_items() {
 
-	$result = get_transient( $result_name );
+	$result_name = 'academic_calendar';
 
-	if ( false === $result ) {
+	$retval = array();
+
+	$retval = get_transient( $result_name );
+
+	if ( false === $retval ) {
 		$opts = array(
 			'http' => array(
 				'timeout' => 15
@@ -338,11 +342,22 @@ function get_academic_calendar_items() {
 		}
 
 		$result = json_decode( file_get_contents( $file_location, false, $context ) );
-		$result = array_slice($result->terms[0]->events, 0, 7);
-		set_transient( $result_name, $result, (60 * 60 * 12) );
+
+		$result = $result->terms[0]->events;
+
+		foreach( $result as $r ) {
+			if ( $r->isImportant ) {
+				$retval[] = $r;
+			}
+			if ( count( $retval ) == 7 ) {
+				break;
+			}
+		}
+
+		set_transient( $result_name, $retval, (60 * 60 * 12) );
 	}
 
-	return $result;
+	return $retval;
 
 }
 

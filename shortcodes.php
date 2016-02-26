@@ -284,22 +284,21 @@ class AcademicCalendarSC extends Shortcode {
                             $endDt = strtotime( $item->dtend );
                             $month = date( 'F', $date );
                             $day = date( 'j', $date );
-                            $startDate = date( 'm/d/Y', $date );
-                            $endDate = date( 'm/d/Y', $date );
-                            $timeString = $startDate . ' - ' . $endDate;
+                            $startDate = date( 'F j', $date );
+                            $endDate = date( 'F j', $date );
+                            if ( $startDate == $endDate ) {
+                                $timeString = $startDate;
+                            } else {
+                                $timeString = $startDate . ' - ' . $endDate;
+                            }
+                            
                         ?>
                         <div class="row event">
                             <a href="<?php echo $item->directUrl; ?>" target="_blank">
                                 <div class="col-md-12">
-                                    <div class="event-date">
-                                        <span class="month"><?php echo $month; ?></span>
-                                        <span class="day"><?php echo $day; ?></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
                                     <div class="event-details">
-                                        <h4><?php echo $item->summary; ?></h4>
-                                        <p class="time"><?php echo $timeString; ?></p>
+                                        <h4 class="time"><?php echo $timeString; ?></h4>
+                                        <p><?php echo $item->summary; ?></p>
                                     </div>
                                 </div>
                             </a>
