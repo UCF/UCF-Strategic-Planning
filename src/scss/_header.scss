@@ -93,6 +93,7 @@
 #site-nav-xs {
   border: none;
   margin: 0;
+  z-index: 100;
 
   .navbar-brand {
     color: #333;
@@ -117,6 +118,18 @@
     .icon {
       color: #fc0;      
     }
+  }
+}
+
+#header-menu-xs-collapse {
+  background: #101010;
+  position: absolute;
+  width: 100%;
+
+  &.collapse.in {
+    background: #101010;
+    position: absolute;
+    width: 100%;
   }
 }
 
@@ -199,7 +212,7 @@
     top: -80px;
 
     @media (max-width: $screen-xs-max) {
-      top: -60px;
+      top: -100px;
     }
 
     > h1,

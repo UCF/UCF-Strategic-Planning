@@ -90,15 +90,12 @@ function display_header_menu() {
 				<span class="icon-bar"></span>
 			</button>
 			<span class="navbar-title">Navigation</span>
-			<a class="navbar-brand" href="<?php echo get_site_url(); ?>"><?php echo bloginfo( 'name' ) ?></a>
-			<?php echo display_weather(); ?>
 		</div>
 		<div class="collapse navbar-collapse" id="header-menu-xs-collapse">
 			<ul id="header-menu-xs" class="menu nav navbar-nav">
 			<?php foreach( $menu->items as $item ) : ?>
 				<li><a href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a></li>
 			<?php endforeach; ?>
-		</ul>
 			</ul>
 		</div>
 	</nav>
