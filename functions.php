@@ -74,13 +74,53 @@ function display_header_menu() {
 
 	ob_start();
 ?>
-	<ul class="list-inline site-header-menu">
-	<?php foreach( $menu->items as $item ) : ?>
-		<li><a href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a></li>
-	<?php endforeach; ?>
-	</ul>
+	<nav id="nav-header-wrap" role="navigation" class="screen-only hidden-xs hidden-sm">
+		<ul id="header-menu" class="menu-list-unstyled list-inline text-center horizontal">
+		<?php foreach( $menu->items as $item ) : ?>
+			<li><a href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a></li>
+		<?php endforeach; ?>
+		</ul>
+	</nav>
+	<nav id="site-nav-xs" class="hidden-md hidden-lg navbar navbar-inverse">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-menu-xs-collapse" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<span class="navbar-title">Navigation</span>
+		</div>
+		<div class="collapse navbar-collapse" id="header-menu-xs-collapse">
+			<ul id="header-menu-xs" class="menu nav navbar-nav">
+			<?php foreach( $menu->items as $item ) : ?>
+				<li><a href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a></li>
+			<?php endforeach; ?>
+			</ul>
+		</div>
+	</nav>
 <?php
 	echo ob_get_clean();
+}
+
+function display_weather() {
+	$weather = get_weather_data();
+	ob_start();
+?>
+	<?php if ( $weather ) : ?>
+		<div class="weather">
+			<?php if ( $weather->icon ) : ?>
+				<span class="icon" title="<?php echo $weather->condition; ?>">
+					<span class="<?php echo $weather->icon; ?>"></span>
+				</span>
+			<?php endif; ?>
+			<span class="location">Orlando, FL</span>
+			<span class="vertical-rule"></span>
+			<span class="temp"><?php echo $weather->tempN; ?>&deg;F</span>
+		</div>
+	<?php endif; ?>
+<?php
+	return ob_get_clean();
 }
 
 function display_footer_menu() {
