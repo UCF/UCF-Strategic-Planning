@@ -300,6 +300,10 @@
     font-family: $font-family-serif;
 
     color: $ucf-gold;
+
+    @media (max-width: $screen-xs-max) {
+      float: left;
+    }
   }
 
   a {
@@ -315,6 +319,10 @@
       .event {
         background: rgba(255, 255, 255, .25);
         border-radius: 4px;
+
+        @media (max-width: $screen-xs-max) {
+          border-radius: 0;
+        }
       }
     }
   }
