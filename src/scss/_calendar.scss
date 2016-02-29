@@ -2,16 +2,16 @@
   text-align: left;
 
   h2 {
-      display: inline-block;
+    display: inline-block;
+    float: left;
     font-family: $font-family-sans-serif;
     font-size: 14px;
     font-weight: 700;
-    text-transform: uppercase;
-    float: left;
-
     letter-spacing: 0;
-    padding: 0 0 10px 0;
     margin-top: 0;
+    padding: 0 0 10px 0;
+    text-transform: uppercase;
+
     &::after {
       background: $ucf-gold;
       content: " ";
@@ -26,17 +26,17 @@
   h3 {
     font-family: $font-family-sans-serif;
     font-size: 14px;
-    text-transform: uppercase;
+    font-weight: 700;
     padding-bottom: 10px;
     padding-top: 0;
-    font-weight: 700;
+    text-transform: uppercase;
   }
 
   h4 {
-    font-size: 16px;
-    text-transform: uppercase;
-    font-weight: 700;
     font-family: $font-family-sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
   }
 
   .first-item {
@@ -54,11 +54,11 @@
 
     .day,
     .month  {
-      position: absolute;
-      top: 70px;
       left: 0;
-      width: 155px;
+      position: absolute;
       text-align: center;
+      top: 70px;
+      width: 155px;
     }
   }
 
@@ -72,11 +72,9 @@
   }
 
   .event-details {
-    font-size: 14px;
-    line-height: 20px;
-
     font-family: $font-family-serif;
     font-size: 18px;
+    line-height: 20px;
 
     .time {
       color: $ucf-metal-gold;
@@ -85,16 +83,15 @@
   }
 
   .all-link {
-    float: right;
-    font-size: 16px;
-    font-family: $font-family-serif;
-
     color: $ucf-gold;
+    float: right;
+    font-family: $font-family-serif;
+    font-size: 16px;
 
     @media (max-width: $screen-xs-max) {
       float: left;
-      padding-left: 10px;
       margin-top: -4px;
+      padding-left: 10px;
     }
   }
 
@@ -122,8 +119,8 @@
   .giant-event-date {
     border: 1px solid $ucf-metal-gold;
     border-radius: 4px;
-    text-align: center;
     max-width: 200px;
+    text-align: center;
 
     @media (max-width: $screen-xs-max) {
       color: $ucf-metal-gold;
@@ -134,12 +131,11 @@
       background: $ucf-metal-gold;
       color: #000;
       display: block;
+      font-size: 26px;
       font-weight: 700;
+      line-height: 1.5;
       padding: 12px auto;
       text-transform: uppercase;
-      // font-size: 40px;
-      font-size: 26px;
-      line-height: 1.5;
 
       @media (max-width: $screen-xs-max) {
         background: transparent;
@@ -148,7 +144,6 @@
     }
 
     .day {
-      font-size: 22px;
       font-size: 70px;
       line-height: 1.25;
     }
@@ -164,17 +159,17 @@
     }
 
     .title {
-      font-size: 16px;
-      text-transform: uppercase;
-      font-weight: 700;
-      margin-bottom: 10px;
       display: block;
       font-family: $font-family-sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-transform: uppercase;
     }
 
     h4 {
-      vertical-align: middle;
       font-size: 20px;
+      vertical-align: middle;
     }
   }
 }
