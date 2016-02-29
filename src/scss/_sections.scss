@@ -272,6 +272,10 @@
     }
   }
 
+  .event {
+    margin-bottom: 10px;
+  }
+
   .event-date {
     font-weight: 700;
     text-transform: uppercase;
@@ -280,7 +284,6 @@
   .event-details {
     font-size: 14px;
     line-height: 20px;
-    padding-bottom: 10px;
 
     font-family: $font-family-serif;
     font-size: 18px;
@@ -363,6 +366,8 @@
       font-size: 16px;
       text-transform: uppercase;
       font-weight: 700;
+      margin-bottom: 10px;
+      display: block;
       font-family: $font-family-sans-serif;
     }
 

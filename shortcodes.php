@@ -281,6 +281,7 @@ class AcademicCalendarSC extends Shortcode {
             <div class="col-md-4 first-item">
                 <h3>Up Next</h3>
                     <?php if ( !$displayRange ): ?>
+                        <a href="<?php echo $first_item->directUrl; ?>" target="_blank">
                         <div class="giant-event-date">
                             <?php $date = strtotime( $first_item->dtstart ); ?>
                             <span class="month"><?php echo $month; ?></span>
@@ -290,12 +291,15 @@ class AcademicCalendarSC extends Shortcode {
                             <h4><?php echo $first_item->summary; ?></h4>
                             <p><?php echo $first_item->description; ?></p>
                         </div>
+                        </a>
                     <?php else: ?>
+                        <a href="<?php echo $first_item->directUrl; ?>" target="_blank">
                         <div class="event-details event-date-range">
                             <h4><span class="fa fa-calendar-o icon"></span><?php echo $timeString; ?></h4>
                             <span class="title"><?php echo $first_item->summary; ?></span>
                             <p><?php echo $first_item->description; ?></p>
                         </div>
+                        </a>
                     <?php endif; ?>
             </div>
             <div class="col-md-8">
