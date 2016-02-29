@@ -15,7 +15,6 @@
 
   @media (max-width: $screen-xs-max) {
     position: absolute;
-    top: 90px;
     z-index: 100;
   }
 
@@ -106,7 +105,7 @@
     top: -80px;
 
     @media (max-width: $screen-xs-max) {
-      top: auto;
+      top: -60px;
     }
 
     > h1,
