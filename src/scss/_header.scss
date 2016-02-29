@@ -1,40 +1,76 @@
 // Styles that are directly tied to the site header/navigation should go in
 // this file.
 
-.site-header {
+#header-menu {
+  @include center-block();
+  background: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.01) );
   margin-bottom: 20px;
-  padding-bottom: 70px;
 
-  @media (max-width: $screen-xs-max) {
-    padding-bottom: 20px;
-  }
-}
+  li {
+    padding: 15px 5px;
+    @media (max-width: $screen-sm-max) {
+      padding: 0;
+    }
 
-.site-nav {
-  text-align: center;
+    &:last-child {
+      height: 25px;
 
-  @media (max-width: $screen-xs-max) {
-    position: absolute;
-    top: 90px;
-    z-index: 100;
-  }
+      &:after {
+        content: '' !important;
+      }
 
-  ul {
-    background: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.01) );
-    padding: 12px 0;
+      a {
+        background-color: #fc0;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Verdana, Geneva, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.42857143;
+        margin-bottom: 0;
+        margin-top: -5px;
+        padding: 4px 12px;
+        text-align: center;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        vertical-align: middle;
+        white-space: nowrap;
+
+        @media (min-width: $screen-md-min) {
+          @include body-prefix('.ie9') {
+            top: 1px;
+          }
+        }
+
+        @media (max-width: $screen-sm-max) {
+          font-size: 11px !important;
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+          background-color: #000;
+          color: #fff;
+        }
+      }
+    }
   }
 
   a {
-    @include transition( color 0.125s, background-color 0.125s );
     color: #fff;
-    font-family: Georgia,"Times New Roman",Times,serif;
     font-size: 17px;
+    font-weight: 400;
     padding: 7px;
 
     @media (max-width: $screen-sm-max) {
-      font-size: 14.25px;
-      line-height: 27px;
-      padding: 7px 5px;
+      font-size: 14.25px !important;
     }
 
     &:hover,
@@ -46,21 +82,78 @@
     }
   }
 
-  li:last-child a {
-    @include transition( color 0.125s, background-color 0.125s );
-    background-color: #fc0;
-    border: darken(#fc0, 20%);
-    border-radius: 4px;
-    color: #000;
-    padding: 7px 14px;
-
-    &:hover,
-    &:active,
-    &:focus {
-      background-color: #000;
-      border: lighten(#000, 20%);
-      color: #fff;
+  a[href]:after {
+    @media print {
+      content: '';
     }
+  }
+}
+
+// Mobile nav
+#site-nav-xs {
+  border: none;
+  margin: 0;
+
+  .navbar-brand {
+    color: #333;
+    background: #fc0;
+    font-family: $font-family-serif, serif;
+    font-size: 20px;
+  }
+
+  .navbar-title {
+    color: #fff;
+    float: right;
+    padding: 16px;
+    position: relative;
+  }
+
+  .weather {
+    color: #fff;
+    float: left;
+    padding: 16px;
+    position: relative;
+
+    .icon {
+      color: #fc0;      
+    }
+  }
+}
+
+#header-menu-xs {
+  font-family: $font-family-serif, serif;
+  z-index: 100;
+
+  li {
+    margin-bottom: 0;
+  }
+
+  a {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .last {
+    text-align: center;
+
+    a {
+      background-color: #fc0;
+      border-radius: 4px;
+      color: #000;
+      font-family: Verdana, Geneva, sans-serif;
+      font-size: 11px;
+      margin: 10px 15px;
+      padding: 6px 15px;
+    }
+  }
+}
+
+.site-header {
+  margin-bottom: 20px;
+  padding-bottom: 70px;
+
+  @media (max-width: $screen-xs-max) {
+    padding-bottom: 20px;
   }
 }
 
@@ -103,11 +196,7 @@
     display: table;
     margin: 0 auto;
     position: relative;
-    top: -80px;
-
-    @media (max-width: $screen-xs-max) {
-      top: auto;
-    }
+    top: -60px;
 
     > h1,
     > span {
