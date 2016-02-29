@@ -297,6 +297,10 @@
     font-family: $font-family-serif;
 
     color: $ucf-gold;
+
+    @media (max-width: $screen-xs-max) {
+      float: left;
+    }
   }
 
   a {
