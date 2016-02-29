@@ -245,6 +245,10 @@
     margin: 10px auto;
     width: 25%;
 
+    @media (max-width: $screen-xs-max) {
+      width: 50%;
+    }
+
     a {
       color: #000;
 
