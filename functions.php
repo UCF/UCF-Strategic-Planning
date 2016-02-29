@@ -127,7 +127,7 @@ function display_footer_news() {
 					</div>
 				</div>
 			</div>
-		<a href="<?php echo $item->get_link(); ?>">
+		</a>
 	<?php endforeach; ?>
 	</div>
 <?php
@@ -145,15 +145,15 @@ function display_footer_events() {
         <?php
             $month = $item->get_date( 'M' );
             $day = $item->get_date( 'j' );
-            $startDate = $item->get_item_tags( 'http://events.ucf.edu', 'startdate' );
-        	$endDate = $item->get_item_tags( 'http://events.ucf.edu', 'enddate' );
-        	$startTime = date( 'g:i a', strtotime( $startDate[0]['data'] ) );
-        	$endTime = date( 'g:i a', strtotime( $endDate[0]['data'] ) );
-        	$timeString = '';
-        	if ( $startTime == $endTime ) {
-        		$timeString = $startTime;
+            $start_date = $item->get_item_tags( 'http://events.ucf.edu', 'startdate' );
+        	$end_date = $item->get_item_tags( 'http://events.ucf.edu', 'enddate' );
+        	$start_time = date( 'g:i a', strtotime( $start_date[0]['data'] ) );
+        	$end_time = date( 'g:i a', strtotime( $end_date[0]['data'] ) );
+        	$time_string = '';
+        	if ( $start_time == $end_time ) {
+        		$time_string = $start_time;
         	} else {
-        		$timeString = $startTime . ' - ' . $endTime;
+        		$time_string = $start_time . ' - ' . $end_time;
         	}
         ?>
         <a href="<?php echo $item->get_link(); ?>" target="_blank">
@@ -168,9 +168,9 @@ function display_footer_events() {
 	        		<div class="event-details">
 		                <h4><?php echo $item->get_title(); ?></h4>
 		                <?php
-		                	
+
 		                ?>
-		                <p class="time"><?php echo $timeString; ?></p>
+		                <p class="time"><?php echo $time_string; ?></p>
 		            </div>
 	        	</div>
 	    	</div>
@@ -209,25 +209,25 @@ function display_social() {
 	<div class="social">
 	<?php if ( $facebook_url ) : ?>
 		<a href="<?php echo $facebook_url; ?>" target="_blank" class="social-icon ga-event-link">
-			<i class="fa fa-facebook"></i>
+			<span class="fa fa-facebook"></span>
 			<span class="sr-only">Like us on Facebook</span>
 		</a>
 	<?php endif; ?>
 	<?php if ( $twitter_url ) : ?>
 		<a href="<?php echo $twitter_url; ?>" target="_blank" class="social-icon ga-event-link">
-			<i class="fa fa-twitter"></i>
+			<span class="fa fa-twitter"></span>
 			<span class="sr-only">Follow us on Twitter</span>
 		</a>
 	<?php endif; ?>
 	<?php if ( $googleplus_url ) : ?>
 		<a href="<?php echo $googleplus_url; ?>" target="_blank" class="social-icon ga-event-link">
-			<i class="fa fa-google-plus"></i>
+			<span class="fa fa-google-plus"></span>
 			<span class="sr-only">Follow us on Google+</span>
 		</a>
 	<?php endif; ?>
 	<?php if ( $linkedin_url ) : ?>
 		<a href="<?php echo $linkedin_url; ?>" target="_blank" class="social-icon ga-event-link">
-			<i class="fa fa-linkedin"></i>
+			<span class="fa fa-linkedin"></span>
 			<span class="sr-only">View our LinkedIn page</span>
 		</a>
 	<?php endif; ?>
@@ -322,8 +322,6 @@ function get_weather_icon( $condition ) {
 function get_academic_calendar_items() {
 
 	$result_name = 'academic_calendar';
-
-	$retval = array();
 
 	$retval = get_transient( $result_name );
 

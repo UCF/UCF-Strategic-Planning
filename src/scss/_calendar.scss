@@ -101,10 +101,6 @@
     &:hover {
       text-decoration: none;
 
-      > * {
-        text-decoration: none;
-      }
-
       .event {
         background: rgba(255, 255, 255, .25);
         border-radius: 4px;

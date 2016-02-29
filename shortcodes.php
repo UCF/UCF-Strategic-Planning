@@ -250,6 +250,7 @@ class AcademicCalendarSC extends Shortcode {
         $items = get_academic_calendar_items();
         $first_item = array_shift( $items );
 
+        $full_cal_url = get_theme_mod_or_default( 'academic_calendar_full_url' );
         $date = strtotime( $first_item->dtstart );
         $endDt = empty( $first_item->dtend ) ? '' : strtotime( $first_item->dtend );
         $month = date( 'F', $date );
@@ -269,7 +270,7 @@ class AcademicCalendarSC extends Shortcode {
         <div class="row">
             <div class="col-md-12">
                 <h2>Academic Calendar</h2>
-                <a class="all-link" href="http://calendar.ucf.edu">Full Academic Calendar &rsaquo;</a>
+                <a class="all-link" href="<?php echo $full_cal_url; ?>">Full Academic Calendar &rsaquo;</a>
             </div>
         </div>
 
@@ -369,7 +370,7 @@ class CalloutSC extends Shortcode {
                 'id'        => 'text-color',
                 'help_text' => 'The color of the text within the callout box',
                 'type'      => 'color',
-                'default'   => null
+                'default'   => '#000000'
             )
         ), // The parameters used by the shortcode.
         $callback    = 'callback',
