@@ -35,8 +35,16 @@
         background: $ucf-metal-gold;;
         border-radius: 4px;
 
+        @media (max-width: $screen-xs-max) {
+          border-radius: 0;
+        }
+
         .month {
           color: $ucf-metal-gold;
+
+          @media (max-width: $screen-xs-max) {
+            color: #fff;
+          }
         }
       }
     }
@@ -86,6 +94,10 @@
         .news-item {
           background: $ucf-metal-gold;
           border-radius: 4px;
+
+          @media (max-width: $screen-xs-max) {
+            border-radius: 0;
+          }
         }
       }
     }
