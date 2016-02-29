@@ -265,7 +265,7 @@ class AcademicCalendarSC extends Shortcode {
         }
 
 
-        // $displayRange = False;
+        $displayRange = False;
 
         ob_start();
 ?>
