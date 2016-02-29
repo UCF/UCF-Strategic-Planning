@@ -263,10 +263,6 @@ class AcademicCalendarSC extends Shortcode {
             $timeString = $startDate . ' - ' . $endDate;
             $displayRange = True;
         }
-
-
-        $displayRange = False;
-
         ob_start();
 ?>
     <div class="calendar-events">
