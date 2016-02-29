@@ -320,16 +320,14 @@ class AcademicCalendarSC extends Shortcode {
                                 $timeString = $startDate . ' - ' . $endDate;
                             }
                         ?>
-                        <div class="row event">
-                            <a href="<?php echo $item->directUrl; ?>" target="_blank">
-                                <div class="col-md-12">
-                                    <div class="event-details">
-                                        <h4 class="time"><?php echo $timeString; ?></h4>
-                                        <p><?php echo $item->summary; ?></p>
-                                    </div>
+                        <a href="<?php echo $item->directUrl; ?>" target="_blank">
+                            <div class="row event">
+                                <div class="col-md-12 event-details">
+                                    <h4 class="time"><?php echo $timeString; ?></h4>
+                                    <p><?php echo $item->summary; ?></p>
                                 </div>
-                            </a>
-                        </div>
+                            </div>
+                        </a>
                         <?php if ( ( $key + 1 ) % 3 == 0 ): ?>
                             </div>
                             <div class="col-md-6">

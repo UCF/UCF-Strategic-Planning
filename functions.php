@@ -110,8 +110,8 @@ function display_footer_news() {
 	<a class="all-link" href="http://today.ucf.edu">All News &rsaquo;</a>
 	<div class="footer-news">
 	<?php foreach( $items as $key=>$item ) : $image = get_article_image( $item ); ?>
-		<div class="row news-item">
-			<a href="<?php echo $item->get_link(); ?>">
+		<a href="<?php echo $item->get_link(); ?>">
+			<div class="row news-item">
 				<div class="col-xs-2 col-sm-4 col-md-3">
 					<div class="news-thumbnail">
 					<?php if ( $image ) : ?>
@@ -126,8 +126,8 @@ function display_footer_news() {
 						<h3><?php echo $item->get_title(); ?></h3>
 					</div>
 				</div>
-			</a>
-		</div>
+			</div>
+		<a href="<?php echo $item->get_link(); ?>">
 	<?php endforeach; ?>
 	</div>
 <?php
@@ -156,8 +156,8 @@ function display_footer_events() {
         		$timeString = $startTime . ' - ' . $endTime;
         	}
         ?>
-        <div class="row event">
-        	<a href="<?php echo $item->get_link(); ?>" target="_blank">
+        <a href="<?php echo $item->get_link(); ?>" target="_blank">
+        	<div class="row event">
 	        	<div class="col-xs-2 col-sm-4 col-md-3">
 	        		<div class="event-date">
 	        			<span class="month"><?php echo $month; ?></span>
@@ -173,8 +173,8 @@ function display_footer_events() {
 		                <p class="time"><?php echo $timeString; ?></p>
 		            </div>
 	        	</div>
-        	</a>
-	    </div>
+	    	</div>
+	    </a>
     <?php endforeach; ?>
     </div>
 <?php

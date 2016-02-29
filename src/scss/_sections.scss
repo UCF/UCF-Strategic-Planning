@@ -285,6 +285,10 @@
     font-family: $font-family-serif;
     font-size: 18px;
 
+    .time {
+      color: $ucf-metal-gold;
+    }
+
   }
 
   .all-link {
@@ -298,22 +302,22 @@
   a {
     color: #fff;
 
-    &:link,
-    &:active,
-    &:focus {
-    }
-
     &:hover {
-      text-decoration: underline;
+      text-decoration: none;
 
       > * {
-        text-decoration: underline;
+        text-decoration: none;
+      }
+
+      .event {
+        background: rgba(255, 255, 255, .25);
+        border-radius: 4px;
       }
     }
   }
 
   .giant-event-date {
-    border: 1px solid $ucf-gold;
+    border: 1px solid $ucf-metal-gold;
     border-radius: 4px;
     text-align: center;
     max-width: 200px;
@@ -323,7 +327,7 @@
     }
 
     .month {
-      background: $ucf-gold;
+      background: $ucf-metal-gold;
       color: #000;
       display: block;
       font-weight: 700;
@@ -348,7 +352,7 @@
 
   .event-date-range {
     .icon {
-      color: $ucf-gold;
+      color: $ucf-metal-gold;
       font-size: 30px;
       margin-top: -5px;
       padding-right: 5px;
