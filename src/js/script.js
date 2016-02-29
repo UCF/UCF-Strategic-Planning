@@ -222,13 +222,16 @@ var sectionsMenu = function($) {
 		};
 
 		var onResize = function() {
-			offset = $menu.offset().top;
+			offset = $menu.offset().top + $menu.height() - 50; // Reduce by 50px to account for university header.
 		};
 
 		var $sections = $('section.bucket-section'),
 				$menuList = $sectionsMenu.find('ul.nav'),
 				$menu = $('#sections-navbar'),
 				offset = $menu.offset().top + $menu.height();
+
+		console.log("Offset top: " + $menu.offset().top);
+		console.log("Height: " + $menu.height());
 
 		$.each($sections, addToMenu);
 		$(document).on('scroll', scroll);
