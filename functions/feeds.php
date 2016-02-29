@@ -204,7 +204,6 @@ function get_events( $start=null, $limit=null ) {
 	return $events;
 }
 
-
 function get_news( $start=null, $limit=null ) {
 	$url     = get_theme_mod_or_default( 'news_url' );
 	$news    = FeedManager::get_items( $url, $start, $limit );
