@@ -60,6 +60,18 @@
     }
   }
 
+  .all-link {
+    &,
+    &:link,
+    &:active {
+      text-decoration: none;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   .big-calendar {
     position: relative;
 
