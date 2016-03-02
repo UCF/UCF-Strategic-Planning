@@ -261,7 +261,11 @@ class AcademicCalendarSC extends Shortcode {
         if ( $start_date == $end_date || empty( $end_dt ) ) {
             $time_string = $start_date;
         } else {
-            $time_string = $start_date . ' - ' . $end_date;
+            if ( $month === date( 'F', $end_dt ) ) {
+                $time_string = $start_date . ' - ' . date( 'j', $end_dt );
+            } else {
+                $time_string = $start_date . ' - ' . $end_date;
+            }
             $display_range = True;
         }
         ob_start();
