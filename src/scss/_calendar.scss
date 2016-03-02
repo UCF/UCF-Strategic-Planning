@@ -102,8 +102,10 @@
       text-decoration: none;
 
       .event {
-        background: rgba(255, 255, 255, .25);
-        border-radius: 4px;
+        // background: rgba(255, 255, 255, .25);
+        // border-radius: 4px;
+
+        opacity: 0.8;
 
         @media (max-width: $screen-xs-max) {
           border-radius: 0;

@@ -32,21 +32,24 @@
       text-decoration: none;
 
       .event {
-        background: $ucf-metal-gold;
-        border-radius: 4px;
-
-        @media (max-width: $screen-xs-max) {
-          border-radius: 0;
-        }
-
-        .month {
-          color: $ucf-metal-gold;
-
-          @media (max-width: $screen-xs-max) {
-            color: #fff;
-          }
-        }
+        opacity: 0.8;
       }
+      // .event {
+      //   background: $ucf-metal-gold;
+      //   border-radius: 4px;
+
+      //   @media (max-width: $screen-xs-max) {
+      //     border-radius: 0;
+      //   }
+
+      //   .month {
+      //     color: $ucf-metal-gold;
+
+      //     @media (max-width: $screen-xs-max) {
+      //       color: #fff;
+      //     }
+      //   }
+      // }
     }
   }
 
@@ -92,8 +95,9 @@
     a {
       &:hover {
         .news-item {
-          background: $ucf-metal-gold;
-          border-radius: 4px;
+          // background: $ucf-metal-gold;
+          // border-radius: 4px;
+          opacity: 0.8;
 
           @media (max-width: $screen-xs-max) {
             border-radius: 0;
