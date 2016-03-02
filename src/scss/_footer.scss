@@ -32,20 +32,7 @@
       text-decoration: none;
 
       .event {
-        background: $ucf-metal-gold;
-        border-radius: 4px;
-
-        @media (max-width: $screen-xs-max) {
-          border-radius: 0;
-        }
-
-        .month {
-          color: $ucf-metal-gold;
-
-          @media (max-width: $screen-xs-max) {
-            color: #fff;
-          }
-        }
+        opacity: .8;
       }
     }
   }
@@ -86,14 +73,12 @@
       margin-top: -18px;
       padding-bottom: 18px;
       padding-top: 18px;
-      transition: background .1s, color .1s;
     }
 
     a {
       &:hover {
         .news-item {
-          background: $ucf-metal-gold;
-          border-radius: 4px;
+          opacity: .8;
 
           @media (max-width: $screen-xs-max) {
             border-radius: 0;
@@ -111,7 +96,6 @@
       margin-bottom: 18px;
       margin-top: -18px;
       padding-top: 18px;
-      transition: background .1s, color .1s;
     }
 
     .event-date {

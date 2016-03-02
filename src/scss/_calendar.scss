@@ -40,6 +40,21 @@
   }
 
   .first-item {
+    a {
+      &,
+      &:link,
+      &:active {
+        text-decoration: none;
+      }
+
+      &:hover {
+        text-decoration: none;
+
+        .event-date-range {
+          opacity: .8;
+        }
+      }
+    }
     h4 {
       padding: 12px 0 5px;
     }
@@ -102,8 +117,8 @@
       text-decoration: none;
 
       .event {
-        background: rgba(255, 255, 255, .25);
-        border-radius: 4px;
+
+        opacity: .8;
 
         @media (max-width: $screen-xs-max) {
           border-radius: 0;
