@@ -81,24 +81,26 @@ function display_header_menu() {
 		<?php endforeach; ?>
 		</ul>
 	</nav>
-	<nav id="site-nav-xs" class="hidden-md hidden-lg navbar navbar-inverse">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-menu-xs-collapse" aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<span class="navbar-title">Navigation</span>
-		</div>
-		<div class="collapse navbar-collapse" id="header-menu-xs-collapse">
-			<ul id="header-menu-xs" class="menu nav navbar-nav">
-			<?php foreach( $menu->items as $item ) : ?>
-				<li><a href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a></li>
-			<?php endforeach; ?>
-			</ul>
-		</div>
-	</nav>
+	<div class="container">
+		<nav id="site-nav-xs" class="hidden-md hidden-lg navbar navbar-inverse">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-menu-xs-collapse" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<span class="navbar-title">Navigation</span>
+			</div>
+			<div class="collapse navbar-collapse" id="header-menu-xs-collapse">
+				<ul id="header-menu-xs" class="menu nav navbar-nav">
+				<?php foreach( $menu->items as $item ) : ?>
+					<li><a href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a></li>
+				<?php endforeach; ?>
+				</ul>
+			</div>
+		</nav>
+	</div>
 <?php
 	echo ob_get_clean();
 }
