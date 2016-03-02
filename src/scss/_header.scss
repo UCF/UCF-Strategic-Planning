@@ -4,7 +4,8 @@
 #header-menu {
   @include center-block();
   background: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.01) );
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+  padding-top: 15px;
 
   li {
     padding: 15px 5px;
@@ -24,6 +25,7 @@
         background-image: none;
         border: 1px solid transparent;
         border-radius: 4px;
+        color: #000;
         cursor: pointer;
         display: inline-block;
         font-family: $font-family-header;
@@ -90,20 +92,25 @@
 // Mobile nav
 #site-nav-xs {
   border: none;
-  margin: 0;
+  border-radius: 4px;
+  margin: 0 auto;
+  top: 8px;
+  width: 97%;
   z-index: 100;
 
   .navbar-brand {
     color: #333;
     background: #fc0;
-    font-family: $font-family-serif, serif;
+    font-family: $font-family-serif-alt, serif;
     font-size: 20px;
   }
 
   .navbar-title {
     color: #fff;
-    float: right;
-    padding: 16px;
+    float: left;
+    font-family: $font-family-serif-alt, serif;
+    font-size: 20px;
+    padding: 11px 16px;
     position: relative;
   }
 
@@ -114,13 +121,15 @@
     position: relative;
 
     .icon {
-      color: #fc0;      
+      color: #fc0;
     }
   }
 }
 
 #header-menu-xs-collapse {
   background: #101010;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
   position: absolute;
   width: 100%;
 
@@ -132,7 +141,7 @@
 }
 
 #header-menu-xs {
-  font-family: $font-family-serif, serif;
+  font-family: $font-family-serif-alt, serif;
   z-index: 100;
 
   li {
