@@ -380,9 +380,11 @@ function get_academic_calendar_items() {
 		}
 
 		$result = json_decode( file_get_contents( $file_location, false, $context ) );
+		if ( empty( $result ) ) {
+			return;
+		}
 
 		$result = $result->terms[0]->events;
-
 		foreach( $result as $r ) {
 			if ( $r->isImportant ) {
 				$retval[] = $r;
