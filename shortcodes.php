@@ -252,17 +252,21 @@ class AcademicCalendarSC extends Shortcode {
 
         $full_cal_url = get_theme_mod_or_default( 'academic_calendar_full_url' );
         $date = strtotime( $first_item->dtstart );
-        $endDt = empty( $first_item->dtend ) ? '' : strtotime( $first_item->dtend );
+        $end_dt = empty( $first_item->dtend ) ? '' : strtotime( $first_item->dtend );
         $month = date( 'F', $date );
         $day = date( 'j', $date );
-        $startDate = date( 'F j', $date );
-        $endDate = empty( $endDt ) ? $endDt : date( 'F j', $endDt );
-        $displayRange = False;
-        if ( $startDate == $endDate || empty( $endDt ) ) {
-            $timeString = $startDate;
+        $start_date = date( 'F j', $date );
+        $end_date = empty( $end_dt ) ? $end_dt : date( 'F j', $end_dt );
+        $display_range = False;
+        if ( $start_date == $end_date || empty( $end_dt ) ) {
+            $time_string = $start_date;
         } else {
-            $timeString = $startDate . ' - ' . $endDate;
-            $displayRange = True;
+            if ( $month === date( 'F', $end_dt ) ) {
+                $time_string = $start_date . ' - ' . date( 'j', $end_dt );
+            } else {
+                $time_string = $start_date . ' - ' . $end_date;
+            }
+            $display_range = True;
         }
         ob_start();
 ?>
@@ -277,7 +281,7 @@ class AcademicCalendarSC extends Shortcode {
         <div class="row">
             <div class="col-md-4 first-item">
                 <h3>Up Next</h3>
-                    <?php if ( !$displayRange ): ?>
+                    <?php if ( !$display_range ): ?>
                         <a href="<?php echo $first_item->directUrl; ?>" target="_blank">
                         <div class="giant-event-date">
                             <?php $date = strtotime( $first_item->dtstart ); ?>
@@ -292,7 +296,7 @@ class AcademicCalendarSC extends Shortcode {
                     <?php else: ?>
                         <a href="<?php echo $first_item->directUrl; ?>" target="_blank">
                         <div class="event-details event-date-range">
-                            <h4><span class="fa fa-calendar-o icon"></span><?php echo $timeString; ?></h4>
+                            <h4><span class="fa fa-calendar-o icon"></span><?php echo $time_string; ?></h4>
                             <span class="title"><?php echo $first_item->summary; ?></span>
                             <p><?php echo $first_item->description; ?></p>
                         </div>
@@ -310,21 +314,25 @@ class AcademicCalendarSC extends Shortcode {
                     <?php foreach( $items as $key=>$item ) : ?>
                         <?php
                             $date = strtotime( $item->dtstart );
-                            $endDt = empty( $item->dtend ) ? '' : strtotime( $item->dtend );
+                            $end_dt  = empty( $item->dtend ) ? '' : strtotime( $item->dtend );
                             $month = date( 'F', $date );
                             $day = date( 'j', $date );
-                            $startDate = date( 'F j', $date );
-                            $endDate = empty( $endDt ) ? $endDt : date( 'F j', $endDt );
-                            if ( $startDate == $endDate || empty( $endDt ) ) {
-                                $timeString = $startDate;
+                            $start_date = date( 'F j', $date );
+                            $end_date = empty( $end_dt ) ? $end_dt : date( 'F j', $end_dt );
+                            if ( $start_date == $endDate || empty( $end_dt ) ) {
+                                $time_string = $start_date;
                             } else {
-                                $timeString = $startDate . ' - ' . $endDate;
+                                if ( $month === date( 'F', $end_dt ) ) {
+                                    $time_string = $start_date . ' - ' . date( 'j', $end_dt );
+                                } else {
+                                    $time_string = $start_date . ' - ' . $end_date;
+                                }
                             }
                         ?>
                         <a href="<?php echo $item->directUrl; ?>" target="_blank">
                             <div class="row event">
                                 <div class="col-md-12 event-details">
-                                    <h4 class="time"><?php echo $timeString; ?></h4>
+                                    <h4 class="time"><?php echo $time_string; ?></h4>
                                     <p><?php echo $item->summary; ?></p>
                                 </div>
                             </div>
