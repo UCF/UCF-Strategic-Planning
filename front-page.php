@@ -26,7 +26,7 @@
 	<nav id="sections-navbar" class="navbar navbar-gold center">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<span class="navbar-title">Skip-To Section</span>
+				<span class="navbar-title">Skip To Section</span>
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sections-menu">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
