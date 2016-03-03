@@ -41,7 +41,6 @@ function get_custom_header_image() {
 
 function get_remote_menu( $menu_name ) {
 	$result_name = $menu_name.'_json';
-
 	$result = get_transient( $result_name );
 
 	if ( false === $result ) {
@@ -55,6 +54,12 @@ function get_remote_menu( $menu_name ) {
 
 		$file_location = get_theme_mod_or_default( $menu_name.'_feed' );
 		if ( empty( $file_location ) ) {
+			return;
+		}
+
+		$headers = get_headers( $file_location );
+		$response_code = substr( $headers[0], 9, 3 );
+		if ($response_code !== '200') {
 			return;
 		}
 
