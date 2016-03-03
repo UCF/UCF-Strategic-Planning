@@ -59,7 +59,7 @@ function get_remote_menu( $menu_name ) {
 
 		$headers = get_headers( $file_location );
 		$response_code = substr( $headers[0], 9, 3 );
-		if ($response_code !== '200') {
+		if ( $response_code !== '200' ) {
 			return;
 		}
 
