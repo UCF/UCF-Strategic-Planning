@@ -755,6 +755,19 @@ class Section extends CustomPostType {
 				'type'        => 'text'
 			),
 			array(
+				'name'        => 'Header Text Position',
+				'description' => 'The position of the header text.',
+				'id'          => $prefix.'header_text_position',
+				'type'        => 'radio',
+				'choices'     => array(
+					'' => 'Centered/Middle',
+					'top'           => 'Centered/Top',
+					'left'          => 'Left Aligned/Middle',
+					'right'         => 'Right Aligned/Middle'
+				),
+				'default'     => ''
+			),
+			array(
 				'name'        => 'Header Text Color',
 				'description' => 'The color of the header text.',
 				'id'          => $prefix.'header_text_color',
@@ -833,17 +846,18 @@ class Section extends CustomPostType {
 		$post_id    = $object->ID;
 		$prefix     = 'section_';
 
-		$object->header_image        = get_field( $prefix.'header_image', $post_id );
-		$object->header_video_mp4    = get_field( $prefix.'header_video_mp4', $post_id );
-		$object->header_video_loop   = get_field( $prefix.'header_video_loop', $post_id );
-		$object->header_text         = get_field( $prefix.'header_text', $post_id );
-		$object->header_text_color   = get_field( $prefix.'header_text_color', $post_id );
-		$object->lead_text           = get_field( $prefix.'lead_text', $post_id );
-		$object->feature_type        = get_field( $prefix.'feature_type', $post_id );
-		$object->feature_image       = get_field( $prefix.'feature_image', $post_id );
-		$object->feature_spotlight   = get_field( $prefix.'feature_spotlight', $post_id );
-		$object->content             = get_field( $prefix.'content', $post_id );
-		$object->menu                = get_field( $prefix.'resource_links', $post_id );
+		$object->header_image         = get_field( $prefix.'header_image', $post_id );
+		$object->header_video_mp4     = get_field( $prefix.'header_video_mp4', $post_id );
+		$object->header_video_loop    = get_field( $prefix.'header_video_loop', $post_id );
+		$object->header_text          = get_field( $prefix.'header_text', $post_id );
+		$object->header_text_position = get_field( $prefix.'header_text_position', $post_id );
+		$object->header_text_color    = get_field( $prefix.'header_text_color', $post_id );
+		$object->lead_text            = get_field( $prefix.'lead_text', $post_id );
+		$object->feature_type         = get_field( $prefix.'feature_type', $post_id );
+		$object->feature_image        = get_field( $prefix.'feature_image', $post_id );
+		$object->feature_spotlight    = get_field( $prefix.'feature_spotlight', $post_id );
+		$object->content              = get_field( $prefix.'content', $post_id );
+		$object->menu                 = get_field( $prefix.'resource_links', $post_id );
 
 		return $object;
 	}
@@ -855,12 +869,14 @@ class Section extends CustomPostType {
 		<section id="<?php echo $object->post_name; ?>" class="bucket-section">
 			<div class="section-header">
 				<div class="section-header-text-wrapper">
-					<span class="section-header-text" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
+					<span class="section-header-text <?php echo $object->header_text_position; ?>" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
 					<?php echo $object->header_text; ?>
 					</span>
 				</div>
 				<?php if ( $object->header_image ) : ?>
-					<?php $header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) ); ?>
+					<?php 
+						$header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) ); 
+					?>
 					<div class="section-header-image-container">
 						<img class="section-header-image" src="<?php echo $header_img[0]; ?>" alt="">
 					</div>
