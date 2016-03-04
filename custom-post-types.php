@@ -259,7 +259,7 @@ abstract class CustomPostType {
 					$opts = array_merge( $opts,
 						array(
 							'type'          => 'image',
-							'preview_size'  => 'thumbnail',
+							'preview_size'  => $field['preview_size'] ? $field['preview_size'] : 'thumbnail',
 							'save_format'   => 'object',
 							'library'       => $field['library'] ? $field['library'] : 'all'
 						)
@@ -732,7 +732,8 @@ class Section extends CustomPostType {
 				'name'        => 'Header Image',
 				'description' => 'This image will be used in the section header when the header video ends or if the user\'s browser does not support video playback.',
 				'id'          => $prefix.'header_image',
-				'type'        => 'image'
+				'type'        => 'image',
+				'preview_size'=> 'large'
 			),
 			array(
 				'name'        => 'Header Video (mp4)',
