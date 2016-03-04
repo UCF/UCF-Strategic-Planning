@@ -220,19 +220,20 @@ gulp.task('update-tag', ['update-repo'], function() {
 
 gulp.task('tag', ['update-tag', 'update-repo'], function() {
   var tag = argv.version;
-  git.add();
-  git.commit("Updated version tag.", function(err) {
-    if (err) {
-      return console.log(err);
-    }
-
-    git.tag("v" + tag, "v" + tag, function(err) {
+  gulp.src('.')
+    .pipe(git.add(), { args: '-u' })
+    .pipe(git.commit("Bump version", function(err) {
       if (err) {
         return console.log(err);
       }
-      console.log("Tagged: v" + tag);
-    });
-  });
+
+      git.tag("v" + tag, "v" + tag, function(err) {
+        if (err) {
+          return console.log(err);
+        }
+        console.log("Tagged: v" + tag);
+      });
+    }));
 });
 
 
