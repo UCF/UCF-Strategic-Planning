@@ -15,6 +15,9 @@ var gulp = require('gulp'),
     jshintStylish = require('jshint-stylish'),
     scsslint = require('gulp-scss-lint'),
     autoprefixer = require('gulp-autoprefixer'),
+    git = require('gulp-git'),
+    argv = require('yargs').argv,
+    gutil = require('gulp-util'),
     browserSync = require('browser-sync').create();
 
 var configDefault = {
@@ -169,6 +172,71 @@ gulp.task('watch', function() {
 
   gulp.watch(config.scssPath + '/*.scss', ['css']).on('change', browserSync.reload);
   gulp.watch(config.jsPath + '/*.js', ['js']).on('change', browserSync.reload);
+});
+
+gulp.task('update-repo', function() {
+  git.fetch('origin');
+});
+
+gulp.task('update-tag', ['update-repo'], function() {
+  var tag = argv.version;
+  git.tag(function(tags) {
+    if (!tags.indexOf(tag)) {
+      throw new gutil.PluginError({
+        plugin: 'tag',
+        message: 'Tag already exists. Exiting.'
+      });
+    }
+    
+    // Update version in style.css.
+    fs.readFile('style.css', 'utf8', function(err, data) {
+      if (err) {
+        return console.log(err);
+      }
+      
+      var data = data.replace(/Version:\sv\d\.\d\.\d/, "Version: " + tag);
+
+      fs.writeFile('style.css', data, function(err) {
+        if (err) {
+          return console.log(err);
+        }
+      })
+      
+    });
+
+    // Update verion in bower.json
+    fs.readFile('bower.json', 'utf8', function(err, data) {
+      if (err) {
+        return console.log(err);
+      }
+
+      var data = data.replace(/\"version\": \"v\d\.\d\.\d\"/, "\"version\": \"" + tag + "\"");
+
+      fs.writeFile('bower.json', data, function(err) {
+        if (err) {
+          return console.log(err);
+        }
+      });
+    });
+  });
+});
+
+gulp.task('tag', ['update-tag', 'update-repo'], function() {
+  var tag = argv.version;
+  gulp.src('.')
+    .pipe(git.add(), { args: '-u' })
+    .pipe(git.commit("Bump version", function(err) {
+      if (err) {
+        return console.log(err);
+      }
+
+      git.tag(tag, tag, function(err) {
+        if (err) {
+          return console.log(err);
+        }
+        console.log("Tagged: " + tag);
+      });
+    }));
 });
 
 
