@@ -17,6 +17,7 @@ var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     git = require('gulp-git'),
     argv = require('yargs').argv,
+    gutil = require('gulp-util'),
     browserSync = require('browser-sync').create();
 
 var configDefault = {
@@ -181,8 +182,10 @@ gulp.task('update-tag', ['update-repo'], function() {
   var tag = argv.version;
   git.tag(function(tags) {
     if (!tags.indexOf('v' + tag)) {
-      console.log("Tag exists already. Exiting...");
-      return;
+      throw new gutil.PluginError({
+        plugin: 'tag',
+        message: 'Tag already exists. Exiting.'
+      });
     }
     
     // Update version in style.css.
@@ -191,7 +194,7 @@ gulp.task('update-tag', ['update-repo'], function() {
         return console.log(err);
       }
       
-      var data = data.replace(/Version:\sv\d\.\d\.\d/, "Version: v" + tag);
+      var data = data.replace(/Version:\sv\d\.\d\.\d/, "Version: " + tag);
 
       fs.writeFile('style.css', data, function(err) {
         if (err) {
@@ -207,7 +210,7 @@ gulp.task('update-tag', ['update-repo'], function() {
         return console.log(err);
       }
 
-      var data = data.replace(/\"version\": \"v\d\.\d\.\d\"/, "\"version\": \"v" + tag + "\"");
+      var data = data.replace(/\"version\": \"v\d\.\d\.\d\"/, "\"version\": \"" + tag + "\"");
 
       fs.writeFile('bower.json', data, function(err) {
         if (err) {
@@ -227,11 +230,11 @@ gulp.task('tag', ['update-tag', 'update-repo'], function() {
         return console.log(err);
       }
 
-      git.tag("v" + tag, "v" + tag, function(err) {
+      git.tag(tag, tag, function(err) {
         if (err) {
           return console.log(err);
         }
-        console.log("Tagged: v" + tag);
+        console.log("Tagged: " + tag);
       });
     }));
 });
