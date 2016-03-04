@@ -15,6 +15,8 @@ var gulp = require('gulp'),
     jshintStylish = require('jshint-stylish'),
     scsslint = require('gulp-scss-lint'),
     autoprefixer = require('gulp-autoprefixer'),
+    git = require('gulp-git'),
+    argv = require('yargs').argv,
     browserSync = require('browser-sync').create();
 
 var configDefault = {
@@ -169,6 +171,68 @@ gulp.task('watch', function() {
 
   gulp.watch(config.scssPath + '/*.scss', ['css']).on('change', browserSync.reload);
   gulp.watch(config.jsPath + '/*.js', ['js']).on('change', browserSync.reload);
+});
+
+gulp.task('update-repo', function() {
+  git.fetch('origin');
+});
+
+gulp.task('update-tag', ['update-repo'], function() {
+  var tag = argv.version;
+  git.tag(function(tags) {
+    if (!tags.indexOf('v' + tag)) {
+      console.log("Tag exists already. Exiting...");
+      return;
+    }
+    
+    // Update version in style.css.
+    fs.readFile('style.css', 'utf8', function(err, data) {
+      if (err) {
+        return console.log(err);
+      }
+      
+      var data = data.replace(/Version:\sv\d\.\d\.\d/, "Version: v" + tag);
+
+      fs.writeFile('style.css', data, function(err) {
+        if (err) {
+          return console.log(err);
+        }
+      })
+      
+    });
+
+    // Update verion in bower.json
+    fs.readFile('bower.json', 'utf8', function(err, data) {
+      if (err) {
+        return console.log(err);
+      }
+
+      var data = data.replace(/\"version\": \"v\d\.\d\.\d\"/, "\"version\": \"v" + tag + "\"");
+
+      fs.writeFile('bower.json', data, function(err) {
+        if (err) {
+          return console.log(err);
+        }
+      });
+    });
+  });
+});
+
+gulp.task('tag', ['update-tag', 'update-repo'], function() {
+  var tag = argv.version;
+  git.add();
+  git.commit("Updated version tag.", function(err) {
+    if (err) {
+      return console.log(err);
+    }
+
+    git.tag("v" + tag, "v" + tag, function(err) {
+      if (err) {
+        return console.log(err);
+      }
+      console.log("Tagged: v" + tag);
+    });
+  });
 });
 
 
