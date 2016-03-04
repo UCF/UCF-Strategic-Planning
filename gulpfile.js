@@ -181,7 +181,7 @@ gulp.task('update-repo', function() {
 gulp.task('update-tag', ['update-repo'], function() {
   var tag = argv.version;
   git.tag(function(tags) {
-    if (!tags.indexOf('v' + tag)) {
+    if (!tags.indexOf(tag)) {
       throw new gutil.PluginError({
         plugin: 'tag',
         message: 'Tag already exists. Exiting.'
