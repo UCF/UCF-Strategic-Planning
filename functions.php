@@ -154,7 +154,6 @@ function display_footer_news() {
 	$placeholder = get_theme_mod_or_default( 'news_placeholder_image' );
 	ob_start();
 ?>
-	<a class="all-link" href="http://today.ucf.edu">All News &rsaquo;</a>
 	<div class="footer-news">
 	<?php foreach( $items as $key=>$item ) : $image = get_article_image( $item ); ?>
 		<a href="<?php echo $item->get_link(); ?>">
@@ -177,6 +176,7 @@ function display_footer_news() {
 		</a>
 	<?php endforeach; ?>
 	</div>
+	<a class="all-link" href="http://today.ucf.edu">More News &rsaquo;</a>
 <?php
 	echo ob_get_clean();
 }
@@ -186,7 +186,6 @@ function display_footer_events() {
     $items = get_events( 0, $max_events );
     ob_start();
 ?>
-	<a class="all-link" href="http://events.ucf.edu">All Events &rsaquo;</a>
     <div class="footer-events">
     <?php foreach( $items as $item ) : ?>
         <?php
@@ -223,6 +222,7 @@ function display_footer_events() {
 	    	</div>
 	    </a>
     <?php endforeach; ?>
+	<a class="all-link more-events-link" href="http://events.ucf.edu">More Events &rsaquo;</a>
     </div>
 <?php
     echo ob_get_clean();

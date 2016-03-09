@@ -21,6 +21,11 @@
       width: 25px;
     }
 
+    .icon {
+        color: $ucf-metal-gold;
+        font-size: 20px;
+    }
+
   }
 
   h3 {
@@ -173,26 +178,11 @@
   }
 
   .event-date-range {
-    .icon {
-      color: $ucf-metal-gold;
-      font-size: 30px;
-      margin-top: -5px;
-      padding-right: 5px;
-      vertical-align: middle;
-    }
 
     .title {
       display: block;
-      font-family: $font-family-sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-
-    h4 {
-      font-size: 19px;
-      vertical-align: middle;
+      font-size: 18px;
+      margin-bottom: 15px;
     }
   }
 }
