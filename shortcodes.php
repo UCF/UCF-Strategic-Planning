@@ -302,7 +302,7 @@ class AcademicCalendarSC extends Shortcode {
                         </a>
                     <?php endif; ?>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 vertical-border">
                 <div class="row">
                     <div class="col-md-12">
                         <h3>Looking Ahead</h3>
@@ -344,7 +344,7 @@ class AcademicCalendarSC extends Shortcode {
                 </div>
             </div>
         </div>
-        <a class="all-link" href="<?php echo $full_cal_url; ?>">Full Academic Calendar &rsaquo;</a>
+        <a class="all-link" href="<?php echo $full_cal_url; ?>">More Academic Calendar Dates &rsaquo;</a>
     </div>
 <?php
         return ob_get_clean();

@@ -8,12 +8,14 @@
 								<h2>News</h2>
 								<?php display_footer_news(); ?>
 							</div>
+							<a class="all-link" href="http://today.ucf.edu">More News &rsaquo;</a>
 						</div>
 						<div class="col-sm-4">
 							<div class="footer-col center-col">
 								<h2>Events</h2>
 								<?php display_footer_events(); ?>
 							</div>
+							<a class="all-link more-events-link" href="http://events.ucf.edu">More Events &rsaquo;</a>
 						</div>
 						<div class="col-sm-4">
 							<div class="footer-col right-col">

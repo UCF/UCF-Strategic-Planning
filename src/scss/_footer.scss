@@ -139,15 +139,20 @@
 
   .all-link {
     color: #fc0;
-    display: inline-block;
+    display: block;
     margin-left: 20px;
-    float: right;
+    margin-top: 20px;
+    text-align: right;
     font-family: $font-family-serif;
     font-style: italic;
-  }
 
-  .more-events-link {
-      margin-top: 18px;
+    @media (max-width: $screen-xs-max) {
+        margin-top: 0;
+        margin-left: 0;
+        margin-bottom: 50px;
+        text-align: left;
+    }
+
   }
 
   .read-more {

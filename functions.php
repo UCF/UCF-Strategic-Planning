@@ -176,7 +176,6 @@ function display_footer_news() {
 		</a>
 	<?php endforeach; ?>
 	</div>
-	<a class="all-link" href="http://today.ucf.edu">More News &rsaquo;</a>
 <?php
 	echo ob_get_clean();
 }
@@ -222,7 +221,6 @@ function display_footer_events() {
 	    	</div>
 	    </a>
     <?php endforeach; ?>
-	<a class="all-link more-events-link" href="http://events.ucf.edu">More Events &rsaquo;</a>
     </div>
 <?php
     echo ob_get_clean();
