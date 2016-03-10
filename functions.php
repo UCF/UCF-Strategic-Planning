@@ -154,7 +154,6 @@ function display_footer_news() {
 	$placeholder = get_theme_mod_or_default( 'news_placeholder_image' );
 	ob_start();
 ?>
-	<a class="all-link" href="http://today.ucf.edu">All News &rsaquo;</a>
 	<div class="footer-news">
 	<?php foreach( $items as $key=>$item ) : $image = get_article_image( $item ); ?>
 		<a href="<?php echo $item->get_link(); ?>">
@@ -177,6 +176,7 @@ function display_footer_news() {
 		</a>
 	<?php endforeach; ?>
 	</div>
+	<a class="all-link" href="http://today.ucf.edu">More News &rsaquo;</a>
 <?php
 	echo ob_get_clean();
 }
@@ -186,7 +186,6 @@ function display_footer_events() {
     $items = get_events( 0, $max_events );
     ob_start();
 ?>
-	<a class="all-link" href="http://events.ucf.edu">All Events &rsaquo;</a>
     <div class="footer-events">
     <?php foreach( $items as $item ) : ?>
         <?php
@@ -223,6 +222,7 @@ function display_footer_events() {
 	    	</div>
 	    </a>
     <?php endforeach; ?>
+	<a class="all-link more-events-link" href="http://events.ucf.edu">More Events &rsaquo;</a>
     </div>
 <?php
     echo ob_get_clean();
@@ -251,6 +251,9 @@ function display_social() {
 	$twitter_url    = get_theme_mod_or_default( 'twitter_url' );
 	$googleplus_url = get_theme_mod_or_default( 'googleplus_url' );
 	$linkedin_url   = get_theme_mod_or_default( 'linkedin_url' );
+	$instagram_url   = get_theme_mod_or_default( 'instagram_url' );
+	$pinterest_url   = get_theme_mod_or_default( 'pinterest_url' );
+	$youtube_url   = get_theme_mod_or_default( 'youtube_url' );
 	ob_start();
 ?>
 	<div class="social">
@@ -276,6 +279,24 @@ function display_social() {
 		<a href="<?php echo $linkedin_url; ?>" target="_blank" class="social-icon ga-event-link">
 			<span class="fa fa-linkedin"></span>
 			<span class="sr-only">View our LinkedIn page</span>
+		</a>
+	<?php endif; ?>
+	<?php if ( $instagram_url ) : ?>
+		<a href="<?php echo $instagram_url; ?>" target="_blank" class="social-icon ga-event-link">
+			<span class="fa fa-instagram"></span>
+			<span class="sr-only">View our Instagram page</span>
+		</a>
+	<?php endif; ?>
+	<?php if ( $pinterest_url ) : ?>
+		<a href="<?php echo $pinterest_url; ?>" target="_blank" class="social-icon ga-event-link">
+			<span class="fa fa-pinterest-p"></span>
+			<span class="sr-only">View our Pinterest page</span>
+		</a>
+	<?php endif; ?>
+	<?php if ( $youtube_url ) : ?>
+		<a href="<?php echo $youtube_url; ?>" target="_blank" class="social-icon ga-event-link">
+			<span class="fa fa-youtube"></span>
+			<span class="sr-only">View our YouTube page</span>
 		</a>
 	<?php endif; ?>
 	</div>

@@ -273,8 +273,7 @@ class AcademicCalendarSC extends Shortcode {
     <div class="calendar-events">
         <div class="row">
             <div class="col-md-12">
-                <h2>Academic Calendar</h2>
-                <a class="all-link" href="<?php echo $full_cal_url; ?>">Full Academic Calendar &rsaquo;</a>
+                <h2><span class="fa fa-calendar-o icon"></span> Academic Calendar</h2>
             </div>
         </div>
 
@@ -289,14 +288,14 @@ class AcademicCalendarSC extends Shortcode {
                             <span class="day"><?php echo $day; ?></span>
                         </div>
                         <div class="event-details">
-                            <h4><?php echo $first_item->summary; ?></h4>
+                            <h4 class="time"><?php echo $first_item->summary; ?></h4>
                             <p><?php echo $first_item->description; ?></p>
                         </div>
                         </a>
                     <?php else: ?>
                         <a href="<?php echo $first_item->directUrl; ?>" target="_blank">
                         <div class="event-details event-date-range">
-                            <h4><span class="fa fa-calendar-o icon"></span><?php echo $time_string; ?></h4>
+                            <h4 class="time"><?php echo $time_string; ?></h4>
                             <span class="title"><?php echo $first_item->summary; ?></span>
                             <p><?php echo $first_item->description; ?></p>
                         </div>
@@ -345,6 +344,7 @@ class AcademicCalendarSC extends Shortcode {
                 </div>
             </div>
         </div>
+        <a class="all-link" href="<?php echo $full_cal_url; ?>">Full Academic Calendar &rsaquo;</a>
     </div>
 <?php
         return ob_get_clean();
