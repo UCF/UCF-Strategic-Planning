@@ -623,6 +623,45 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'instagram_url'
+	);
+	$wp_customize->add_control(
+		'instagram_url',
+		array(
+			'type'        => 'url',
+			'label'       => 'Instagram URL',
+			'description' => 'URL to the Instagram user account you would like to direct visitors to.  Example: <em>http://instagram.com/UCF</em>',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'social'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'pinterest_url'
+	);
+	$wp_customize->add_control(
+		'pinterest_url',
+		array(
+			'type'        => 'url',
+			'label'       => 'Pinterest URL',
+			'description' => 'URL to the Pinterest user account you would like to direct visitors to.  Example: <em>http://pinterest.com/UCF</em>',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'social'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'youtube_url'
+	);
+	$wp_customize->add_control(
+		'youtube_url',
+		array(
+			'type'        => 'url',
+			'label'       => 'YouTube URL',
+			'description' => 'URL to the YouTube user account you would like to direct visitors to.  Example: <em>http://youtube.com/UCF</em>',
+			'section'     => THEME_CUSTOMIZER_PREFIX . 'social'
+		)
+	);
+
 	// Web Fonts
 	$wp_customize->add_setting(
 		'cloud_typography_key',
