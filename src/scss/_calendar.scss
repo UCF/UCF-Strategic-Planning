@@ -45,6 +45,12 @@
   }
 
   .first-item {
+    border-right: 2px solid #666;
+
+    @media (max-width: $screen-sm-max) {
+        border: 0;
+    }
+
     a {
       &,
       &:link,
