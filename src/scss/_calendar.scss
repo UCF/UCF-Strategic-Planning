@@ -5,7 +5,7 @@
     display: inline-block;
     float: left;
     font-family: $font-family-sans-serif;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 700;
     letter-spacing: 0;
     margin-top: 0;
@@ -23,7 +23,8 @@
 
     .icon {
         color: $ucf-metal-gold;
-        font-size: 20px;
+        font-size: 29px;
+        margin-right: 5px;
     }
 
   }
@@ -45,11 +46,6 @@
   }
 
   .first-item {
-    border-right: 2px solid #666;
-
-    @media (max-width: $screen-sm-max) {
-        border: 0;
-    }
 
     a {
       &,
@@ -68,6 +64,14 @@
     }
     h4 {
       padding: 12px 0 5px;
+    }
+  }
+
+  .vertical-border {
+    border-left: 2px solid #666;
+
+    @media (max-width: $screen-sm-max) {
+        border: 0;
     }
   }
 
