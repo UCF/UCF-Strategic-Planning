@@ -61,11 +61,11 @@ body.admin-bar .navbar-fixed-top {
     margin: 0 auto;
 
     .weather {
-      height: 0px;
+      height: 0;
       padding: 0;
       margin: 0;
       transform: translate(300px);
-      width: 0px;
+      width: 0;
     }
   }
 
@@ -106,17 +106,17 @@ body.admin-bar .navbar-fixed-top {
     text-transform: none;
     transition: transform .75s;
 
-    @media (max-width: $screen-md-max) {
+    @media (max-width: 1250px) {
       padding: 17px 30px 17px 52px;
     }
 
     .location {
-      @media (max-width: $screen-md-max) {
+      @media (max-width: 1250px) {
         display: none;
       }
     }
 
-    @media (max-width: $screen-sm-max) {
+    @media (max-width: 1090px) {
       display: none;
     }
 

@@ -5,7 +5,7 @@
     display: inline-block;
     float: left;
     font-family: $font-family-sans-serif;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 700;
     letter-spacing: 0;
     margin-top: 0;
@@ -19,6 +19,12 @@
       height: 2px;
       margin-top: 15px;
       width: 25px;
+    }
+
+    .icon {
+        color: $ucf-metal-gold;
+        font-size: 29px;
+        margin-right: 5px;
     }
 
   }
@@ -40,6 +46,7 @@
   }
 
   .first-item {
+
     a {
       &,
       &:link,
@@ -57,6 +64,14 @@
     }
     h4 {
       padding: 12px 0 5px;
+    }
+  }
+
+  .vertical-border {
+    border-left: 2px solid #666;
+
+    @media (max-width: $screen-sm-max) {
+        border: 0;
     }
   }
 
@@ -173,26 +188,11 @@
   }
 
   .event-date-range {
-    .icon {
-      color: $ucf-metal-gold;
-      font-size: 30px;
-      margin-top: -5px;
-      padding-right: 5px;
-      vertical-align: middle;
-    }
 
     .title {
       display: block;
-      font-family: $font-family-sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-
-    h4 {
-      font-size: 19px;
-      vertical-align: middle;
+      font-size: 18px;
+      margin-bottom: 15px;
     }
   }
 }
