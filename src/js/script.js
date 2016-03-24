@@ -164,7 +164,7 @@ var loadVideos = function($) {
 			$video.addClass('noLoop');
 		}
 
-		$video.html('<source src="https://wwwqa.cc.ucf.edu/students/files/2016/02/ucf_96683694_preview.mp4" type="video/mp4">')
+		$video.html('<source src="' + video_src + '" type="video/mp4">')
 			.css({
 				'width': video_width,
 				'height': video_height
