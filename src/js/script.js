@@ -90,7 +90,6 @@ var isAutoPlay = function($) {
 	video.autoplay = true;
 	video.volume = 0;
 	video.style.visibility = 'hidden';
-
 	body.appendChild(video);
 
 	// Check if <video> can play. It won't be able to on Opera mini and IE8
@@ -135,6 +134,13 @@ var checkVideoPositionToPlay = function($) {
 		else {
 			this.pause();
 		}
+
+		$this.on('play', function(e) {
+			if (e.currentTarget.networkState === 3) {
+				$(this).closest('.section-header').children('.section-header-image-container').removeClass('has-video');
+				$(this).remove();
+			}
+		});
 	});
 };
 
@@ -158,7 +164,7 @@ var loadVideos = function($) {
 			$video.addClass('noLoop');
 		}
 
-		$video.html('<source src="' + video_src + '" type="video/mp4">')
+		$video.html('<source src="https://wwwqa.cc.ucf.edu/students/files/2016/02/ucf_96683694_preview.mp4" type="video/mp4">')
 			.css({
 				'width': video_width,
 				'height': video_height
