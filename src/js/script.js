@@ -136,10 +136,12 @@ var checkVideoPositionToPlay = function($) {
 		}
 
 		$this.on('play', function(e) {
-			if (e.currentTarget.networkState === 3) {
-				$(this).closest('.section-header').children('.section-header-image-container').removeClass('has-video');
-				$(this).remove();
-			}
+			setTimeout(function() {
+				if (e.currentTarget.networkState === 3) {
+					$(this).closest('.section-header').children('.section-header-image-container').removeClass('has-video');
+					$(this).remove();
+				}
+			}, 1);
 		});
 	});
 };
