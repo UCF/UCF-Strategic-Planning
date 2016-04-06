@@ -40,10 +40,12 @@ function get_custom_header_image() {
 }
 
 function get_remote_menu( $menu_name ) {
+	global $wp_customize;
+	$customizing = isset( $wp_customize );
 	$result_name = $menu_name.'_json';
 	$result = get_transient( $result_name );
 
-	if ( false === $result ) {
+	if ( false === $result || $customizing ) {
 		$opts = array(
 			'http' => array(
 				'timeout' => 15
@@ -64,7 +66,9 @@ function get_remote_menu( $menu_name ) {
 		}
 
 		$result = json_decode( file_get_contents( $file_location, false, $context ) );
-		set_transient( $result_name, $result, (60 * 60 * 24) );
+		if ( ! $customizing ) {
+			set_transient( $result_name, $result, (60 * 60 * 24) );
+		}
 	}
 
 	return $result;
