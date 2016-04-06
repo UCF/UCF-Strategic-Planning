@@ -183,7 +183,7 @@
 
   @media (max-width: $screen-xs-max) {
     background-size: cover;
-    min-height: auto;
+    min-height: 0;
   }
 }
 
