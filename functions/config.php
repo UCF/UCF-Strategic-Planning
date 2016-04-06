@@ -729,7 +729,7 @@ function clear_header_menu_transient( $value, $old_value ) {
 }
 add_action( 'pre_set_theme_mod_header_menu_feed', 'clear_header_menu_transient' );
 
-function clear_footer_menu_transient( $value, $old_valud ) {
+function clear_footer_menu_transient( $value, $old_value ) {
 	delete_transient( 'footer_menu_json' );
 	return $value;
 }

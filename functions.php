@@ -41,7 +41,7 @@ function get_custom_header_image() {
 
 function get_remote_menu( $menu_name ) {
 	global $wp_customize;
-	$customizing = isset( $wp_customize )
+	$customizing = isset( $wp_customize );
 	$result_name = $menu_name.'_json';
 	$result = get_transient( $result_name );
 
