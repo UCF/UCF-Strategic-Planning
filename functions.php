@@ -40,10 +40,11 @@ function get_custom_header_image() {
 }
 
 function get_remote_menu( $menu_name ) {
+	global $wp_customize;
 	$result_name = $menu_name.'_json';
 	$result = get_transient( $result_name );
 
-	if ( false === $result ) {
+	if ( false === $result || isset( $wp_customize ) ) {
 		$opts = array(
 			'http' => array(
 				'timeout' => 15
