@@ -874,8 +874,8 @@ class Section extends CustomPostType {
 					</span>
 				</div>
 				<?php if ( $object->header_image ) : ?>
-					<?php 
-						$header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) ); 
+					<?php
+						$header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) );
 					?>
 					<div class="section-header-image-container">
 						<img class="section-header-image" src="<?php echo $header_img[0]; ?>" alt="">
@@ -888,7 +888,7 @@ class Section extends CustomPostType {
 					?>
 
 					<div class="section-header-video-container" data-video-src="<?php echo $header_video_url; ?>" data-video-width="<?php echo $header_video_meta['width']; ?>" data-video-height="<?php echo $header_video_meta['height']; ?>" data-video-loop="<?php echo $object->header_video_loop ? 'true' : 'false'; ?>">
-						<video class="section-header-video"></video>
+						<video class="section-header-video" muted></video>
 					</div>
 				<?php endif; ?>
 			</div>
