@@ -697,7 +697,7 @@ class Spotlight extends CustomPostType {
 			<h2 <?php if ( $title_color ) : echo 'style="color: '.$title_color.'"'; ?>><?php echo $object->post_title; endif; ?></h2>
 			<?php if ( $btn_text ) : ?>
 			<div class="btn-wrapper">
-				<span class="btn btn-lg btn-ucf" styles="<?php if ( !empty( $btn_styles) ) : echo implode( ' ', $btn_styles ); endif; ?>">
+				<span class="btn btn-lg btn-ucf" style="<?php if ( !empty( $btn_styles) ) : echo implode( ' ', $btn_styles ); endif; ?>">
 					<?php echo $btn_text; ?>
 				</span>
 			</div>
