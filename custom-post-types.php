@@ -652,7 +652,7 @@ class Spotlight extends CustomPostType {
 				'description' => 'The text color of the call to action button',
 				'id'          => $prefix.'btn_foreground',
 				'type'        => 'color',
-				'default'     => '#ffffff'
+				'default'     => '#000000'
 			),
 			array(
 				'name'        => 'Button Text',
