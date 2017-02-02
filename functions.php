@@ -395,7 +395,7 @@ function get_academic_calendar_items() {
 
 	$retval = get_transient( $result_name );
 
-	if ( true ) {
+	if ( $retval === false ) {
 		$opts = array(
 			'http' => array(
 				'timeout' => 15
