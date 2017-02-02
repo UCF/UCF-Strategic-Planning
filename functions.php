@@ -415,20 +415,34 @@ function get_academic_calendar_items() {
 		}
 
 		$result = $result->terms[0]->events;
-		foreach( $result as $r ) {
-			if ( $r->isImportant ) {
-				$retval[] = $r;
-			}
-			if ( count( $retval ) == 7 ) {
-				break;
-			}
-		}
+
+		$retval = filter_academics_calendar_items( $result );
 
 		set_transient( $result_name, $retval, (60 * 60 * 12) );
 	}
 
 	return $retval;
 
+}
+
+/**
+ * Filters academic calendar events to only include ones 
+ * that are marked `isImportant`.
+ **/
+function filter_academics_calendar_items( $items ) {
+	$retval = array();
+
+	foreach( $items as $item ) {
+		if ( $item->isImportant ) {
+			$retval[] = $item;
+
+			if ( count( $retval ) == 7 ) {
+				break;
+			}
+		}
+	}
+
+	return $retval;
 }
 
 function google_tag_manager() {
