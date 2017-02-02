@@ -395,7 +395,7 @@ function get_academic_calendar_items() {
 
 	$retval = get_transient( $result_name );
 
-	if ( false === $retval ) {
+	if ( true ) {
 		$opts = array(
 			'http' => array(
 				'timeout' => 15
@@ -415,20 +415,41 @@ function get_academic_calendar_items() {
 		}
 
 		$result = $result->terms[0]->events;
-		foreach( $result as $r ) {
-			if ( $r->isImportant ) {
-				$retval[] = $r;
-			}
-			if ( count( $retval ) == 7 ) {
-				break;
-			}
-		}
 
-		set_transient( $result_name, $retval, (60 * 60 * 12) );
+		$retval = filter_academics_calendar_items( $result );
+
+		set_transient( $result_name, $result, (60 * 60 * 12) );
 	}
 
 	return $retval;
 
+}
+
+/**
+ * Filters academic calendar events to only include ones 
+ * that start today or after.
+ **/
+function filter_academics_calendar_items( $items ) {
+	$retval = array();
+
+	$today = DateTime::createFromFormat( 'U', strtotime( 'today midnight' ) );
+
+	foreach( $items as $item ) {
+		if ( $item->isImportant ) {
+			$start = DateTime::createFromFormat( 'Y-m-d H:i:s*', $item->dtstart );
+
+			if ( $start >= $today ) {
+				
+				$retval[] = $item;
+
+				if ( count( $retval ) == 7 ) {
+					break;
+				}
+			}
+		}
+	}
+
+	return $retval;
 }
 
 function google_tag_manager() {
