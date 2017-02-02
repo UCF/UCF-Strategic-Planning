@@ -106,7 +106,9 @@ Config::$setting_defaults = array(
 	'search_per_page' => 10,
 	'cloud_typography_key' => '//cloud.typography.com/730568/675644/css/fonts.css', // Main site css key
 	'weather_feed_url' => 'http://weather.smca.ucf.edu/',
-	'map_search_url' => 'http://map.ucf.edu/'
+	'map_search_url' => 'http://map.ucf.edu/',
+	'academic_calendar_feed_url' => 'http://calendar.ucf.edu/feed/upcoming/',
+	'academic_calendar_full_url' => 'http://calendar.ucf.edu/'
 );
 
 

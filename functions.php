@@ -418,7 +418,7 @@ function get_academic_calendar_items() {
 
 		$retval = filter_academics_calendar_items( $result );
 
-		set_transient( $result_name, $result, (60 * 60 * 12) );
+		set_transient( $result_name, $retval, (60 * 60 * 12) );
 	}
 
 	return $retval;
@@ -427,24 +427,17 @@ function get_academic_calendar_items() {
 
 /**
  * Filters academic calendar events to only include ones 
- * that start today or after.
+ * that are marked `isImportant`.
  **/
 function filter_academics_calendar_items( $items ) {
 	$retval = array();
 
-	$today = DateTime::createFromFormat( 'U', strtotime( 'today midnight' ) );
-
 	foreach( $items as $item ) {
 		if ( $item->isImportant ) {
-			$start = DateTime::createFromFormat( 'Y-m-d H:i:s*', $item->dtstart );
+			$retval[] = $item;
 
-			if ( $start >= $today ) {
-				
-				$retval[] = $item;
-
-				if ( count( $retval ) == 7 ) {
-					break;
-				}
+			if ( count( $retval ) == 7 ) {
+				break;
 			}
 		}
 	}
