@@ -3,12 +3,9 @@
 <primary>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8">
+			<div class="col-md-12">
 				<h2><?php echo the_title(); ?></h2>
 				<?php echo the_content(); ?>
-			</div>
-			<div class="col-md-4">
-
 			</div>
 		</div>
 	</div>

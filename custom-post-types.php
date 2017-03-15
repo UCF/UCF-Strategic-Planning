@@ -443,68 +443,6 @@ class Page extends CustomPostType {
 		$use_metabox    = True,
 		$built_in       = True;
 
-	public function __construct() {
-		// Register Home Page fields for front_page and posts_page only
-		$homepage_metabox = array(
-			'id'        => 'custom_homepage_fields',
-			'title'     => 'Home Page Fields',
-			'fields'    => $this->get_fields (
-				array(
-					array(
-						'id'          => 'homepage_message',
-						'name'        => __( 'Home Page Message' ),
-						'description' => 'The message that will appear below the header image',
-						'type'        => 'textarea',
-						'formatting'  => 'html'
-					),
-					array(
-						'id'          => 'homepage_spotlight',
-						'name'        => __( 'Home Page Spotlight' ),
-						'description' => 'The spotlight that will appear to the right of the home page message',
-						'type'         => 'post_object',
-						'post_type'    => array( 'spotlight' )
-					)
-				)
-			),
-			'location' => array(
-				array(
-					array(
-						'param'    => 'post_type',
-						'operator' => '==',
-						'value'    => 'page',
-						'order_no' => 0,
-						'group_no' => 0
-					), // and
-					array(
-						'param'    => 'page_type',
-						'operator' => '==',
-						'value'    => 'front_page',
-						'order_no' => 1,
-						'group_no' => 0
-					)
-				), // or
-				array(
-					array(
-						'param'    => 'page_type',
-						'operator' => '==',
-						'value'    => 'posts_page',
-						'order_no' => 0,
-						'group_no' => 1
-					)
-				)
-			),
-			'options' => array(
-				'position'       => 'acf_after_title',
-			)
-		);
-
-		$this->metaboxes[] = $homepage_metabox;
-
-		// Build default post type meta fields
-		parent::__construct();
-
-	}
-
 	public function fields() {
 		$prefix = $this->options( 'name' ).'_';
 		return array(

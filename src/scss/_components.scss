@@ -20,41 +20,6 @@
   font-family: $font-family-sans-serif;
 }
 
-// Add animations to dropdowns
-// Adapted from https://gist.github.com/orizens/4994397
-@include body-prefix(':not(.ie8)') {
-  .ucf-dropdown-menu {
-    @include animation-fill-mode(forwards); // NOTE: deprecated mixin
-    @include scale(1, 0);
-    @include transform-origin(top);
-    @include transition(all .3s cubic-bezier(.190, 1, .220, 1));
-    box-shadow: 0 0 0 transparent;
-    display: block;
-  }
-
-  .open > .ucf-dropdown-menu {
-    @include scale(1, 1);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, .08);
-  }
-
-  .dropup .ucf-dropdown-menu {
-    @include transform-origin(bottom);
-
-    &:after {
-      border-bottom: 0;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 6px solid rgba(39, 45, 51, .9);
-      bottom: -6px;
-      content: '';
-      display: inline-block;
-      left: 50%;
-      position: absolute;
-      top: auto;
-    }
-  }
-}
-
 
 // Modals
 .modal-dialog {

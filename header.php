@@ -12,9 +12,31 @@
 					<div class="title-wrapper">
 						<div class="title-header-container">
 							<?php echo display_site_title(); ?>
+							<div class="header-sub-title">Creating our Collective Impact</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<nav class="navbar site-navbar header-sub-nav" role="navigation">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-sub-menu">
+							<span class="navbar-toggle-text"><span class="sr-only">Toggle Navigation</span> Menu</span>
+							<span class="fa fa-bars" aria-hidden="true"></span>
+						</button>
+					</div>
+					<div class="collapse navbar-collapse" id="header-sub-menu">
+						<?php
+						wp_nav_menu( array(
+							'theme_location' => 'header-menu',
+							'depth'  => 2,
+							'container' => false,
+							'menu_class' => 'nav navbar-nav header-menu-nav',
+							'walker' => new Bootstrap_Walker_Nav_Menu()
+						) );
+						?>
+					</div>
+				</div>
+			</nav>
 		</header>
 		<main class="site-main">
