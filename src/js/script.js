@@ -251,25 +251,12 @@ Number.prototype.clamp = function(min, max) {
 	return Math.min(Math.max(this, min), max);
 };
 
-var searchListeners = function($) {
-	var $mapSearchBar = $('.map-search'),
-		$searchButton = $('.search-button');
-
-	$searchButton.removeClass('loading');
-
-	$mapSearchBar.on('click', '.search-button', function() {
-		$searchButton.addClass('loading');
-	});
-};
-
 if (typeof jQuery !== 'undefined') {
 	jQuery(document).ready( function($) {
 		headerImage($);
 		heightAdjustments($);
 		isAutoPlay($);
 		sectionsMenu($);
-
-		searchListeners($);
 
 		$(window).on('resize', function() {
 			positionHeaderBackgrounds($);

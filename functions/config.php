@@ -45,12 +45,10 @@ Config::$custom_taxonomies = array(
 Config::$shortcodes = array(
 	'CallToActionSC',
 	'SectionSC',
-	'MapSearchSC',
 	'CalloutSC',
 	'IconLinkSC',
 	'RowSC',
-	'ColumnSC',
-	'AcademicCalendarSC'
+	'ColumnSC'
 );
 
 
@@ -98,17 +96,9 @@ if ( get_theme_mod_or_default( 'gw_verify' ) ) {
  **/
 
 Config::$setting_defaults = array(
-	'events_max_items' => 4,
-	'events_url' => 'http://events.ucf.edu/feed.rss',
-	'news_max_items' => 2,
-	'news_url' => 'http://today.ucf.edu/feed/',
 	'enable_google' => 1,
 	'search_per_page' => 10,
-	'cloud_typography_key' => '//cloud.typography.com/730568/675644/css/fonts.css', // Main site css key
-	'weather_feed_url' => 'http://weather.smca.ucf.edu/',
-	'map_search_url' => 'http://map.ucf.edu/',
-	'academic_calendar_feed_url' => 'http://calendar.ucf.edu/feed/upcoming/',
-	'academic_calendar_full_url' => 'http://calendar.ucf.edu/'
+	'cloud_typography_key' => '//cloud.typography.com/730568/675644/css/fonts.css' // Main site css key
 );
 
 
@@ -152,31 +142,10 @@ function define_customizer_sections( $wp_customize ) {
 		)
 	);
 	$wp_customize->add_section(
-		THEME_CUSTOMIZER_PREFIX . 'events',
-		array(
-			'title'       => 'Events',
-			'description' => 'Settings for event lists used throughout the site.'
-		)
-	);
-	$wp_customize->add_section(
-		THEME_CUSTOMIZER_PREFIX . 'academic_calendar',
-		array(
-			'title'       => 'Calendar',
-			'description' => 'Settings for academic calendar dates list.'
-		)
-	);
-	$wp_customize->add_section(
 		THEME_CUSTOMIZER_PREFIX . 'org_info',
 		array(
 			'title'       => 'Organization Info',
 			'description' => 'Contact information'
-		)
-	);
-	$wp_customize->add_section(
-		THEME_CUSTOMIZER_PREFIX . 'news',
-		array(
-			'title'       => 'News',
-			'description' => 'Settings for news feeds used throughout the site.'
 		)
 	);
 	$wp_customize->add_section(
@@ -221,22 +190,6 @@ add_action( 'customize_register', 'define_customizer_sections' );
 
 function define_customizer_fields( $wp_customize ) {
 	// Home
-	$wp_customize->add_setting(
-		'weather_feed_url',
-		array(
-			'default'     => get_setting_default( 'weather_feed_url' ),
-		)
-	);
-
-	$wp_customize->add_control(
-		'weather_feed_url',
-		array(
-			'type'        => 'text',
-			'label'       => 'Weather Feed URL',
-			'description' => 'The url of the CM Weather Feed',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'home_custom'
-		)
-	);
 
 	$form_choices = array( '' => '-- Choose Form --');
 
@@ -335,78 +288,6 @@ function define_customizer_fields( $wp_customize ) {
  		)
 	);
 
-	// Events
-	$wp_customize->add_setting(
-		'events_max_items',
-		array(
-			'default'     => get_setting_default( 'events_max_items' ),
-		)
-	);
-	$wp_customize->add_control(
-		'events_max_items',
-		array(
-			'type'        => 'select',
-			'label'       => 'Events Max Items',
-			'description' => 'Maximum number of events to display when outputting event information.',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'events',
-			'choices'     => array(
-				1 => 1,
-				2 => 2,
-				3 => 3,
-				4 => 4,
-				5 => 5
-			)
-		)
-	);
-
-	$wp_customize->add_setting(
-		'events_url',
-		array(
-			'default'     => get_setting_default( 'events_url' ),
-		)
-	);
-	$wp_customize->add_control(
-		'events_url',
-		array(
-			'type'        => 'text',
-			'label'       => 'Events Calendar URL',
-			'description' => 'Base URL for the calendar you wish to use. Example: <em>http://events.ucf.edu/mycalendar</em>',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'events'
-		)
-	);
-
-	$wp_customize->add_setting(
-		'academic_calendar_feed_url',
-		array(
-			'default'     => get_setting_default( 'academic_calendar_feed_url' ),
-		)
-	);
-	$wp_customize->add_control(
-		'academic_calendar_feed_url',
-		array(
-			'type'        => 'text',
-			'label'       => 'Academic Calendar Feed URL',
-			'description' => 'Base URL for the calendar feed you wish to use. Example: <em>http://calendar.ucf.edu/json/2016/spring</em>',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'academic_calendar'
-		)
-	);
-
-	$wp_customize->add_setting(
-		'academic_calendar_full_url',
-		array(
-			'default'     => get_setting_default( 'academic_calendar_full_url' ),
-		)
-	);
-	$wp_customize->add_control(
-		'academic_calendar_full_url',
-		array(
-			'type'        => 'text',
-			'label'       => 'Academic Calendar URL',
-			'description' => 'Base URL for the calendar you wish to use. Example: <em>http://calendar.ucf.edu/</em>',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'academic_calendar'
-		)
-	);
-
 
 	// Org Info
 	$wp_customize->add_setting(
@@ -416,7 +297,7 @@ function define_customizer_fields( $wp_customize ) {
 		'organization_name',
 		array(
 			'type'        => 'text',
-			'label'       => 'Oragnization Name',
+			'label'       => 'Organization Name',
 			'description' => 'The name that will be displayed with organization info is displayed',
 			'section'     => THEME_CUSTOMIZER_PREFIX . 'org_info'
 		)
@@ -429,7 +310,7 @@ function define_customizer_fields( $wp_customize ) {
 		'organization_phone',
 		array(
 			'type'        => 'text',
-			'label'       => 'Oragnization Phone',
+			'label'       => 'Organization Phone',
 			'description' => 'The phone number that will be displayed with organization info is displayed',
 			'section'     => THEME_CUSTOMIZER_PREFIX . 'org_info'
 		)
@@ -442,64 +323,9 @@ function define_customizer_fields( $wp_customize ) {
 		'organization_email',
 		array(
 			'type'        => 'email',
-			'label'       => 'Oragnization Email',
+			'label'       => 'Organization Email',
 			'description' => 'The email address that will be displayed with organization info is displayed',
 			'section'     => THEME_CUSTOMIZER_PREFIX . 'org_info'
-		)
-	);
-
-	// News
-	$wp_customize->add_setting(
-		'news_max_items',
-		array(
-			'default'     => get_setting_default( 'news_max_items' ),
-		)
-	);
-	$wp_customize->add_control(
-		'news_max_items',
-		array(
-			'type'        => 'select',
-			'label'       => 'News Max Items',
-			'description' => 'Maximum number of articles to display when outputting news information.',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'news',
-			'choices'     => array(
-				1 => 1,
-				2 => 2,
-				3 => 3,
-				4 => 4,
-				5 => 5
-			)
-		)
-	);
-
-	$wp_customize->add_setting(
-		'news_url',
-		array(
-			'default'     => get_setting_default( 'news_url' ),
-		)
-	);
-	$wp_customize->add_control(
-		'news_url',
-		array(
-			'type'        => 'text',
-			'label'       => 'News Feed',
-			'description' => 'Use the following URL for the news RSS feed <br>Example: <em>http://today.ucf.edu/feed/</em>',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'news'
-		)
-	);
-
-	$wp_customize->add_setting(
-		'news_placeholder_image'
-	);
-
-	$wp_customize->add_control(
-		new WP_Customize_Image_Control(
-			$wp_customize,
-			'news_placeholder_image',
-			array(
-				'label'     => __( 'Placeholder thumbnail for news stories.' ),
-				'section'   => THEME_CUSTOMIZER_PREFIX.'news'
-			)
 		)
 	);
 
@@ -552,22 +378,6 @@ function define_customizer_fields( $wp_customize ) {
 				'max'  => 50,
 				'step' => 1
 			)
-		)
-	);
-
-	$wp_customize->add_setting(
-		'map_search_url',
-		array(
-			'default'     => get_setting_default( 'map_search_url' )
-		)
-	);
-	$wp_customize->add_control(
-		'map_search_url',
-		array(
-			'type'        => 'text',
-			'label'       => 'Campus Map Domain',
-			'description' => 'Domain to use for the "Search Student Services on Campus" search at the bottom of the home page.',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'home_custom'
 		)
 	);
 

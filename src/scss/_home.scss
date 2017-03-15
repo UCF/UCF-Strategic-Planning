@@ -84,14 +84,6 @@ body.admin-bar .navbar-fixed-top {
     box-shadow: none;
     margin-bottom: 0;
     margin: 0 auto;
-
-    .weather {
-      height: 0;
-      padding: 0;
-      margin: 0;
-      transform: translate(300px);
-      width: 0;
-    }
   }
 
   .navbar-nav {
@@ -116,41 +108,4 @@ body.admin-bar .navbar-fixed-top {
     }
   }
 
-
-
-
-  .weather {
-    background: #000;
-    color: #fff;
-    font-family: $font-family-serif;
-    font-size: 18px;
-    font-weight: 100;
-    line-height: 20px;
-    margin-right: -15px;
-    padding: 17px 60px 17px 82px;
-    text-transform: none;
-    transition: transform .75s;
-
-    @media (max-width: 1250px) {
-      padding: 17px 30px 17px 52px;
-    }
-
-    .location {
-      @media (max-width: 1250px) {
-        display: none;
-      }
-    }
-
-    @media (max-width: 1090px) {
-      display: none;
-    }
-
-    .icon {
-      color: $ucf-gold;
-      position: absolute;
-      top: 16px;
-      font-size: 22px;
-      margin-left: -30px;
-    }
-  }
 }

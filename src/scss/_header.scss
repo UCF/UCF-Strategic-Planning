@@ -112,17 +112,6 @@
     padding: 11px 16px;
     position: relative;
   }
-
-  .weather {
-    color: #fff;
-    float: left;
-    padding: 16px;
-    position: relative;
-
-    .icon {
-      color: #fc0;
-    }
-  }
 }
 
 #header-menu-xs-collapse {
@@ -254,58 +243,6 @@
     &:hover {
       color: #000;
       text-decoration: none;
-    }
-  }
-
-  .weather {
-    background: #000;
-    display: inline-block;
-    color: #fff;
-    font-family: $font-family-serif;
-    font-size: 18px;
-    line-height: 32px;
-    padding: 6px 20px;
-    position: absolute;
-    right: 0;
-    letter-spacing: 1.35px;
-    font-weight: 100;
-
-    @media (max-width: $screen-xs-max) {
-      font-size: 13px;
-      padding: 0 14px;
-    }
-
-    .icon {
-      display: inline-block;
-      padding-right: 6px;
-
-      @media (max-width: $screen-xs-max) {
-        padding-right: 4px;
-      }
-
-      span {
-        color: #ffc904;
-        font-size: 27px;
-        display: inline-block;
-        position: relative;
-        bottom: -3px;
-
-        @media (max-width: $screen-xs-max) {
-          font-size: 20px;
-        }
-      }
-    }
-
-    .vertical-rule {
-      border-left: 1px solid #fff;
-      margin-left: 4px;
-      margin-right: 6px;
-      width: 2px;
-    }
-
-    .temp {
-      margin-left: 4px;
-      font-weight: 800;
     }
   }
 }

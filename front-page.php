@@ -34,24 +34,6 @@
 					<span class="icon-bar"></span>
 				</button>
 			</div>
-			<div class="collapse navbar-collapse" id="sections-menu">
-					<ul class="nav navbar-nav">
-
-					</ul>
-				<?php $weather = get_weather_data(); ?>
-				<?php if ( $weather ) : ?>
-				<div class="weather navbar-right">
-					<?php if ( $weather->icon ) : ?>
-						<span class="icon" title="<?php echo $weather->condition; ?>">
-							<span class="<?php echo $weather->icon; ?>"></span>
-						</span>
-					<?php endif; ?>
-					<span class="location">Orlando, FL</span>
-					<span class="vertical-rule"></span>
-					<span class="temp"><?php echo $weather->tempN; ?>&deg;F</span>
-				</div>
-				<?php endif; ?>
-			</div>
 		</div>
 	</nav>
 <?php

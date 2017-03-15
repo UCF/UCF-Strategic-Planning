@@ -12,7 +12,6 @@
 					<div class="title-wrapper">
 						<div class="title-header-container">
 							<?php echo display_site_title(); ?>
-							<?php echo display_weather(); ?>
 						</div>
 					</div>
 				</div>
