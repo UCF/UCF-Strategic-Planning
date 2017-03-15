@@ -7,12 +7,18 @@
 	<body ontouchstart <?php echo body_class(); ?>>
 		<header class="site-header">
 			<div class="header-image" style="background-image: url(<?php echo get_custom_header_image(); ?>);">
-					<?php display_header_menu(); ?>
-				<div class="header-center">
-					<div class="title-wrapper">
-						<div class="title-header-container">
-							<?php echo display_site_title(); ?>
-							<div class="header-sub-title">Creating our Collective Impact</div>
+				<?php display_header_menu(); ?>
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 header-container">
+							<div class="header-center">
+								<div class="title-wrapper">
+									<div class="title-header-container">
+										<?php echo display_site_title(); ?>
+										<div class="header-sub-title">Creating our Collective Impact</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

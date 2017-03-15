@@ -133,6 +133,10 @@
   }
 }
 
+.header-container {
+  height: 400px;
+}
+
 .header-center {
   display: table;
   height: 100%;
@@ -167,7 +171,6 @@
   .title-header-container {
     display: table;
     position: relative;
-    top: -80px;
 
     @media (max-width: $screen-xs-max) {
       top: -100px;

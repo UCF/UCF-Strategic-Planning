@@ -203,10 +203,17 @@
   }
 }
 
+.background-ucf-gold {
+  background: $ucf-gold;
+  display: inline-block;
+  padding: 10px 25px;
+}
+
 .btn-ucf {
   background: $ucf-gold;
   border-radius: 0;
   color: #000;
+  display: inline-block;
   font-family: $font-family-sans-serif;
   font-size: 11px;
   font-weight: 800;
@@ -219,6 +226,24 @@
     color: #fff;
   }
 }
+
+.btn-ucf-black {
+  background: $ucf-col-default;
+  border-radius: 0;
+  color: $ucf-col-highlight;
+  display: inline-block;
+  font-family: $font-family-sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 17px 30px;
+  text-transform: uppercase;
+
+  &:hover {
+    color: $ucf-gold;
+  }
+}
+
 
 .navbar-gold {
   background-color: $ucf-bg-default;
