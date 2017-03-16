@@ -1,6 +1,6 @@
 <?php
 
-if(acf_field) {
+if ( class_exists( 'acf_field' ) ){
 	/**
 	* Register new ACF Custom fields here
 	**/
