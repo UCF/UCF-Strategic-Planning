@@ -368,6 +368,29 @@
   }
 }
 
+
+.heading-underline {
+  // .heading-underline elements should always be consistent in
+  // font size, so force them on this class
+  font-family: $font-family-sans-serif;
+  font-size: 18px;
+  margin-bottom: 16px * 1.7;
+  margin-top: 16px * 4;
+  padding-bottom: 14px;
+  position: relative;
+
+  &::after {
+    background-color: $ucf-gold;
+    bottom: 0;
+    content: '';
+    display: block;
+    height: 3px;
+    left: 0;
+    position: absolute;
+    width: 40px;
+  }
+}
+
 .no-pad-left {
   padding-left: 0;
 
