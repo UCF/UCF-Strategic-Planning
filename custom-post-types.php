@@ -844,9 +844,6 @@ class Section extends CustomPostType {
 				<?php endif; ?>
 			</div>
 		</section>
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
 <?php
 		return ob_get_clean();
 	}
