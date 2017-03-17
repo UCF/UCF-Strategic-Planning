@@ -700,6 +700,7 @@ class Section extends CustomPostType {
 				'choices'     => array(
 					'' => 'Centered/Middle',
 					'top'           => 'Centered/Top',
+					'bottom'           => 'Centered/Bottom',
 					'left'          => 'Left Aligned/Middle',
 					'right'         => 'Right Aligned/Middle'
 				),
@@ -804,11 +805,23 @@ class Section extends CustomPostType {
 		$object = Section::add_post_meta( $object );
 		ob_start();
 ?>
+</div>
+	</div>
+		</div>
 		<section id="<?php echo $object->post_name; ?>" class="bucket-section">
 			<div class="section-header">
 				<div class="section-header-text-wrapper">
 					<span class="section-header-text <?php echo $object->header_text_position; ?>" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
-					<?php echo $object->header_text; ?>
+						<div class="section-header-background">
+							<div class="container">
+								<div class="row">
+									<div class="col-md-12 col-lg-10 col-lg-offset-1">
+										<h2 class="section-title"><?php echo $object->header_text; ?></h2>
+										<p class="section-lead"><?php echo $object->lead_text; ?></p>
+									</div>
+								</div>
+							</div>
+						</div>
 					</span>
 				</div>
 				<?php if ( $object->header_image ) : ?>
@@ -830,37 +843,10 @@ class Section extends CustomPostType {
 					</div>
 				<?php endif; ?>
 			</div>
-			<div class="container">
-				<h2 class="section-title"><?php echo $object->post_title; ?></h2>
-				<p class="lead"><?php echo $object->lead_text; ?></p>
-				<div class="row">
-					<div class="col-md-5 col-sm-6 col-xs-12 no-pad">
-					<?php if ( $object->feature_type == 'feature_image' ) : ?>
-						<?php $featured_img = wp_get_attachment_image_src( $object->feature_image, 'large' ); ?>
-						<img class="img-responsive section-image" src="<?php echo $featured_img[0]; ?>">
-					<?php else: ?>
-						<?php echo Spotlight::toHTML( $object->feature_spotlight ); ?>
-					<?php endif; ?>
-					</div>
-					<div class="col-md-6 col-md-offset-1 col-sm-6 section-content">
-						<?php echo apply_filters( 'the_content', $object->content); ?>
-						<?php if ( $object->menu ) : ?>
-						<div class="menu-wrapper">
-							<h2>Explore Further</h2>
-							<?php
-								wp_nav_menu(
-									array(
-										'menu'  => $object->menu,
-										'container' => ''
-									)
-								);
-							?>
-						</div>
-						<?php endif; ?>
-					</div>
-				</div>
-			</div>
 		</section>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
 <?php
 		return ob_get_clean();
 	}

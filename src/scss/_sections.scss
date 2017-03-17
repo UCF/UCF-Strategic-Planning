@@ -8,7 +8,6 @@
   .section-header {
     height: 750px;
     position: relative;
-    text-shadow: 1px 1px 8px #000;
     width: 100%;
 
     @media (max-width: $screen-md-max) {
@@ -91,19 +90,67 @@
     .section-header-text {
       color: #fff;
       display: table-cell;
-      font-family: $font-family-serif;
-      font-size: 60px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      line-height: 1;
-      padding: 0 27%;
       position: relative;
-      text-align: center;
       vertical-align: middle;
+      width: 100%;
+
+      .section-title {
+        font-size: 40px;
+        font-family: $font-family-serif;
+        font-weight: 400;
+        letter-spacing: 2px;
+        line-height: 1;
+        margin: 0 0 20px;
+        text-align: center;
+      }
+
+      .section-lead {
+        font-size: 12px;
+        font-weight: normal;
+        line-height: 18px;
+        margin-bottom: 20px;
+      }
+
+      ul {
+        display: inline-block;
+        font-size: 12px;
+        margin-bottom: 20px;
+        padding-left: 20px;
+
+        li {
+          float: left;
+          list-style: none;
+          padding-right: 40px;
+          width: 20%;
+
+          &::before {
+            content: '\2022';
+            display: block;
+            position: relative;
+            max-width: 0;
+            max-height: 0;
+            left: -20px;
+            top: -10px;
+            color: $ucf-gold;
+            font-size: 26px;
+          }
+
+        }
+      }
+
+      .section-header-background {
+        background-color: rgba(0, 0, 0, .4);
+        padding: 20px 0 20px;
+      }
 
       &.top {
         padding-top: 24px;
+        padding: 0 27%;
         vertical-align: top;
+      }
+
+      &.bottom {
+        vertical-align: bottom;
       }
 
       &.left {
@@ -114,17 +161,6 @@
       &.right {
         padding: 0 36px 0 60%;
         text-align: right;
-      }
-
-      @media (max-width: $screen-md-max) {
-        font-size: 52px;
-      }
-      @media (max-width: $screen-sm-max) {
-        font-size: 45px;
-      }
-      @media (max-width: $screen-xs-max) {
-        font-size: 40px;
-        padding: 0 10%;
       }
     }
   }
@@ -149,36 +185,6 @@
   .section-image {
     @media (max-width: $screen-xs-max) {
       padding-bottom: 25px;
-    }
-  }
-
-  h2 {
-    display: inline-block;
-    font-family: $font-family-sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-
-    letter-spacing: 0;
-    padding: 0 0 10px 0;
-
-    &.section-title {
-      margin-bottom: 18px;
-      margin-top: 60px;
-
-      @media (max-width: $screen-xs-max) {
-        margin-top: 40px;
-        margin-bottom: 10px;
-      }
-    }
-
-    &::after {
-      background: $ucf-gold;
-      content: " ";
-      display: block;
-      height: 2px;
-      margin-top: 15px;
-      width: 25px;
     }
   }
 

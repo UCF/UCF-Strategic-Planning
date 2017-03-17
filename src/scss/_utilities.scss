@@ -32,6 +32,19 @@
 
 // scss-lint:enable ImportantRule
 
+// text-align
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
 // padding
 .padding-ten {
   padding: 10px;
@@ -58,6 +71,10 @@
 }
 
 // margin
+.margin-zero-auto {
+  margin: 0 auto;
+}
+
 .margin-ten {
   margin: 10px;
 }
