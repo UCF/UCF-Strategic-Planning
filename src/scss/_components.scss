@@ -221,9 +221,12 @@
   padding: 17px 30px;
   text-transform: uppercase;
 
-  &:hover {
+  &:active,
+  &:hover,
+  &:focus {
     background: $ucf-bg-highlight;
     color: #fff;
+    text-decoration: none;
   }
 }
 
@@ -239,8 +242,11 @@
   padding: 17px 30px;
   text-transform: uppercase;
 
-  &:hover {
+  &:active,
+  &:hover,
+  &:focus {
     color: $ucf-gold;
+    text-decoration: none;
   }
 }
 

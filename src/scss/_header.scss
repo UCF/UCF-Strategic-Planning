@@ -124,6 +124,7 @@
   background-position: center center;
   width: 100%;
   min-height: 500px;
+  max-height: 500px;
 
   @media (max-width: $screen-xs-max) {
     background-size: cover;
