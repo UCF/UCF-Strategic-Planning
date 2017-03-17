@@ -229,3 +229,23 @@
   }
 }
 
+.promises-section {
+  margin: 40px 0;
+
+  .promises-copy-wrapper {
+    background-color: $ucf-gold;
+
+    .promises-copy {
+      padding: 20px 10px;
+
+      .promises-title {
+        font-size: 22px;
+        margin-top: 0;
+      }
+    }
+  }
+
+  .promises-img {
+    background-position: center center;
+  }
+}
