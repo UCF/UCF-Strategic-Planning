@@ -203,6 +203,25 @@
   }
 }
 
+.callout-black {
+  background-color: #000 !important;
+  color: #fff;
+
+  .ucf-events-modern-list {
+    .ucf-event-when {
+      color: $ucf-gold;
+    }
+
+    .ucf-event-title {
+      color: #fff;
+    }
+
+    .ucf-event-link:hover::before {
+      color: $ucf-gold;
+    }
+  }
+}
+
 .background-ucf-gold {
   background: $ucf-gold;
   display: inline-block;
