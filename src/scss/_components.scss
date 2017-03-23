@@ -404,3 +404,131 @@
     padding-left: inherit;
   }
 }
+
+
+//
+// Events
+//
+
+.ucf-events-modern-list {
+  font-family: $font-family-sans-serif;
+  list-style: none;
+  padding-left: 0;
+
+  .ucf-event {
+    margin-bottom: 15px;
+    margin-top: 15px;
+
+    @media (min-width: $screen-sm-min) {
+      margin-bottom: 25px;
+      margin-top: 25px;
+    }
+  }
+
+  .ucf-event-link {
+    display: block;
+    position: relative;
+    text-decoration: none;
+
+    &:hover,
+    &:active,
+    &:focus {
+      text-decoration: none;
+
+      .event-date,
+      .event-title {
+        text-decoration: underline;
+      }
+    }
+
+    &:hover::before {
+      content: '\f0da';
+      font-family: FontAwesome;
+      font-size: 24px;
+      left: -25px;
+      position: absolute;
+      top: -2px;
+    }
+
+    br {
+      display: none;
+    }
+  }
+
+  .ucf-event-title {
+    display: block;
+    font-family: $font-family-sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    margin: .4em 0;
+
+    @media (min-width: $screen-sm-min) {
+      font-size: 16px;
+    }
+  }
+
+  .ucf-event-when {
+    line-height: 1.5;
+  }
+
+  .ucf-event-start-datetime {
+    font-size: 15px;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+
+    @media (min-width: $screen-sm-min) {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+  }
+
+  .ucf-event-start-date {
+    font-family: $font-family-sans-serif;
+    font-weight: 700;
+  }
+
+  .ucf-event-start-year,
+  .ucf-event-start-time,
+  .ucf-event-location {
+    // .sr-only
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .ucf-event-description {
+    font-family: $font-family-sans-serif;
+    font-size: 12px;
+    line-height: 1.7;
+
+    @media (min-width: $screen-sm-min) {
+      font-size: 14px;
+    }
+  }
+}
+
+
+//
+// News
+//
+
+.ucf-news-item {
+  margin-bottom: 15px;
+  margin-top: 15px;
+
+  @media (min-width: $screen-sm-min) {
+    margin-bottom: 25px;
+    margin-top: 25px;
+  }
+}
+
+.ucf-news-item-title {
+  font-family: $font-family-sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
