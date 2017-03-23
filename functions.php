@@ -113,24 +113,6 @@ function display_header_menu() {
 	echo ob_get_clean();
 }
 
-function display_footer_menu() {
-	$menu = get_remote_menu( 'footer_menu' );
-
-	if ( empty( $menu) ) {
-		return;
-	}
-
-	ob_start();
-?>
-	<ul class="list-inline site-footer-menu">
-	<?php foreach( $menu->items as $item ) : ?>
-		<li><a href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a></li>
-	<?php endforeach; ?>
-	</ul>
-<?php
-	echo ob_get_clean();
-}
-
 function display_contact_info() {
 	$org_name  = get_theme_mod_or_default( 'organization_name' );
 	$org_phone = get_theme_mod_or_default( 'organization_phone' );
