@@ -142,7 +142,6 @@
   width: 100%;
 
   @media (max-width: $screen-xs-max) {
-    height: 400px;
     position: relative;
     top: 0;
   }
@@ -159,12 +158,16 @@
   }
 
   .header-sub-title {
-    background-color: $ucf-col-default;
-    background-color: rgba(0, 0, 0, .8);
+    background-color: transparentize($ucf-col-default, .2);
     color: $ucf-col-highlight;
     display: inline-block;
-    font-size: 20px;
-    padding: 15px 30px;
+    font-size: 14px;
+    padding: 10px 20px;
+
+    @media (min-width: $screen-sm-min) {
+      font-size: 18px;
+      padding: 15px 30px;
+    }
   }
 
   .title-header-container {
@@ -178,25 +181,20 @@
     > h1,
     > span {
       @extend .h1;
-      background-color: $ucf-gold;
-      background-color: rgba(255, 204, 0, .8);
-
-
+      background-color: transparentize($ucf-gold, .2);
       display: block;
-      font-size: 80px;
+      font-size: 40px;
       font-weight: 800;
       margin: 0;
       padding: 4px 30px;
       text-transform: uppercase;
 
-      @media (max-width: $screen-md-max) {
-        font-size: 68px;
-      }
-      @media (max-width: $screen-sm-max) {
+      @media (min-width: $screen-sm-min) {
         font-size: 55px;
       }
-      @media (max-width: $screen-xs-max) {
-        font-size: 40px;
+
+      @media (min-width: $screen-md-min) {
+        font-size: 70px;
       }
     }
   }
