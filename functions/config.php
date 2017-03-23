@@ -233,20 +233,6 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
-	$wp_customize->add_setting(
-		'footer_menu_feed'
-	);
-
-	$wp_customize->add_control(
-		'footer_menu_feed',
-		array(
-			'type'        => 'text',
-			'label'       => 'Footer Menu Feed',
-			'description' => 'The JSON feed of the www.ucf.edu footer menu.',
-			'section'     => THEME_CUSTOMIZER_PREFIX.'remote_menus'
-		)
-	);
-
 	// Analytics
 	$wp_customize->add_setting(
 		'gw_verify'
@@ -541,11 +527,6 @@ function clear_header_menu_transient( $value, $old_value ) {
 }
 add_action( 'pre_set_theme_mod_header_menu_feed', 'clear_header_menu_transient' );
 
-function clear_footer_menu_transient( $value, $old_value ) {
-	delete_transient( 'footer_menu_json' );
-	return $value;
-}
-add_action( 'pre_set_theme_mod_footer_menu_feed', 'clear_footer_menu_transient' );
 
 /**
  * Responsible for running code that needs to be executed as wordpress is

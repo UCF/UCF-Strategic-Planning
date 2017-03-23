@@ -3,15 +3,55 @@
 
 #header-menu {
   @include center-block();
-  background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.01));
+  background: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.01) );
   margin-bottom: 5px;
   padding-top: 15px;
 
   li {
     padding: 15px 5px;
-
     @media (max-width: $screen-sm-max) {
       padding: 0;
+    }
+
+    &:last-child {
+      height: 25px;
+
+      &:after {
+        content: '' !important;
+      }
+
+      a {
+        background-color: #fc0;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        color: #000;
+        cursor: pointer;
+        display: inline-block;
+        font-family: $font-family-header;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.42857143;
+        margin-bottom: 0;
+        margin-top: -5px;
+        padding: 4px 12px;
+        text-align: center;
+        touch-action: manipulation;
+        user-select: none;
+        vertical-align: middle;
+        white-space: nowrap;
+
+        @media (max-width: $screen-sm-max) {
+          font-size: 11px !important;
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+          background-color: #000;
+          color: #fff;
+        }
+      }
     }
   }
 
