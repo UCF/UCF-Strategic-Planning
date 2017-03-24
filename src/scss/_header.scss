@@ -156,6 +156,25 @@
   }
 }
 
+.site-navbar {
+  border-radius: 0;
+
+  .navbar-collapse {
+    @media (min-width: $grid-float-breakpoint) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  .nav {
+    li:first-child a {
+      @media (min-width: $grid-float-breakpoint) {
+        padding-left: 0;
+      }
+    }
+  }
+}
+
 .site-header {
   margin-bottom: 20px;
 }
