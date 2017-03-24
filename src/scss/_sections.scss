@@ -1,9 +1,5 @@
 .bucket-section {
-  margin-bottom: 60px;
-
-  @media (max-width: $screen-xs-max) {
-    margin-bottom: 30px;
-  }
+  margin-top: -1px; // accomodate any preceding empty column divs
 
   .section-header {
     height: 750px;
