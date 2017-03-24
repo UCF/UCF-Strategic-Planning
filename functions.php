@@ -209,4 +209,143 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	return ob_get_clean();
 }
 
+
+/**
+ * Add new registered layouts for UCF Events plugin
+ **/
+function sp_events_get_layouts( $layouts ) {
+	$layouts = array_merge(
+		$layouts,
+		array(
+			'modern_list' => 'Modern List',
+			'modern_list_nd' => 'Modern List (No Event Descriptions)'
+		)
+	);
+	return $layouts;
+}
+add_filter( 'ucf_events_get_layouts', 'sp_events_get_layouts' );
+
+
+/**
+ * Output of "Modern List" UCF Events layout:
+ **/
+function sp_events_display_modern_list_before( $items, $title, $display_type ) {
+	if ( ! is_array( $items ) ) { $items = array( $items ); }
+
+	ob_start();
+?>
+	<div class="ucf-events ucf-events-modern-list">
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_events_display_modern_list_before', 'sp_events_display_modern_list_before', 10, 3 );
+
+
+function sp_events_display_modern_list_title( $items, $title, $display_type ) {
+	if ( ! is_array( $items ) ) { $items = array( $items ); }
+
+	echo do_action( 'ucf_events_display_classic_title', $items, $title, $display_type );
+}
+
+add_action( 'ucf_events_display_modern_list_title', 'sp_events_display_modern_list_title', 10, 3 );
+
+
+function _sp_events_display_modern_list( $items, $description=true ) {
+	ob_start();
+?>
+	<div class="ucf-events-list vcalendar">
+
+	<?php if ( $items ): ?>
+
+		<?php
+		foreach( $items as $event ) :
+			$starts = new DateTime( $event->starts );
+		?>
+		<div class="ucf-event ucf-event-row vevent">
+			<a class="ucf-event-link url" href="<?php echo $event->url; ?>">
+				<div class="ucf-event-when">
+					<time class="ucf-event-start-datetime dtstart" datetime="<?php echo $starts->format( 'c' ); ?>">
+						<span class="ucf-event-start-date"><?php echo $starts->format( 'M j' ); ?></span>
+						<span class="ucf-event-start-year"><?php echo $starts->format( 'Y' ); ?></span>
+						<span class="ucf-event-start-time"><?php echo $starts->format( 'h:i a' ); ?></span>
+					</time>
+				</div>
+				<span class="ucf-event-title">
+					<?php echo $event->title; ?>
+				</span>
+				<span class="ucf-event-location location"><?php echo $event->location; ?></span>
+			</a>
+
+			<?php if ( $description ): ?>
+			<div class="ucf-event-description description">
+				<?php echo wp_trim_words( $event->description, 40 ); ?>
+			</div>
+			<?php endif; ?>
+		</div>
+		<?php endforeach; ?>
+
+	<?php else: ?>
+		<span class="ucf-events-error">No events found.</span>
+	<?php endif; ?>
+
+	</div>
+<?php
+	echo ob_get_clean();
+}
+
+function sp_events_display_modern_list( $items, $title, $display_type ) {
+	if ( ! is_array( $items ) ) { $items = array( $items ); }
+
+	_sp_events_display_modern_list( $items );
+}
+
+add_action( 'ucf_events_display_modern_list', 'sp_events_display_modern_list', 10, 3 );
+
+
+function sp_events_display_modern_list_after( $items, $title, $display_type ) {
+	if ( ! is_array( $items ) ) { $items = array( $items ); }
+
+	ob_start();
+?>
+	</div>
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_events_display_modern_list_after', 'sp_events_display_modern_list_after', 10, 3 );
+
+
+/**
+ * Output of "Modern List (No Event Descriptions)" UCF Events layout:
+ **/
+function sp_events_display_modern_list_nd_before( $items, $title, $display_type ) {
+	if ( ! is_array( $items ) ) { $items = array( $items ); }
+
+	ob_start();
+?>
+	<div class="ucf-events ucf-events-modern-list ucf-events-modern-list-nd">
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_events_display_modern_list_nd_before', 'sp_events_display_modern_list_nd_before', 10, 3 );
+
+
+// Just recycle modern list action
+add_action( 'ucf_events_display_modern_list_nd_title', 'sp_events_display_modern_list_title', 10, 3 );
+
+
+function sp_events_display_modern_list_nd( $items, $title, $display_type ) {
+	if ( ! is_array( $items ) ) { $items = array( $items ); }
+
+	_sp_events_display_modern_list( $items, false );
+}
+
+add_action( 'ucf_events_display_modern_list_nd', 'sp_events_display_modern_list_nd', 10, 3 );
+
+
+// Just recycle modern list action
+add_action( 'ucf_events_display_modern_list_nd_after', 'sp_events_display_modern_list_after', 10, 3 );
+
 ?>

@@ -4,3 +4,48 @@
   font-family: $font-family-sans-serif;
   font-size: $font-size-base;
 }
+
+
+// scss-lint:disable SelectorDepth
+.table-metrics {
+  border-bottom: 4px solid $ucf-col-default;
+  border-top: 4px solid $ucf-col-default;
+  max-width: 800px;
+
+  th,
+  td {
+    text-align: center;
+  }
+
+  > thead {
+    background-color: $ucf-gold;
+
+    > tr > th {
+      border-bottom: 0 solid transparent;
+      font-size: 16px;
+    }
+  }
+
+  > tbody > tr:first-child > td {
+    border-top: 0 solid transparent;
+  }
+
+  > thead > tr > th,
+  > thead > tr > td,
+  > tbody > tr > th,
+  > tbody > tr > td {
+    padding-left: 15px;
+    padding-right: 15px;
+    vertical-align: middle;
+
+    @media (min-width: $screen-sm-min) {
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+  }
+}
+// scss-lint:enable SelectorDepth
+
+.table-metrics-col-stat {
+  background-color: $ucf-gold-lighter;
+}
