@@ -805,45 +805,52 @@ class Section extends CustomPostType {
 		$object = Section::add_post_meta( $object );
 		ob_start();
 ?>
-</div>
-	</div>
 		</div>
-		<section id="<?php echo $object->post_name; ?>" class="bucket-section">
-			<div class="section-header">
-				<div class="section-header-text-wrapper">
-					<span class="section-header-text <?php echo $object->header_text_position; ?>" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
-						<div class="section-header-background">
-							<div class="container">
-								<div class="row">
-									<div class="col-md-12 col-lg-10 col-lg-offset-1">
-										<h2 class="section-title"><?php echo $object->header_text; ?></h2>
-										<p class="section-lead"><?php echo $object->lead_text; ?></p>
-									</div>
-								</div>
+	</div>
+</div>
+<section id="<?php echo $object->post_name; ?>" class="bucket-section">
+	<div class="section-header">
+		<div class="section-header-text-wrapper">
+			<span class="section-header-text <?php echo $object->header_text_position; ?>" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
+				<div class="section-header-background">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12 col-lg-10 col-lg-offset-1">
+								<h2 class="section-title"><?php echo $object->header_text; ?></h2>
 							</div>
 						</div>
-					</span>
+					</div>
 				</div>
-				<?php if ( $object->header_image ) : ?>
-					<?php
-						$header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) );
-					?>
-					<div class="section-header-image-container">
-						<img class="section-header-image" src="<?php echo $header_img[0]; ?>" alt="">
-					</div>
-				<?php endif; ?>
-				<?php if ( $object->header_video_mp4 ) : ?>
-					<?php
-						$header_video_url = wp_get_attachment_url( $object->header_video_mp4 );
-						$header_video_meta = wp_get_attachment_metadata( $object->header_video_mp4 );
-					?>
-
-					<div class="section-header-video-container" data-video-src="<?php echo $header_video_url; ?>" data-video-width="<?php echo $header_video_meta['width']; ?>" data-video-height="<?php echo $header_video_meta['height']; ?>" data-video-loop="<?php echo $object->header_video_loop ? 'true' : 'false'; ?>">
-						<video class="section-header-video" muted></video>
-					</div>
-				<?php endif; ?>
+			</span>
+		</div>
+		<?php if ( $object->header_image ) : ?>
+			<?php
+				$header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) );
+			?>
+			<div class="section-header-image-container">
+				<img class="section-header-image" src="<?php echo $header_img[0]; ?>" alt="">
 			</div>
-		</section>
+		<?php endif; ?>
+		<?php if ( $object->header_video_mp4 ) : ?>
+			<?php
+				$header_video_url = wp_get_attachment_url( $object->header_video_mp4 );
+				$header_video_meta = wp_get_attachment_metadata( $object->header_video_mp4 );
+			?>
+
+			<div class="section-header-video-container" data-video-src="<?php echo $header_video_url; ?>" data-video-width="<?php echo $header_video_meta['width']; ?>" data-video-height="<?php echo $header_video_meta['height']; ?>" data-video-loop="<?php echo $object->header_video_loop ? 'true' : 'false'; ?>">
+				<video class="section-header-video" muted></video>
+			</div>
+		<?php endif; ?>
+	</div>
+</section>
+<div class="callout callout-black">
+	<div class="container">
+		<p class="section-lead"><?php echo $object->lead_text; ?></p>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
 <?php
 		return ob_get_clean();
 	}
