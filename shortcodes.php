@@ -214,7 +214,6 @@ class SectionSC extends Shortcode {
  */
 function sc_image($attr) {
 	global $wpdb, $post;
-    var_dump($wpdb);
 	$post_id = wp_is_post_revision($post->ID);
 	if($post_id === False) {
 		$post_id = $post->ID;
