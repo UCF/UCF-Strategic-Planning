@@ -3,15 +3,55 @@
 
 #header-menu {
   @include center-block();
-  background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.01));
+  background: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.01) );
   margin-bottom: 5px;
   padding-top: 15px;
 
   li {
     padding: 15px 5px;
-
     @media (max-width: $screen-sm-max) {
       padding: 0;
+    }
+
+    &:last-child {
+      height: 25px;
+
+      &:after {
+        content: '' !important;
+      }
+
+      a {
+        background-color: #fc0;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        color: #000;
+        cursor: pointer;
+        display: inline-block;
+        font-family: $font-family-header;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.42857143;
+        margin-bottom: 0;
+        margin-top: -5px;
+        padding: 4px 12px;
+        text-align: center;
+        touch-action: manipulation;
+        user-select: none;
+        vertical-align: middle;
+        white-space: nowrap;
+
+        @media (max-width: $screen-sm-max) {
+          font-size: 11px !important;
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+          background-color: #000;
+          color: #fff;
+        }
+      }
     }
   }
 
@@ -116,6 +156,25 @@
   }
 }
 
+.site-navbar {
+  border-radius: 0;
+
+  .navbar-collapse {
+    @media (min-width: $grid-float-breakpoint) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  .nav {
+    li:first-child a {
+      @media (min-width: $grid-float-breakpoint) {
+        padding-left: 0;
+      }
+    }
+  }
+}
+
 .site-header {
   margin-bottom: 20px;
 }
@@ -142,7 +201,6 @@
   width: 100%;
 
   @media (max-width: $screen-xs-max) {
-    height: 400px;
     position: relative;
     top: 0;
   }
@@ -159,12 +217,16 @@
   }
 
   .header-sub-title {
-    background-color: $ucf-col-default;
-    background-color: rgba(0, 0, 0, .8);
+    background-color: transparentize($ucf-col-default, .2);
     color: $ucf-col-highlight;
     display: inline-block;
-    font-size: 20px;
-    padding: 15px 30px;
+    font-size: 14px;
+    padding: 10px 20px;
+
+    @media (min-width: $screen-sm-min) {
+      font-size: 18px;
+      padding: 15px 30px;
+    }
   }
 
   .title-header-container {
@@ -178,25 +240,20 @@
     > h1,
     > span {
       @extend .h1;
-      background-color: $ucf-gold;
-      background-color: rgba(255, 204, 0, .8);
-
-
+      background-color: transparentize($ucf-gold, .2);
       display: block;
-      font-size: 80px;
+      font-size: 40px;
       font-weight: 800;
       margin: 0;
       padding: 4px 30px;
       text-transform: uppercase;
 
-      @media (max-width: $screen-md-max) {
-        font-size: 68px;
-      }
-      @media (max-width: $screen-sm-max) {
+      @media (min-width: $screen-sm-min) {
         font-size: 55px;
       }
-      @media (max-width: $screen-xs-max) {
-        font-size: 40px;
+
+      @media (min-width: $screen-md-min) {
+        font-size: 70px;
       }
     }
   }
