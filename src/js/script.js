@@ -32,8 +32,9 @@ var headerImage = function($) {
 };
 
 var heightAdjustments = function($) {
-	var $footer = $('.site-footer').find('.footer-col').matchHeight();
-	var $sections = $('.bucket-section .row').find('div').matchHeight();
+	var $footer = $('.site-footer').find('.footer-col').matchHeight(),
+		$sections = $('.bucket-section .row').find('div').matchHeight(),
+		$promises = $('.promises-section').find('div').matchHeight();
 
 	var beforeUpdate = function(event, groups) {
 		if ($(window).width() < 768) {
@@ -46,6 +47,7 @@ var heightAdjustments = function($) {
 
 	$footer.matchHeight._beforeUpdate = beforeUpdate;
 	$sections.matchHeight._beforeUpdate = beforeUpdate;
+	$promises.matchHeight._beforeUpdate = beforeUpdate;
 };
 
 var positionHeaderBackgrounds = function($) {

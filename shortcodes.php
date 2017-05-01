@@ -208,6 +208,67 @@ class SectionSC extends Shortcode {
     }
 }
 
+/*
+ * Search for a image by file name and return its URL.
+ *
+ */
+function sc_image($attr) {
+	global $wpdb, $post;
+    var_dump($wpdb);
+	$post_id = wp_is_post_revision($post->ID);
+	if($post_id === False) {
+		$post_id = $post->ID;
+	}
+	$url = '';
+	if(isset($attr['filename']) && $attr['filename'] != '') {
+		$sql = sprintf('SELECT * FROM %s WHERE post_title="%s" AND post_parent=%d ORDER BY post_date DESC', $wpdb->posts, $wpdb->escape($attr['filename']), $post_id);
+		$rows = $wpdb->get_results($sql);
+		if(count($rows) > 0) {
+			$obj = $rows[0];
+			if($obj->post_type == 'attachment' && stripos($obj->post_mime_type, 'image/') == 0) {
+				$url = wp_get_attachment_url($obj->ID);
+			}
+		}
+	}
+	return $url;
+}
+
+class BackgroundImageSC extends Shortcode {
+    public
+        $name        = 'Background Image', // The name of the shortcode.
+        $command     = 'background_image', // The command used to call the shortcode.
+        $description = 'Displays background image markup', // The description of the shortcode.
+        $params      = array(
+            array(
+                'name'      => 'Filename',
+                'id'        => 'filename',
+                'help_text' => 'Insert name of the filename',
+                'type'      => 'text'
+            ),
+            array(
+                'name'      => 'Inline Styles',
+                'id'        => 'style',
+                'help_text' => 'Inline css styles',
+                'type'      => 'text'
+            ),
+        ), // The parameters used by the shortcode.
+        $callback    = 'callback',
+        $wysiwyg     = True; // Whether to add it to the shortcode Wysiwyg modal.
+
+
+    public static function callback( $attr, $content='' ) {
+        $attr = shortcode_atts( array(
+                'filename'    => ''
+            ), $attr
+        );
+
+        if ( $attr['filename'] ) {
+            return sprintf( 'style="background-image: url(%s); %s"', sc_image( $attr ), $attr['style'] );
+        }
+        return '';
+    }
+}
+
 function sc_search_form() {
     ob_start();
 ?>

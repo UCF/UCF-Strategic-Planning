@@ -45,6 +45,7 @@ Config::$custom_taxonomies = array(
 Config::$shortcodes = array(
 	'CallToActionSC',
 	'SectionSC',
+	'BackgroundImageSC',
 	'CalloutSC',
 	'IconLinkSC',
 	'RowSC',
