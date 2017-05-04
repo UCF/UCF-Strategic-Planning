@@ -36,17 +36,10 @@
         margin-top: -5px;
         padding: 4px 12px;
         text-align: center;
-        -ms-touch-action: manipulation;
         touch-action: manipulation;
         user-select: none;
         vertical-align: middle;
         white-space: nowrap;
-
-        @include body-prefix('.ie9') {
-          @media (min-width: $screen-md-min) {
-            top: 1px;
-          }
-        }
 
         @media (max-width: $screen-sm-max) {
           font-size: 11px !important;
@@ -89,6 +82,27 @@
   }
 }
 
+.header-sub-nav {
+  background-color: $ucf-col-default;
+
+  a {
+    color: $ucf-col-highlight;
+    font-size: 16px;
+    margin: 10px 30px 10px 0;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $ucf-col-default !important;
+      color: $ucf-gold;
+    }
+  }
+
+  .navbar-toggle {
+    color: $ucf-col-highlight;
+  }
+}
+
 // Mobile nav
 #site-nav-xs {
   border: none;
@@ -99,7 +113,7 @@
 
   .navbar-brand {
     color: #333;
-    background: #fc0;
+    background: $ucf-gold;
     font-family: $font-family-serif-alt, serif;
     font-size: 20px;
   }
@@ -111,17 +125,6 @@
     font-size: 20px;
     padding: 11px 16px;
     position: relative;
-  }
-
-  .weather {
-    color: #fff;
-    float: left;
-    padding: 16px;
-    position: relative;
-
-    .icon {
-      color: #fc0;
-    }
   }
 }
 
@@ -151,40 +154,45 @@
     font-size: 14px;
     font-weight: bold;
   }
+}
 
-  .last {
-    text-align: center;
+.site-navbar {
+  border-radius: 0;
 
-    a {
-      background-color: #fc0;
-      border-radius: 4px;
-      color: #000;
-      font-family: Verdana, Geneva, sans-serif;
-      font-size: 11px;
-      margin: 10px 15px;
-      padding: 6px 15px;
+  .navbar-collapse {
+    @media (min-width: $grid-float-breakpoint) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  .nav {
+    li:first-child a {
+      @media (min-width: $grid-float-breakpoint) {
+        padding-left: 0;
+      }
     }
   }
 }
 
 .site-header {
   margin-bottom: 20px;
-  padding-bottom: 70px;
-
-  @media (max-width: $screen-xs-max) {
-    padding-bottom: 20px;
-  }
 }
 
 .header-image {
   background-position: center center;
   width: 100%;
-  min-height: 600px;
+  min-height: 500px;
+  max-height: 500px;
 
   @media (max-width: $screen-xs-max) {
     background-size: cover;
     min-height: 0;
   }
+}
+
+.header-container {
+  height: 400px;
 }
 
 .header-center {
@@ -193,14 +201,12 @@
   width: 100%;
 
   @media (max-width: $screen-xs-max) {
-    height: 400px;
     position: relative;
     top: 0;
   }
 
   .title-wrapper {
     display: table-cell;
-    text-align: center;
     vertical-align: middle;
   }
 
@@ -208,14 +214,24 @@
     display: inline-block;
     margin: 0 auto;
     position: relative;
-    text-align: center;
+  }
+
+  .header-sub-title {
+    background-color: transparentize($ucf-col-default, .2);
+    color: $ucf-col-highlight;
+    display: inline-block;
+    font-size: 14px;
+    padding: 10px 20px;
+
+    @media (min-width: $screen-sm-min) {
+      font-size: 18px;
+      padding: 15px 30px;
+    }
   }
 
   .title-header-container {
     display: table;
-    margin: 0 auto;
     position: relative;
-    top: -80px;
 
     @media (max-width: $screen-xs-max) {
       top: -100px;
@@ -224,25 +240,20 @@
     > h1,
     > span {
       @extend .h1;
-      background-color: #FC0;
-      background-color: rgba(255, 204, 0, .8);
-
-
+      background-color: transparentize($ucf-gold, .2);
       display: block;
-      font-size: 80px;
+      font-size: 40px;
       font-weight: 800;
       margin: 0;
       padding: 4px 30px;
       text-transform: uppercase;
 
-      @media (max-width: $screen-md-max) {
-        font-size: 68px;
-      }
-      @media (max-width: $screen-sm-max) {
+      @media (min-width: $screen-sm-min) {
         font-size: 55px;
       }
-      @media (max-width: $screen-xs-max) {
-        font-size: 40px;
+
+      @media (min-width: $screen-md-min) {
+        font-size: 70px;
       }
     }
   }
@@ -254,58 +265,6 @@
     &:hover {
       color: #000;
       text-decoration: none;
-    }
-  }
-
-  .weather {
-    background: #000;
-    display: inline-block;
-    color: #fff;
-    font-family: $font-family-serif;
-    font-size: 18px;
-    line-height: 32px;
-    padding: 6px 20px;
-    position: absolute;
-    right: 0;
-    letter-spacing: 1.35px;
-    font-weight: 100;
-
-    @media (max-width: $screen-xs-max) {
-      font-size: 13px;
-      padding: 0 14px;
-    }
-
-    .icon {
-      display: inline-block;
-      padding-right: 6px;
-
-      @media (max-width: $screen-xs-max) {
-        padding-right: 4px;
-      }
-
-      span {
-        color: #ffc904;
-        font-size: 27px;
-        display: inline-block;
-        position: relative;
-        bottom: -3px;
-
-        @media (max-width: $screen-xs-max) {
-          font-size: 20px;
-        }
-      }
-    }
-
-    .vertical-rule {
-      border-left: 1px solid #fff;
-      margin-left: 4px;
-      margin-right: 6px;
-      width: 2px;
-    }
-
-    .temp {
-      margin-left: 4px;
-      font-weight: 800;
     }
   }
 }

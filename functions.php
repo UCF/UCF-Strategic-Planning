@@ -1,6 +1,5 @@
 <?php
 require_once 'functions/base.php';          // Base theme functions
-require_once 'functions/feeds.php';         // Where functions related to feed data live
 require_once 'functions/custom-fields.php'; // Where custom field types are defined
 require_once 'custom-taxonomies.php';       // Where per theme taxonomies are defined
 require_once 'custom-post-types.php';       // Where per theme post types are defined
@@ -114,122 +113,6 @@ function display_header_menu() {
 	echo ob_get_clean();
 }
 
-function display_weather() {
-	$weather = get_weather_data();
-	ob_start();
-?>
-	<?php if ( $weather ) : ?>
-		<div class="weather">
-			<?php if ( $weather->icon ) : ?>
-				<span class="icon" title="<?php echo $weather->condition; ?>">
-					<span class="<?php echo $weather->icon; ?>"></span>
-				</span>
-			<?php endif; ?>
-			<span class="location">Orlando, FL</span>
-			<span class="vertical-rule"></span>
-			<span class="temp"><?php echo $weather->tempN; ?>&deg;F</span>
-		</div>
-	<?php endif; ?>
-<?php
-	return ob_get_clean();
-}
-
-function display_footer_menu() {
-	$menu = get_remote_menu( 'footer_menu' );
-
-	if ( empty( $menu) ) {
-		return;
-	}
-
-	ob_start();
-?>
-	<ul class="list-inline site-footer-menu">
-	<?php foreach( $menu->items as $item ) : ?>
-		<li><a href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a></li>
-	<?php endforeach; ?>
-	</ul>
-<?php
-	echo ob_get_clean();
-}
-
-function display_footer_news() {
-	$max_news = get_theme_mod_or_default( 'news_max_items' );
-	$items = get_news(0, $max_news);
-	$placeholder = get_theme_mod_or_default( 'news_placeholder_image' );
-	ob_start();
-?>
-	<div class="footer-news">
-	<?php foreach( $items as $key=>$item ) : $image = get_article_image( $item ); ?>
-		<a href="<?php echo $item->get_link(); ?>">
-			<div class="row news-item">
-				<div class="col-xs-2 col-sm-4 col-md-3">
-					<div class="news-thumbnail">
-					<?php if ( $image ) : ?>
-						<img class="img-responsive" src="<?php echo $image; ?>" alt="Feed image for <?php echo $item->get_title(); ?>">
-					<?php else : ?>
-						<img class="img-responsive" src="<?php echo $placeholder; ?>" alt="UCF Today">
-					<?php endif; ?>
-					</div>
-				</div>
-				<div class="col-xs-10 col-sm-8 col-md-9">
-					<div class="news-details">
-						<h3><?php echo $item->get_title(); ?></h3>
-					</div>
-				</div>
-			</div>
-		</a>
-	<?php endforeach; ?>
-	</div>
-<?php
-	echo ob_get_clean();
-}
-
-function display_footer_events() {
-    $max_events = get_theme_mod_or_default( 'events_max_items' );
-    $items = get_events( 0, $max_events );
-    ob_start();
-?>
-    <div class="footer-events">
-    <?php foreach( $items as $item ) : ?>
-        <?php
-            $month = $item->get_date( 'M' );
-            $day = $item->get_date( 'j' );
-            $start_date = $item->get_item_tags( 'http://events.ucf.edu', 'startdate' );
-        	$end_date = $item->get_item_tags( 'http://events.ucf.edu', 'enddate' );
-        	$start_time = date( 'g:i a', strtotime( $start_date[0]['data'] ) );
-        	$end_time = date( 'g:i a', strtotime( $end_date[0]['data'] ) );
-        	$time_string = '';
-        	if ( $start_time == $end_time ) {
-        		$time_string = $start_time;
-        	} else {
-        		$time_string = $start_time . ' - ' . $end_time;
-        	}
-        ?>
-        <a href="<?php echo $item->get_link(); ?>" target="_blank">
-        	<div class="row event">
-	        	<div class="col-xs-2 col-sm-4 col-md-3">
-	        		<div class="event-date">
-	        			<span class="month"><?php echo $month; ?></span>
-	                	<span class="day"><?php echo $day; ?></span>
-	               	</div>
-	        	</div>
-	        	<div class="col-xs-10 col-sm-8 col-md-9">
-	        		<div class="event-details">
-		                <h4><?php echo $item->get_title(); ?></h4>
-		                <?php
-
-		                ?>
-		                <p class="time"><?php echo $time_string; ?></p>
-		            </div>
-	        	</div>
-	    	</div>
-	    </a>
-    <?php endforeach; ?>
-    </div>
-<?php
-    echo ob_get_clean();
-}
-
 function display_contact_info() {
 	$org_name  = get_theme_mod_or_default( 'organization_name' );
 	$org_phone = get_theme_mod_or_default( 'organization_phone' );
@@ -306,145 +189,6 @@ function display_social() {
 	echo ob_get_clean();
 }
 
-function get_weather_data() {
-	$opts = array(
-		'http' => array(
-			'timeout' => 15
-		)
-	);
-
-	$context = stream_context_create( $opts );
-	$file = file_get_contents( get_theme_mod_or_default( 'weather_feed_url' ), false, $context );
-	$weather = json_decode( $file );
-
-	$weather->icon = get_weather_icon( $weather->condition );
-
-	return $weather;
-}
-
-function get_weather_icon( $condition ) {
-	// https://erikflowers.github.io/weather-icons/
-
-	$icon_prefix = "wi wi-";
-	$icons_to_conditions = array(
-			'day-sunny' => array(
-				'fair',
-				'default'
-			),
-			'hot' => array(
-				'hot',
-				'haze'
-			),
-			'cloudy' => array(
-				'overcast',
-				'partly cloudy',
-				'mostly cloudy'
-			),
-			'snowflake-cold' => array(
-				'blowing snow',
-				'cold',
-				'snow'
-			),
-			'showers' => array(
-				'showers',
-				'drizzle',
-				'mixed rain/sleet',
-				'mixed rain/hail',
-				'mixed snow/sleet',
-				'hail',
-				'freezing drizzle'
-			),
-			'cloudy-gusts' => array(
-				'windy'
-			),
-			'fog' => array(
-				'dust',
-				'smoke',
-				'foggy'
-			),
-			'storm-showers' => array(
-				'scattered thunderstorms',
-				'scattered thundershowers',
-				'scattered showers',
-				'freezing rain',
-				'isolated thunderstorms',
-				'isolated thundershowers'
-			),
-			'lightning' => array(
-				'tornado',
-				'severe thunderstorms'
-			)
-		);
-
-	$condition = strtolower( $condition );
-
-	foreach ( $icons_to_conditions as $icon => $condition_array ) {
-		if ( in_array( $condition, $condition_array ) ) {
-			return $icon_prefix . $icon;
-		}
-	}
-
-	// If the condition for some reason isn't listed here,
-	// no icon name will be returned and so no icon will be used
-	return false;
-}
-
-function get_academic_calendar_items() {
-
-	$result_name = 'academic_calendar';
-
-	$retval = get_transient( $result_name );
-
-	if ( false === $retval ) {
-		$opts = array(
-			'http' => array(
-				'timeout' => 15
-			)
-		);
-
-		$context = stream_context_create( $opts );
-
-		$file_location = get_theme_mod_or_default( 'academic_calendar_feed_url' );
-		if ( empty( $file_location ) ) {
-			return;
-		}
-
-		$result = json_decode( file_get_contents( $file_location, false, $context ) );
-		if ( empty( $result ) ) {
-			return;
-		}
-
-		$result = $result->terms[0]->events;
-
-		$retval = filter_academics_calendar_items( $result );
-
-		set_transient( $result_name, $retval, (60 * 60 * 12) );
-	}
-
-	return $retval;
-
-}
-
-/**
- * Filters academic calendar events to only include ones 
- * that are marked `isImportant`.
- **/
-function filter_academics_calendar_items( $items ) {
-	$retval = array();
-
-	foreach( $items as $item ) {
-		if ( $item->isImportant ) {
-			$retval[] = $item;
-
-			if ( count( $retval ) == 7 ) {
-				break;
-			}
-		}
-	}
-
-	return $retval;
-}
-
 function google_tag_manager() {
 	ob_start();
 	$gtm_id = get_theme_mod_or_default( 'gtm_id' );
@@ -464,5 +208,144 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 	return ob_get_clean();
 }
+
+
+/**
+ * Add new registered layouts for UCF Events plugin
+ **/
+function sp_events_get_layouts( $layouts ) {
+	$layouts = array_merge(
+		$layouts,
+		array(
+			'modern_list' => 'Modern List',
+			'modern_list_nd' => 'Modern List (No Event Descriptions)'
+		)
+	);
+	return $layouts;
+}
+add_filter( 'ucf_events_get_layouts', 'sp_events_get_layouts' );
+
+
+/**
+ * Output of "Modern List" UCF Events layout:
+ **/
+function sp_events_display_modern_list_before( $items, $title, $display_type ) {
+	if ( ! is_array( $items ) ) { $items = array( $items ); }
+
+	ob_start();
+?>
+	<div class="ucf-events ucf-events-modern-list">
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_events_display_modern_list_before', 'sp_events_display_modern_list_before', 10, 3 );
+
+
+function sp_events_display_modern_list_title( $items, $title, $display_type ) {
+	if ( ! is_array( $items ) ) { $items = array( $items ); }
+
+	echo do_action( 'ucf_events_display_classic_title', $items, $title, $display_type );
+}
+
+add_action( 'ucf_events_display_modern_list_title', 'sp_events_display_modern_list_title', 10, 3 );
+
+
+function _sp_events_display_modern_list( $items, $description=true ) {
+	ob_start();
+?>
+	<div class="ucf-events-list vcalendar">
+
+	<?php if ( $items ): ?>
+
+		<?php
+		foreach( $items as $event ) :
+			$starts = new DateTime( $event->starts );
+		?>
+		<div class="ucf-event ucf-event-row vevent">
+			<a class="ucf-event-link url" href="<?php echo $event->url; ?>">
+				<div class="ucf-event-when">
+					<time class="ucf-event-start-datetime dtstart" datetime="<?php echo $starts->format( 'c' ); ?>">
+						<span class="ucf-event-start-date"><?php echo $starts->format( 'M j' ); ?></span>
+						<span class="ucf-event-start-year"><?php echo $starts->format( 'Y' ); ?></span>
+						<span class="ucf-event-start-time"><?php echo $starts->format( 'h:i a' ); ?></span>
+					</time>
+				</div>
+				<span class="ucf-event-title">
+					<?php echo $event->title; ?>
+				</span>
+				<span class="ucf-event-location location"><?php echo $event->location; ?></span>
+			</a>
+
+			<?php if ( $description ): ?>
+			<div class="ucf-event-description description">
+				<?php echo wp_trim_words( $event->description, 40 ); ?>
+			</div>
+			<?php endif; ?>
+		</div>
+		<?php endforeach; ?>
+
+	<?php else: ?>
+		<span class="ucf-events-error">No events found.</span>
+	<?php endif; ?>
+
+	</div>
+<?php
+	echo ob_get_clean();
+}
+
+function sp_events_display_modern_list( $items, $title, $display_type ) {
+	if ( ! is_array( $items ) ) { $items = array( $items ); }
+
+	_sp_events_display_modern_list( $items );
+}
+
+add_action( 'ucf_events_display_modern_list', 'sp_events_display_modern_list', 10, 3 );
+
+
+function sp_events_display_modern_list_after( $items, $title, $display_type ) {
+	if ( ! is_array( $items ) ) { $items = array( $items ); }
+
+	ob_start();
+?>
+	</div>
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_events_display_modern_list_after', 'sp_events_display_modern_list_after', 10, 3 );
+
+
+/**
+ * Output of "Modern List (No Event Descriptions)" UCF Events layout:
+ **/
+function sp_events_display_modern_list_nd_before( $items, $title, $display_type ) {
+	if ( ! is_array( $items ) ) { $items = array( $items ); }
+
+	ob_start();
+?>
+	<div class="ucf-events ucf-events-modern-list ucf-events-modern-list-nd">
+<?php
+	echo ob_get_clean();
+}
+
+add_action( 'ucf_events_display_modern_list_nd_before', 'sp_events_display_modern_list_nd_before', 10, 3 );
+
+
+// Just recycle modern list action
+add_action( 'ucf_events_display_modern_list_nd_title', 'sp_events_display_modern_list_title', 10, 3 );
+
+
+function sp_events_display_modern_list_nd( $items, $title, $display_type ) {
+	if ( ! is_array( $items ) ) { $items = array( $items ); }
+
+	_sp_events_display_modern_list( $items, false );
+}
+
+add_action( 'ucf_events_display_modern_list_nd', 'sp_events_display_modern_list_nd', 10, 3 );
+
+
+// Just recycle modern list action
+add_action( 'ucf_events_display_modern_list_nd_after', 'sp_events_display_modern_list_after', 10, 3 );
 
 ?>

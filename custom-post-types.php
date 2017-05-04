@@ -443,68 +443,6 @@ class Page extends CustomPostType {
 		$use_metabox    = True,
 		$built_in       = True;
 
-	public function __construct() {
-		// Register Home Page fields for front_page and posts_page only
-		$homepage_metabox = array(
-			'id'        => 'custom_homepage_fields',
-			'title'     => 'Home Page Fields',
-			'fields'    => $this->get_fields (
-				array(
-					array(
-						'id'          => 'homepage_message',
-						'name'        => __( 'Home Page Message' ),
-						'description' => 'The message that will appear below the header image',
-						'type'        => 'textarea',
-						'formatting'  => 'html'
-					),
-					array(
-						'id'          => 'homepage_spotlight',
-						'name'        => __( 'Home Page Spotlight' ),
-						'description' => 'The spotlight that will appear to the right of the home page message',
-						'type'         => 'post_object',
-						'post_type'    => array( 'spotlight' )
-					)
-				)
-			),
-			'location' => array(
-				array(
-					array(
-						'param'    => 'post_type',
-						'operator' => '==',
-						'value'    => 'page',
-						'order_no' => 0,
-						'group_no' => 0
-					), // and
-					array(
-						'param'    => 'page_type',
-						'operator' => '==',
-						'value'    => 'front_page',
-						'order_no' => 1,
-						'group_no' => 0
-					)
-				), // or
-				array(
-					array(
-						'param'    => 'page_type',
-						'operator' => '==',
-						'value'    => 'posts_page',
-						'order_no' => 0,
-						'group_no' => 1
-					)
-				)
-			),
-			'options' => array(
-				'position'       => 'acf_after_title',
-			)
-		);
-
-		$this->metaboxes[] = $homepage_metabox;
-
-		// Build default post type meta fields
-		parent::__construct();
-
-	}
-
 	public function fields() {
 		$prefix = $this->options( 'name' ).'_';
 		return array(
@@ -762,6 +700,7 @@ class Section extends CustomPostType {
 				'choices'     => array(
 					'' => 'Centered/Middle',
 					'top'           => 'Centered/Top',
+					'bottom'           => 'Centered/Bottom',
 					'left'          => 'Left Aligned/Middle',
 					'right'         => 'Right Aligned/Middle'
 				),
@@ -866,63 +805,52 @@ class Section extends CustomPostType {
 		$object = Section::add_post_meta( $object );
 		ob_start();
 ?>
-		<section id="<?php echo $object->post_name; ?>" class="bucket-section">
-			<div class="section-header">
-				<div class="section-header-text-wrapper">
-					<span class="section-header-text <?php echo $object->header_text_position; ?>" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
-					<?php echo $object->header_text; ?>
-					</span>
-				</div>
-				<?php if ( $object->header_image ) : ?>
-					<?php
-						$header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) );
-					?>
-					<div class="section-header-image-container">
-						<img class="section-header-image" src="<?php echo $header_img[0]; ?>" alt="">
-					</div>
-				<?php endif; ?>
-				<?php if ( $object->header_video_mp4 ) : ?>
-					<?php
-						$header_video_url = wp_get_attachment_url( $object->header_video_mp4 );
-						$header_video_meta = wp_get_attachment_metadata( $object->header_video_mp4 );
-					?>
-
-					<div class="section-header-video-container" data-video-src="<?php echo $header_video_url; ?>" data-video-width="<?php echo $header_video_meta['width']; ?>" data-video-height="<?php echo $header_video_meta['height']; ?>" data-video-loop="<?php echo $object->header_video_loop ? 'true' : 'false'; ?>">
-						<video class="section-header-video" muted></video>
-					</div>
-				<?php endif; ?>
-			</div>
-			<div class="container">
-				<h2 class="section-title"><?php echo $object->post_title; ?></h2>
-				<p class="lead"><?php echo $object->lead_text; ?></p>
-				<div class="row">
-					<div class="col-md-5 col-sm-6 col-xs-12 no-pad">
-					<?php if ( $object->feature_type == 'feature_image' ) : ?>
-						<?php $featured_img = wp_get_attachment_image_src( $object->feature_image, 'large' ); ?>
-						<img class="img-responsive section-image" src="<?php echo $featured_img[0]; ?>">
-					<?php else: ?>
-						<?php echo Spotlight::toHTML( $object->feature_spotlight ); ?>
-					<?php endif; ?>
-					</div>
-					<div class="col-md-6 col-md-offset-1 col-sm-6 section-content">
-						<?php echo apply_filters( 'the_content', $object->content); ?>
-						<?php if ( $object->menu ) : ?>
-						<div class="menu-wrapper">
-							<h2>Explore Further</h2>
-							<?php
-								wp_nav_menu(
-									array(
-										'menu'  => $object->menu,
-										'container' => ''
-									)
-								);
-							?>
+		</div>
+	</div>
+</div>
+<section id="<?php echo $object->post_name; ?>" class="bucket-section">
+	<div class="section-header">
+		<div class="section-header-text-wrapper">
+			<span class="section-header-text <?php echo $object->header_text_position; ?>" <?php if ( $object->header_text_color ) { echo 'style="color: '.$object->header_text_color.'" '; } ?>>
+				<div class="section-header-background">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12 col-lg-10 col-lg-offset-1">
+								<h2 class="section-title"><?php echo $object->header_text; ?></h2>
+							</div>
 						</div>
-						<?php endif; ?>
 					</div>
 				</div>
+			</span>
+		</div>
+		<?php if ( $object->header_image ) : ?>
+			<?php
+				$header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) );
+			?>
+			<div class="section-header-image-container">
+				<img class="section-header-image" src="<?php echo $header_img[0]; ?>" alt="">
 			</div>
-		</section>
+		<?php endif; ?>
+		<?php if ( $object->header_video_mp4 ) : ?>
+			<?php
+				$header_video_url = wp_get_attachment_url( $object->header_video_mp4 );
+				$header_video_meta = wp_get_attachment_metadata( $object->header_video_mp4 );
+			?>
+
+			<div class="section-header-video-container" data-video-src="<?php echo $header_video_url; ?>" data-video-width="<?php echo $header_video_meta['width']; ?>" data-video-height="<?php echo $header_video_meta['height']; ?>" data-video-loop="<?php echo $object->header_video_loop ? 'true' : 'false'; ?>">
+				<video class="section-header-video" muted></video>
+			</div>
+		<?php endif; ?>
+	</div>
+</section>
+<div class="callout callout-black">
+	<div class="container">
+		<p class="section-lead"><?php echo $object->lead_text; ?></p>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
 <?php
 		return ob_get_clean();
 	}

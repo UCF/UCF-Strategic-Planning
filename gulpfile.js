@@ -47,9 +47,6 @@ gulp.task('bower', function() {
       gulp.src(config.componentsPath + '/font-awesome/fonts/*')
         .pipe(gulp.dest(config.fontPath + '/font-awesome/'));
 
-      gulp.src(config.componentsPath + '/weather-icons/font/*')
-        .pipe(gulp.dest(config.fontPath + '/weather-icons/'));
-
     });
 });
 
@@ -170,8 +167,9 @@ gulp.task('watch', function() {
     });
   }
 
-  gulp.watch(config.scssPath + '/*.scss', ['css']).on('change', browserSync.reload);
-  gulp.watch(config.jsPath + '/*.js', ['js']).on('change', browserSync.reload);
+  gulp.watch(config.scssPath + '/*.scss', ['css']);
+  gulp.watch(config.jsPath + '/*.js', ['js']).on("change", browserSync.reload);
+  gulp.watch('**/*.php').on("change", browserSync.reload);
 });
 
 gulp.task('update-repo', function() {
@@ -187,13 +185,13 @@ gulp.task('update-tag', ['update-repo'], function() {
         message: 'Tag already exists. Exiting.'
       });
     }
-    
+
     // Update version in style.css.
     fs.readFile('style.css', 'utf8', function(err, data) {
       if (err) {
         return console.log(err);
       }
-      
+
       var data = data.replace(/Version:\sv\d\.\d\.\d/, "Version: " + tag);
 
       fs.writeFile('style.css', data, function(err) {
@@ -201,7 +199,7 @@ gulp.task('update-tag', ['update-repo'], function() {
           return console.log(err);
         }
       })
-      
+
     });
 
     // Update verion in bower.json

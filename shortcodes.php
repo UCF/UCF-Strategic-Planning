@@ -208,146 +208,63 @@ class SectionSC extends Shortcode {
     }
 }
 
-class MapSearchSC extends Shortcode {
-    public
-        $name        = 'MapSearch', // The name of the shortcode.
-        $command     = 'map-search', // The command used to call the shortcode.
-        $description = 'Displays map stripe', // The description of the shortcode.
-        $callback    = 'callback',
-        $wysiwyg     = True; // Whether to add it to the shortcode Wysiwyg modal.
-
-    public static function callback( $attr, $content='' ) {
-        ob_start();
-?>
-
-<section id="map" class="map-search">
-    <div class="search-box-container">
-        <div class="section-header-text-wrapper">
-            <h2 class="section-header-text">Locate Student Services on Campus</h2>
-            <form class="search-form" action="<?php echo get_theme_mod_or_default( 'map_search_url' ) ?>">
-                <input class="search-term" type="text" name="s" placeholder="First Year Experience, Career Services, Etc.">
-                <button class="search-button" type="submit"><span class="fa fa-search"></span><span class="fa fa-spinner fa-spin"></span></button>
-            </form>
-        </div>
-    </div>
-</section>
-
-<?php
-        return ob_get_clean();
-    }
+/*
+ * Search for a image by file name and return its URL.
+ *
+ */
+function sc_image($attr) {
+	global $wpdb, $post;
+	$post_id = wp_is_post_revision($post->ID);
+	if($post_id === False) {
+		$post_id = $post->ID;
+	}
+	$url = '';
+	if(isset($attr['filename']) && $attr['filename'] != '') {
+		$sql = sprintf('SELECT * FROM %s WHERE post_title="%s" AND post_parent=%d ORDER BY post_date DESC', $wpdb->posts, $wpdb->escape($attr['filename']), $post_id);
+		$rows = $wpdb->get_results($sql);
+		if(count($rows) > 0) {
+			$obj = $rows[0];
+			if($obj->post_type == 'attachment' && stripos($obj->post_mime_type, 'image/') == 0) {
+				$url = wp_get_attachment_url($obj->ID);
+			}
+		}
+	}
+	return $url;
 }
 
-class AcademicCalendarSC extends Shortcode {
+class BackgroundImageSC extends Shortcode {
     public
-        $name        = 'AcademicCalendar', // The name of the shortcode.
-        $command     = 'calendar-entries', // The command used to call the shortcode.
-        $description = 'Displays up and coming academic calendar entries', // The description of the shortcode.
+        $name        = 'Background Image', // The name of the shortcode.
+        $command     = 'background_image', // The command used to call the shortcode.
+        $description = 'Displays background image markup', // The description of the shortcode.
+        $params      = array(
+            array(
+                'name'      => 'Filename',
+                'id'        => 'filename',
+                'help_text' => 'Insert name of the filename',
+                'type'      => 'text'
+            ),
+            array(
+                'name'      => 'Inline Styles',
+                'id'        => 'style',
+                'help_text' => 'Inline css styles',
+                'type'      => 'text'
+            ),
+        ), // The parameters used by the shortcode.
         $callback    = 'callback',
         $wysiwyg     = True; // Whether to add it to the shortcode Wysiwyg modal.
 
+
     public static function callback( $attr, $content='' ) {
-        $max_events = 6;
-        $items = get_academic_calendar_items();
-        $first_item = array_shift( $items );
+        $attr = shortcode_atts( array(
+                'filename'    => ''
+            ), $attr
+        );
 
-        $full_cal_url = get_theme_mod_or_default( 'academic_calendar_full_url' );
-        $date = strtotime( $first_item->dtstart );
-        $end_dt = empty( $first_item->dtend ) ? '' : strtotime( $first_item->dtend );
-        $month = date( 'F', $date );
-        $day = date( 'j', $date );
-        $start_date = date( 'F j', $date );
-        $end_date = empty( $end_dt ) ? $end_dt : date( 'F j', $end_dt );
-        $display_range = False;
-        if ( $start_date == $end_date || empty( $end_dt ) ) {
-            $time_string = $start_date;
-        } else {
-            if ( $month === date( 'F', $end_dt ) ) {
-                $time_string = $start_date . ' - ' . date( 'j', $end_dt );
-            } else {
-                $time_string = $start_date . ' - ' . $end_date;
-            }
-            $display_range = True;
+        if ( $attr['filename'] ) {
+            return sprintf( 'style="background-image: url(%s); %s"', sc_image( $attr ), $attr['style'] );
         }
-        ob_start();
-?>
-    <div class="calendar-events">
-        <div class="row">
-            <div class="col-md-12">
-                <h2><span class="fa fa-calendar-o icon"></span> Academic Calendar</h2>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4 first-item">
-                <h3>Up Next</h3>
-                    <?php if ( !$display_range ): ?>
-                        <a href="<?php echo $first_item->directUrl; ?>" target="_blank">
-                        <div class="giant-event-date">
-                            <?php $date = strtotime( $first_item->dtstart ); ?>
-                            <span class="month"><?php echo $month; ?></span>
-                            <span class="day"><?php echo $day; ?></span>
-                        </div>
-                        <div class="event-details">
-                            <h4 class="time"><?php echo $first_item->summary; ?></h4>
-                            <p><?php echo $first_item->description; ?></p>
-                        </div>
-                        </a>
-                    <?php else: ?>
-                        <a href="<?php echo $first_item->directUrl; ?>" target="_blank">
-                        <div class="event-details event-date-range">
-                            <h4 class="time"><?php echo $time_string; ?></h4>
-                            <span class="title"><?php echo $first_item->summary; ?></span>
-                            <p><?php echo $first_item->description; ?></p>
-                        </div>
-                        </a>
-                    <?php endif; ?>
-            </div>
-            <div class="col-md-8 vertical-border">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>Looking Ahead</h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                    <?php foreach( $items as $key=>$item ) : ?>
-                        <?php
-                            $date = strtotime( $item->dtstart );
-                            $end_dt  = empty( $item->dtend ) ? '' : strtotime( $item->dtend );
-                            $month = date( 'F', $date );
-                            $day = date( 'j', $date );
-                            $start_date = date( 'F j', $date );
-                            $end_date = empty( $end_dt ) ? $end_dt : date( 'F j', $end_dt );
-                            if ( $start_date == $endDate || empty( $end_dt ) ) {
-                                $time_string = $start_date;
-                            } else {
-                                if ( $month === date( 'F', $end_dt ) ) {
-                                    $time_string = $start_date . ' - ' . date( 'j', $end_dt );
-                                } else {
-                                    $time_string = $start_date . ' - ' . $end_date;
-                                }
-                            }
-                        ?>
-                        <a href="<?php echo $item->directUrl; ?>" target="_blank">
-                            <div class="row event">
-                                <div class="col-md-12 event-details">
-                                    <h4 class="time"><?php echo $time_string; ?></h4>
-                                    <p><?php echo $item->summary; ?></p>
-                                </div>
-                            </div>
-                        </a>
-                        <?php if ( ( $key + 1 ) % 3 == 0 ): ?>
-                            </div>
-                            <div class="col-md-6">
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </div>
-        <a class="all-link" href="<?php echo $full_cal_url; ?>">More Academic Calendar Dates &rsaquo;</a>
-    </div>
-<?php
-        return ob_get_clean();
+        return '';
     }
 }
 

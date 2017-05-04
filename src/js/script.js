@@ -32,8 +32,9 @@ var headerImage = function($) {
 };
 
 var heightAdjustments = function($) {
-	var $footer = $('.site-footer').find('.footer-col').matchHeight();
-	var $sections = $('.bucket-section .row').find('div').matchHeight();
+	var $footer = $('.site-footer').find('.footer-col').matchHeight(),
+		$sections = $('.bucket-section .row').find('div').matchHeight(),
+		$promises = $('.promises-section').find('div').matchHeight();
 
 	var beforeUpdate = function(event, groups) {
 		if ($(window).width() < 768) {
@@ -46,6 +47,7 @@ var heightAdjustments = function($) {
 
 	$footer.matchHeight._beforeUpdate = beforeUpdate;
 	$sections.matchHeight._beforeUpdate = beforeUpdate;
+	$promises.matchHeight._beforeUpdate = beforeUpdate;
 };
 
 var positionHeaderBackgrounds = function($) {
@@ -251,25 +253,12 @@ Number.prototype.clamp = function(min, max) {
 	return Math.min(Math.max(this, min), max);
 };
 
-var searchListeners = function($) {
-	var $mapSearchBar = $('.map-search'),
-		$searchButton = $('.search-button');
-
-	$searchButton.removeClass('loading');
-
-	$mapSearchBar.on('click', '.search-button', function() {
-		$searchButton.addClass('loading');
-	});
-};
-
 if (typeof jQuery !== 'undefined') {
 	jQuery(document).ready( function($) {
 		headerImage($);
 		heightAdjustments($);
 		isAutoPlay($);
 		sectionsMenu($);
-
-		searchListeners($);
 
 		$(window).on('resize', function() {
 			positionHeaderBackgrounds($);

@@ -1,6 +1,6 @@
-# Students Theme
+# UCF Strategic Planning Theme
 
-This theme will be used for the /students/ page on [www.ucf.edu](http://www.ucf.edu). The theme relies heavily on shortcodes with Custom Post Types used for data structures that require scheduling or reuse.
+This theme will be used for the /strategic-planning/ page on [www.ucf.edu](http://www.ucf.edu). The theme relies heavily on shortcodes with Custom Post Types used for data structures that require scheduling or reuse.
 
 ## Installation Requirements:
 - WordPress v4.4+
