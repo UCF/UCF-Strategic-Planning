@@ -46,3 +46,6 @@
 			</nav>
 		</header>
 		<main class="site-main">
+		<?php if (wp_installing()) : ?>
+			<div class="container">
+		<?php endif; ?>
