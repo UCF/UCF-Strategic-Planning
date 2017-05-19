@@ -46,3 +46,9 @@
 			</nav>
 		</header>
 		<main class="site-main">
+		<?php if (wp_installing()) : 
+			// `wp_installing` will return true if this file is being loaded on
+			// wp-activate.php. The container is needed to properly format the output
+		?>
+			<div class="container">
+		<?php endif; ?>
