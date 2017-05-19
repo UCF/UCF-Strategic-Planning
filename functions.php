@@ -348,4 +348,17 @@ add_action( 'ucf_events_display_modern_list_nd', 'sp_events_display_modern_list_
 // Just recycle modern list action
 add_action( 'ucf_events_display_modern_list_nd_after', 'sp_events_display_modern_list_after', 10, 3 );
 
+function load_plugins_on_wp_activate() {
+	wp_installing(false);
+
+	foreach( wp_get_active_and_valid_plugins() as $plugin ) {
+		wp_register_plugin_realpath( $plugin );
+		include_once( $plugin );
+	}
+
+	wp_installing(true);
+}
+
+add_action( 'activate_header', 'load_plugins_on_wp_activate' );
+
 ?>
