@@ -462,7 +462,7 @@ function get_search_results(
 	if ( strlen( $query ) > 0 ) {
 		$query_string = http_build_query( $arguments );
 		$url          = $search_url.'?'.$query_string;
-		$response     = file_get_contents( $url );
+		$response     = wp_remote_retrieve_body( wp_remote_get( $url ) );
 
 		if ( $response ) {
 			$xml   = simplexml_load_string( $response );
@@ -708,74 +708,6 @@ function header_links() {
 
 
 /**
- * Generates a title based on context page is viewed.  Stolen from Thematic
- * */
-function header_title( $title, $separator ) {
-	$site_name = get_bloginfo( 'name' );
-
-	if ( is_single() ) {
-		$content = single_post_title( '', FALSE );
-	}
-	elseif ( is_home() || is_front_page() ) {
-		$content = get_bloginfo( 'description' );
-	}
-	elseif ( is_page() ) {
-		$content = single_post_title( '', FALSE );
-	}
-	elseif ( is_search() ) {
-		$content = __( 'Search Results for:' );
-		$content .= ' ' . esc_html( stripslashes( get_search_query() ) );
-	}
-	elseif ( is_category() ) {
-		$content = __( 'Category Archives:' );
-		$content .= ' ' . single_cat_title( '', false );
-	}
-	elseif ( is_404() ) {
-		$content = __( 'Not Found' );
-	}
-	else {
-		$content = get_bloginfo( 'description' );
-	}
-
-	if ( get_query_var( 'paged' ) ) {
-		$content .= ' ' .$separator. ' ';
-		$content .= 'Page';
-		$content .= ' ';
-		$content .= get_query_var( 'paged' );
-	}
-
-	if ( $content ) {
-		if ( is_home() || is_front_page() ) {
-			$elements = array(
-				'site_name' => $site_name,
-				'separator' => $separator,
-				'content' => $content,
-			);
-		} else {
-			$elements = array(
-				'content' => $content,
-			);
-		}
-	} else {
-		$elements = array(
-			'site_name' => $site_name,
-		);
-	}
-
-	// But if they don't, it won't try to implode
-	if ( is_array( $elements ) ) {
-		$doctitle = implode( ' ', $elements );
-	}
-	else {
-		$doctitle = $elements;
-	}
-
-	return $doctitle;
-}
-add_filter( 'wp_title', 'header_title', 10, 2 );
-
-
-/**
  * Assembles the appropriate meta elements for facebook's opengraph stuff.
  * Utilizes the themes Config object to queue up the created elements.
  *
@@ -865,9 +797,9 @@ function opengraph_setup() {
 function installed_custom_post_types() {
 	$installed = Config::$custom_post_types;
 
-	return array_map( create_function( '$class', '
+	return array_map( function( $class ) {
 		return new $class;
-	' ), $installed );
+	}, $installed );
 }
 
 /**
@@ -877,9 +809,9 @@ function installed_custom_post_types() {
 function installed_shortcodes() {
 	$installed = Config::$shortcodes;
 
-	return array_map( create_function( '$class', '
+	return array_map( function( $class ) {
 		return new $class;
-	' ), $installed );
+	}, $installed );
 }
 
 /**
@@ -889,9 +821,9 @@ function installed_shortcodes() {
 function installed_custom_taxonomies() {
 	$installed = Config::$custom_taxonomies;
 
-	return array_map( create_function( '$class', '
+	return array_map( function( $class ) {
 		return new $class;
-	' ), $installed );
+	}, $installed );
 }
 
 function flush_rewrite_rules_if_necessary() {
