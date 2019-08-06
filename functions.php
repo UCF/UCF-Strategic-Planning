@@ -60,7 +60,12 @@ function get_remote_menu( $menu_name ) {
 			return;
 		}
 
-		$result = json_decode( wp_remote_retrieve_body( wp_remote_get( $file_location, $args ) ) );
+		$response = wp_remote_get( $file_location, $args );
+		if ( wp_remote_retrieve_response_code( $response ) > 400 ) {
+			return;
+		}
+
+		$result = json_decode( wp_remote_retrieve_body( $response ) );
 		if ( ! $customizing && $result ) {
 			set_transient( $result_name, $result, (60 * 60 * 24) );
 		}
