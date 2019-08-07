@@ -421,7 +421,7 @@ abstract class CustomPostType {
 	/**
 	 * Outputs this item in HTML.  Can be overridden for descendants.
 	 * */
-	public function toHTML( $object ) {
+	public static function toHTML( $object ) {
 		$html = '<a href="'.get_permalink( $object->ID ).'">'.$object->post_title.'</a>';
 		return $html;
 	}
@@ -533,7 +533,7 @@ class IconLink extends CustomPostType {
 		);
 	}
 
-	public function toHTML( $object ) {
+	public static function toHTML( $object ) {
 		$icon = get_field( 'icon_link_icon', $object->ID );
 		$url = get_field( 'icon_link_url', $object->ID );
 		ob_start();
@@ -607,7 +607,7 @@ class Spotlight extends CustomPostType {
 		);
 	}
 
-	public function toHTML( $object ) {
+	public static function toHTML( $object ) {
 		$image_url = has_post_thumbnail( $object->ID ) ?
 			wp_get_attachment_image_src( get_post_thumbnail_id( $object->ID ), 'spotlight' ) :
 			null;
@@ -780,7 +780,7 @@ class Section extends CustomPostType {
 		);
 	}
 
-	function add_post_meta( $object ) {
+	public static function add_post_meta( $object ) {
 
 		$post_id    = $object->ID;
 		$prefix     = 'section_';
@@ -801,7 +801,7 @@ class Section extends CustomPostType {
 		return $object;
 	}
 
-	public function toHTML( $object ) {
+	public static function toHTML( $object ) {
 		$object = Section::add_post_meta( $object );
 		ob_start();
 ?>
