@@ -54,13 +54,12 @@ function get_remote_menu( $menu_name ) {
 			return;
 		}
 
-		$headers = get_headers( $file_location );
-		$response_code = substr( $headers[0], 9, 3 );
-		if ( $response_code !== '200' ) {
+		$response = wp_remote_get( $file_location, $args );
+		if ( wp_remote_retrieve_response_code( $response ) > 400 ) {
 			return;
 		}
 
-		$result = json_decode( wp_remote_retrieve_body( wp_remote_get( $file_location, $args ) ) );
+		$result = json_decode( wp_remote_retrieve_body( $response ) );
 		if ( ! $customizing && $result ) {
 			set_transient( $result_name, $result, (60 * 60 * 24) );
 		}
