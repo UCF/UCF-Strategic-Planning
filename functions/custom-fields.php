@@ -78,16 +78,15 @@ if ( class_exists( 'acf_field' ) ){
 		}
 
 		function get_fa_icons() {
-			$opts = array(
-				'http' => array(
-					'timeout' => 15
-				)
-			);
+			$response      = wp_remote_get( $url, array( 'timeout' => 15 ) );
+			$response_code = wp_remote_retrieve_response_code( $response );
+			$result        = '';
 
-			$context = stream_context_create( $opts );
+			if ( is_array( $response ) && is_int( $response_code ) && $response_code < 400 ) {
+				$result = json_decode( wp_remote_retrieve_body( $response ) );
+			}
 
-			$contents = file_get_contents( THEME_DATA_URL . '/fa-icons.json', false, $context );
-			return json_decode( $contents );
+			return $result;
 		}
 	}
 
