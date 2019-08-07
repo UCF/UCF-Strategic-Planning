@@ -35,7 +35,7 @@ if ( class_exists( 'acf_field' ) ){
 
 		function create_field( $field ) {
 	?>
-		<?php echo $this->icon_field_modal_html(); ?>
+		<?php echo $this->icon_field_modal_html( $field ); ?>
 		<div class="meta-icon-wrapper">
 			<div class="meta-icon-preview">
 				<?php if ( $field['value'] ) : ?>
@@ -55,6 +55,7 @@ if ( class_exists( 'acf_field' ) ){
 		}
 
 		function icon_field_modal_html( $field ) {
+			$icons = $this->get_fa_icons();
 			ob_start();
 	?>
 			<div id="meta-icon-modal" style="display: none;">
@@ -63,11 +64,15 @@ if ( class_exists( 'acf_field' ) ){
 				<p>
 					<input type="text" placeholder="search" id="meta-icon-search">
 				</p>
+
+				<?php if ( ! empty( $icons ) ): ?>
 				<ul class="meta-fa-icons">
-				<?php foreach( $this->get_fa_icons() as $icon ) : ?>
-					<li class="meta-fa-icon"><i class="fa <?php echo $icon; ?>" data-icon-value="<?php echo $icon; ?>"></i></li>
-				<?php endforeach; ?>
+					<?php foreach( $icons as $icon ) : ?>
+						<li class="meta-fa-icon"><i class="fa <?php echo $icon; ?>" data-icon-value="<?php echo $icon; ?>"></i></li>
+					<?php endforeach; ?>
 				</ul>
+				<?php endif; ?>
+
 				<div class="meta-icon-modal-footer">
 					<button type="button" id="meta-icon-submit">Submit</button>
 				</div>
@@ -78,9 +83,9 @@ if ( class_exists( 'acf_field' ) ){
 		}
 
 		function get_fa_icons() {
-			$response      = wp_remote_get( $url, array( 'timeout' => 15 ) );
+			$response      = wp_remote_get( THEME_DATA_URL . '/fa-icons.json', array( 'timeout' => 15 ) );
 			$response_code = wp_remote_retrieve_response_code( $response );
-			$result        = '';
+			$result        = array();
 
 			if ( is_array( $response ) && is_int( $response_code ) && $response_code < 400 ) {
 				$result = json_decode( wp_remote_retrieve_body( $response ) );
