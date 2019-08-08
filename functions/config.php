@@ -466,7 +466,7 @@ function clear_header_menu_transient( $value, $old_value ) {
 	delete_transient( 'header_menu_json' );
 	return $value;
 }
-add_action( 'pre_set_theme_mod_header_menu_feed', 'clear_header_menu_transient' );
+add_action( 'pre_set_theme_mod_header_menu_feed', 'clear_header_menu_transient', 10, 2 );
 
 
 /**
