@@ -97,8 +97,6 @@ if ( get_theme_mod_or_default( 'gw_verify' ) ) {
  **/
 
 Config::$setting_defaults = array(
-	'enable_google' => 1,
-	'search_per_page' => 10,
 	'cloud_typography_key' => '//cloud.typography.com/730568/675644/css/fonts.css' // Main site css key
 );
 
@@ -147,12 +145,6 @@ function define_customizer_sections( $wp_customize ) {
 		array(
 			'title'       => 'Organization Info',
 			'description' => 'Contact information'
-		)
-	);
-	$wp_customize->add_section(
-		THEME_CUSTOMIZER_PREFIX . 'search',
-		array(
-			'title'       => 'Search',
 		)
 	);
 	$wp_customize->add_section(
@@ -316,58 +308,6 @@ function define_customizer_fields( $wp_customize ) {
 		)
 	);
 
-	// Search
-	$wp_customize->add_setting(
-		'enable_google',
-		array(
-			'default'     => get_setting_default( 'enable_google' ),
-		)
-	);
-	$wp_customize->add_control(
-		'enable_google',
-		array(
-			'type'        => 'checkbox',
-			'label'       => 'Enable Google Search',
-			'description' => 'Enable to use the google search appliance to power the search functionality.',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'search'
-		)
-	);
-
-	$wp_customize->add_setting(
-		'search_domain'
-	);
-	$wp_customize->add_control(
-		'search_domain',
-		array(
-			'type'        => 'text',
-			'label'       => 'Search Domain',
-			'description' => 'Domain to use for the built-in google search.  Useful for development or if the site needs to search a domain other than the one it occupies. Example: <em>some.domain.com</em>',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'search'
-		)
-	);
-
-	$wp_customize->add_setting(
-		'search_per_page',
-		array(
-			'default'     => get_setting_default( 'search_per_page' ),
-			'type'        => 'option'
-		)
-	);
-	$wp_customize->add_control(
-		'search_per_page',
-		array(
-			'type'        => 'number',
-			'label'       => 'Search Results Per Page',
-			'description' => 'Number of search results to show per page of results',
-			'section'     => THEME_CUSTOMIZER_PREFIX . 'search',
-			'input_attrs' => array(
-				'min'  => 1,
-				'max'  => 50,
-				'step' => 1
-			)
-		)
-	);
-
 
 	// Social Media
 	$wp_customize->add_setting(
@@ -526,7 +466,7 @@ function clear_header_menu_transient( $value, $old_value ) {
 	delete_transient( 'header_menu_json' );
 	return $value;
 }
-add_action( 'pre_set_theme_mod_header_menu_feed', 'clear_header_menu_transient' );
+add_action( 'pre_set_theme_mod_header_menu_feed', 'clear_header_menu_transient', 10, 2 );
 
 
 /**
