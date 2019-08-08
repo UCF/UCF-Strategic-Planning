@@ -206,7 +206,7 @@ abstract class CustomPostType {
 					'label'        => $field['name'],
 					'name'         => $field['id'],
 					'instructions' => $field['description'],
-					'required'     => $field['required'] ? $field['required'] : false
+					'required'     => isset( $field['required'] ) ? $field['required'] : false
 				)
 			);
 
@@ -215,8 +215,8 @@ abstract class CustomPostType {
 					$opts = array_merge( $opts,
 						array(
 							'type'          => 'text',
-							'default_value' => $field['default'] ? $field['default'] : '',
-							'placeholder'   => $field['placeholder'] ? $field['placeholder'] : '',
+							'default_value' => isset( $field['default'] ) ? $field['default'] : '',
+							'placeholder'   => isset( $field['placeholder'] ) ? $field['placeholder'] : '',
 							'formatting'    => 'html'
 						)
 					);
@@ -226,8 +226,8 @@ abstract class CustomPostType {
 					$opts = array_merge( $opts,
 						array(
 							'type'          => 'textarea',
-							'default_value' => $field['default'] ? $field['default'] : '',
-							'placeholder'   => $field['placeholder'] ? $field['placeholder'] : '',
+							'default_value' => isset( $field['default'] ) ? $field['default'] : '',
+							'placeholder'   => isset( $field['placeholder'] ) ? $field['placeholder'] : '',
 							'formatting'    => 'html'
 						)
 					);
@@ -237,10 +237,10 @@ abstract class CustomPostType {
 					$opts = array_merge( $opts,
 						array(
 							'type'          => 'number',
-							'default_value' => $field['default'] ? $field['default'] : '',
-							'placeholder'   => $field['placeholder'] ? $field['placeholder'] : '',
-							'min'           => $field['min'] ? $field['min'] : null,
-							'max'           => $field['max'] ? $field['max'] : null
+							'default_value' => isset( $field['default'] ) ? $field['default'] : '',
+							'placeholder'   => isset( $field['placeholder'] ) ? $field['placeholder'] : '',
+							'min'           => isset( $field['min'] ) ? $field['min'] : null,
+							'max'           => isset( $field['max'] ) ? $field['max'] : null
 						)
 					);
 					$retval[] = $opts;
@@ -249,8 +249,8 @@ abstract class CustomPostType {
 					$opts = array_merge( $opts,
 						array(
 							'type'          => 'email',
-							'default_value' => $field['default'] ? $default['default'] : '',
-							'placeholder'   => $field['placeholder'] ? $field['placeholder'] : '',
+							'default_value' => isset( $field['default'] ) ? $default['default'] : '',
+							'placeholder'   => isset( $field['placeholder'] ) ? $field['placeholder'] : '',
 						)
 					);
 					$retval[] = $opts;
@@ -259,9 +259,9 @@ abstract class CustomPostType {
 					$opts = array_merge( $opts,
 						array(
 							'type'          => 'image',
-							'preview_size'  => $field['preview_size'] ? $field['preview_size'] : 'thumbnail',
+							'preview_size'  => isset( $field['preview_size'] ) ? $field['preview_size'] : 'thumbnail',
 							'save_format'   => 'object',
-							'library'       => $field['library'] ? $field['library'] : 'all'
+							'library'       => isset( $field['library'] ) ? $field['library'] : 'all'
 						)
 					);
 					$retval[] = $opts;
@@ -270,8 +270,8 @@ abstract class CustomPostType {
 					$opts = array_merge( $opts,
 						array(
 							'type'          => 'file',
-							'save_format'   => $field['save_as'] ? $field['save_as'] : 'object',
-							'library'       => $field['library'] ? $field['library'] : 'all'
+							'save_format'   => isset( $field['save_as'] ) ? $field['save_as'] : 'object',
+							'library'       => isset( $field['library'] ) ? $field['library'] : 'all'
 						)
 					);
 					$retval[] = $opts;
@@ -281,9 +281,9 @@ abstract class CustomPostType {
 						array(
 							'type'          => 'select',
 							'choices'       => $field['choices'],
-							'default_value' => $field['default'] ? $field['default'] : '',
-							'allow_null'    => $field['allow_null'] ? $field['allow_null'] : 0,
-							'multiple'      => $field['multiple'] ? $field['multiple'] : 0
+							'default_value' => isset( $field['default'] ) ? $field['default'] : '',
+							'allow_null'    => isset( $field['allow_null'] ) ? $field['allow_null'] : 0,
+							'multiple'      => isset( $field['multiple'] ) ? $field['multiple'] : 0
 						)
 					);
 					$retval[] = $opts;
@@ -293,8 +293,8 @@ abstract class CustomPostType {
 						array(
 							'type'          => 'checkbox',
 							'choices'       => $field['choices'],
-							'default_value' => $field['default'] ? $field['default'] : null,
-							'layout'        => $field['layout'] ? $field['layout'] : 'vertical'
+							'default_value' => isset( $field['default'] ) ? $field['default'] : null,
+							'layout'        => isset( $field['layout'] ) ? $field['layout'] : 'vertical'
 						)
 					);
 					$retval[] = $opts;
@@ -304,8 +304,8 @@ abstract class CustomPostType {
 						array(
 							'type'          => 'radio',
 							'choices'       => $field['choices'],
-							'default_value' => $field['default'] ? $field['default'] : null,
-							'layout'        => $field['layout'] ? $field['layout'] : 'vertical'
+							'default_value' => isset( $field['default'] ) ? $field['default'] : null,
+							'layout'        => isset( $field['layout'] ) ? $field['layout'] : 'vertical'
 						)
 					);
 					$retval[] = $opts;
@@ -314,8 +314,8 @@ abstract class CustomPostType {
 					$opts = array_merge( $opts,
 						array(
 							'type'          => 'true_false',
-							'message'       => $field['label'] ? $field['label'] : $field['name'],
-							'default_value' => $field['default'] ? $field['default'] : 0
+							'message'       => isset( $field['label'] ) ? $field['label'] : $field['name'],
+							'default_value' => isset( $field['default'] ) ? $field['default'] : 0
 						)
 					);
 					$retval[] = $opts;
@@ -324,7 +324,7 @@ abstract class CustomPostType {
 					$opts = array_merge( $opts,
 						array(
 							'type'              => 'color_picker',
-							'default_value'     => $field['default'] ? $field['default'] : null
+							'default_value'     => isset( $field['default'] ) ? $field['default'] : null
 						)
 					);
 					$retval[] = $opts;
@@ -341,8 +341,8 @@ abstract class CustomPostType {
 					$opts = array_merge( $opts,
 						array(
 							'type'              => 'wysiwyg',
-							'toolbar'           => $field['toolbar'] ? $field['toolbar'] : 'full',
-							'media_upload'      => $field['media_upload'] ? $field['media_upload'] : 'no'
+							'toolbar'           => isset( $field['toolbar'] ) ? $field['toolbar'] : 'full',
+							'media_upload'      => isset( $field['media_upload'] ) ? $field['media_upload'] : 'no'
 						)
 					);
 					$retval[] = $opts;
@@ -351,10 +351,10 @@ abstract class CustomPostType {
 					$opts = array_merge( $opts,
 						array(
 							'type'              => 'post_object',
-							'post_type'         => $field['post_type'] ? $field['post_type'] : array( 'post' ),
-							'taxonomy'          => $field['taxonomy'] ? $field['taxonomy'] : array( 'all' ),
-							'allow_null'        => $field['allow_null'] ? $field['allow_null'] : 1,
-							'multiple'          => $field['multiple'] ? $field['multiple'] : 0
+							'post_type'         => isset( $field['post_type'] ) ? $field['post_type'] : array( 'post' ),
+							'taxonomy'          => isset( $field['taxonomy'] ) ? $field['taxonomy'] : array( 'all' ),
+							'allow_null'        => isset( $field['allow_null'] ) ? $field['allow_null'] : 1,
+							'multiple'          => isset( $field['multiple'] ) ? $field['multiple'] : 0
 						)
 					);
 					$retval[] = $opts;
@@ -421,7 +421,7 @@ abstract class CustomPostType {
 	/**
 	 * Outputs this item in HTML.  Can be overridden for descendants.
 	 * */
-	public function toHTML( $object ) {
+	public static function toHTML( $object ) {
 		$html = '<a href="'.get_permalink( $object->ID ).'">'.$object->post_title.'</a>';
 		return $html;
 	}
@@ -533,7 +533,7 @@ class IconLink extends CustomPostType {
 		);
 	}
 
-	public function toHTML( $object ) {
+	public static function toHTML( $object ) {
 		$icon = get_field( 'icon_link_icon', $object->ID );
 		$url = get_field( 'icon_link_url', $object->ID );
 		ob_start();
@@ -607,7 +607,7 @@ class Spotlight extends CustomPostType {
 		);
 	}
 
-	public function toHTML( $object ) {
+	public static function toHTML( $object ) {
 		$image_url = has_post_thumbnail( $object->ID ) ?
 			wp_get_attachment_image_src( get_post_thumbnail_id( $object->ID ), 'spotlight' ) :
 			null;
@@ -780,7 +780,7 @@ class Section extends CustomPostType {
 		);
 	}
 
-	function add_post_meta( $object ) {
+	public static function add_post_meta( $object ) {
 
 		$post_id    = $object->ID;
 		$prefix     = 'section_';
@@ -801,7 +801,7 @@ class Section extends CustomPostType {
 		return $object;
 	}
 
-	public function toHTML( $object ) {
+	public static function toHTML( $object ) {
 		$object = Section::add_post_meta( $object );
 		ob_start();
 ?>

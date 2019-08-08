@@ -53,13 +53,15 @@ abstract class Shortcode {
         <li class="shortcode-<?php echo $this->command; ?>">
             <h3><?php echo $this->name; ?> Options</h3>
 <?php
-        foreach($this->params as $param) :
+		if ( ! empty( $this->params ) ):
+			foreach( $this->params as $param ):
+				echo $this->get_field_input( $param, $this->command );
+			endforeach;
+		else:
 ?>
-            <h4><?php echo $param->name; ?></h4>
-            <p class="help"><?php echo $param->help_text; ?></p>
-            <?php echo $this->get_field_input( $param, $this->command ); ?>
+		<p>No options available.</p>
 <?php
-        endforeach;
+		endif;
 ?>
         </li>
 <?php
