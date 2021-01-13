@@ -825,11 +825,17 @@ class Section extends CustomPostType {
 		</div>
 		<?php if ( $object->header_image ) : ?>
 			<?php
-				$header_img = wp_get_attachment_image_src( $object->header_image, array( 2000, 750 ) );
+			// Apparently the return value for the header image field
+			// changed at some point from an ID to an array of image data.
+			// Just account for both here:
+			$header_img_id = is_array( $object->header_image ) ? $object->header_image['ID'] : $object->header_image;
+			$header_img = wp_get_attachment_image_src( $header_img_id, array( 2000, 750 ) );
+			if ( is_array( $header_img ) && isset( $header_img[0] ) ) :
 			?>
 			<div class="section-header-image-container">
 				<img class="section-header-image" src="<?php echo $header_img[0]; ?>" alt="">
 			</div>
+			<?php endif; ?>
 		<?php endif; ?>
 		<?php if ( $object->header_video_mp4 ) : ?>
 			<?php
